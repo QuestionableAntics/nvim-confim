@@ -174,6 +174,7 @@
 	local indent_blankline = require 'indent_blankline'
 	local lsp = require 'lspconfig'
 	local lsp_installer = require 'nvim-lsp-installer'
+	local lsp_installer_servers = require 'nvim-lsp-installer.servers'
 	local lspkind = require 'lspkind'
 	local lualine = require 'lualine'
 	local null_ls = require 'null-ls'
@@ -185,36 +186,46 @@
 
 	------------ Language Servers ------------
 
-		-- Register a handler that will be called for all installed servers.
-		-- Alternatively, you may also register handlers on specific server instances instead (see example below).
-		lsp_installer.on_server_ready(function(server)
-			local opts = {
-				coq.lsp_ensure_capabilities{
-					capabilities = capabilities
-				},
-			}
+		local servers = {'pyright', 'tsserver', 'omnisharp', 'sumneko_lua'}
 
-			if server.name == 'sumneko_lua' then
-				opts.settings = { ['Lua.diagnostic.globals'] = { 'vim' } }
+		for _, server in ipairs(servers) do
+			local server_available, requested_server = lsp_installer_servers.get_server(server)
+			if server_available then
+				requested_server:on_ready(function ()
+					local opts = {
+						coq.lsp_ensure_capabilities{
+							capabilities = capabilities
+						},
+					}
+
+					if server.name == 'sumneko_lua' then
+						opts.settings = { ['Lua.diagnostic.globals'] = { 'vim' } }
+					end
+
+					-- Setup guide for C#
+					-- https://rudism.com/coding-csharp-in-neovim/
+					if server == 'omnisharp' then
+						opts = {
+							-- required for coq
+							coq.lsp_ensure_capabilities{
+								capabilities = capabilities
+							},
+							on_attach = function(_, bufnr)
+								vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+							end,
+							cmd = { "/Users/kean.mattingly@equipmentshare.com/Downloads/omnisharp-osx/run", "--languageserver" , "--hostPID", tostring(pid) },
+						}
+					end
+
+					requested_server:setup(opts)
+				end)
+
+				if not requested_server:is_installed() then
+					-- Queue the server to be installed
+					requested_server:install()
+				end
 			end
-
-			-- Setup guide for C#
-			-- https://rudism.com/coding-csharp-in-neovim/
-			if server.name == 'omnisharp' then
-				opts = {
-					-- required for coq
-					coq.lsp_ensure_capabilities{
-						capabilities = capabilities
-					},
-					on_attach = function(_, bufnr)
-						vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-					end,
-					cmd = { "/Users/kean.mattingly@equipmentshare.com/Downloads/omnisharp-osx/run", "--languageserver" , "--hostPID", tostring(pid) },
-				}
-			end
-
-			server:setup(opts)
-		end)
+		end
 
 	------------------------------------------
 
