@@ -73,12 +73,9 @@ opt.cursorline = true
 		-- Highlight on yank
 		vim.cmd [[ autocmd TextYankPost * silent! lua vim.highlight.on_yank() ]]
 		vim.cmd 'colorscheme codedark'
-		-- vim.g.vscode_style = 'dark'
-		-- vim.cmd 'colorscheme vscode'
 		vim.g.db_ui_use_nerd_fonts = 1
 		vim.g.diagnostic_enable_virtual_text = 1
 
 	-------------------
 
 ------------------------------------------------------------------------------------------
-

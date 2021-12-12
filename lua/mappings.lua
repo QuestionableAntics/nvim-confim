@@ -19,8 +19,6 @@ tmap('jk', [[<C-\><C-N>]])
 
 	-- ESC to de-highlight
 	nmap('<esc>', '<esc>:noh<CR>')
-	-- Sets current pane to 66% of available window height or width (whichever are applicable)
-	nmap('<leader>rs', '<cmd>GoldenRatioResize<CR>')
 	-- Open file explorer
 	nmap('<leader>v', '<cmd>CHADopen<cr>')
 

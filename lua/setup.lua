@@ -1,5 +1,12 @@
 -- Auto start coq (must be run before require 'coq')
-vim.g.coq_settings = { auto_start = 'shut-up', keymap = { jump_to_mark = '' } }
+vim.g.coq_settings = {
+	-- always start coq (silently)
+	auto_start = 'shut-up',
+	-- maybe I'll use snippets eventually, but for now I get my tab key back
+	keymap = { jump_to_mark = '' },
+	-- a lot of what I want from autocomplete is exploring properties on objects, this makes them more visible amongst the noise in large projects by prioritizing lsp results
+	clients = { lsp = { weight_adjust = 1.6 } }
+}
 
 -- Database autocompletion on entering a sql buffer
 vim.cmd "autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} })"
