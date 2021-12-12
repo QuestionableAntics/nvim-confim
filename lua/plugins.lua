@@ -127,8 +127,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'nvim-lua/popup.nvim'
 	-- a bunch of nice functions that creators of nvim plugins don't want to rewrite
 	Plug 'nvim-lua/plenary.nvim'
-	-- language server for alternative completions provided through LSP
-	Plug 'jose-elias-alvarez/null-ls.nvim'
+	-- language server for alternative completions provided through LSP (don't have a use for it right now, but it seems neat)
+	-- Plug 'jose-elias-alvarez/null-ls.nvim'
 
 ------------------------------------------------------------------
 
