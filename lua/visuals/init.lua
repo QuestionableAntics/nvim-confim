@@ -1,36 +1,8 @@
----------- Plugins ----------
-
-	local Plug = vim.fn['plug#']
-
-	vim.call('plug#begin', '~/.vim/plugged')
-
-	--------------------------------------------------
-
-	-- pretty icons everywhere
-	Plug 'ryanoasis/vim-devicons'
-	-- More pretty icons
-	Plug 'kyazdani42/nvim-web-devicons'
-	-- highlight matching html tags
-	Plug 'gregsexton/MatchTag'
-	-- VS Code theme
-	Plug 'tomasiser/vim-code-dark'
-	-- Nice status bar
-	Plug 'nvim-lualine/lualine.nvim'
-	-- VS Code Icons for LSP
-	Plug 'onsails/lspkind-nvim'
-
-	--------------------------------------------------
-
-	vim.call('plug#end')
-
---------------------------------------
-
-
 ----- Config -----
 
 	-- Highlight on yank
 	vim.cmd 'autocmd TextYankPost * silent! lua vim.highlight.on_yank()'
-	vim.cmd 'colorscheme codedark'
+	-- vim.cmd 'colorscheme codedark'
 	vim.g.db_ui_use_nerd_fonts = 1
 	vim.g.diagnostic_enable_virtual_text = 1
 

@@ -96,6 +96,66 @@
 
 	--------------------------------
 
+
+	---------- Visuals ----------
+
+		-- pretty icons everywhere
+		Plug 'ryanoasis/vim-devicons'
+		-- More pretty icons
+		Plug 'kyazdani42/nvim-web-devicons'
+		-- highlight matching html tags
+		Plug 'gregsexton/MatchTag'
+		-- VS Code theme
+		Plug 'tomasiser/vim-code-dark'
+		-- Nice status bar
+		Plug 'nvim-lualine/lualine.nvim'
+		-- VS Code Icons for LSP
+		Plug 'onsails/lspkind-nvim'
+
+	-----------------------------
+
+
+	---------- LSP  ----------
+
+		-- A collection of common configurations for Neovim's built-in language server client
+		-- Handles automatically launching and initializing installed language servers
+		Plug 'neovim/nvim-lspconfig'
+		-- SQL language server
+		Plug 'nanotee/sqls.nvim'
+		-- TS language server
+		Plug 'typescript-language-server/typescript-language-server'
+		-- LSP installer
+		Plug 'williamboman/nvim-lsp-installer'
+
+		---- General dependencies
+		-- popup window interface
+		Plug 'nvim-lua/popup.nvim'
+		-- a bunch of nice functions that creators of nvim plugins don't want to rewrite
+		Plug 'nvim-lua/plenary.nvim'
+		-- language server for alternative completions provided through LSP
+		Plug 'jose-elias-alvarez/null-ls.nvim'
+
+	--------------------------
+
+
+	---------- Autocompletion  ----------
+
+		-- Autocomplete source for vim dadbod (database)
+		Plug 'kristijanhusak/vim-dadbod-completion'
+		-- Fast as FUCK autocompletion
+		Plug('ms-jpq/coq_nvim', { branch = 'coq' } )
+		-- coq.nvim dependency
+		Plug('ms-jpq/coq.artifacts', { branch = 'artifacts' } )
+		-- coq.nvim snippets and other third party sources of completion
+		Plug 'ms-jpq/coq.thirdparty'
+		-- AI in my code
+		Plug 'github/copilot.vim'
+		---- nvim cmp
+		Plug 'hrsh7th/nvim-cmp'
+
+	--------------------------------------
+
+
 	vim.call('plug#end')
 
 ----------------------------------------------------------------------------
@@ -181,3 +241,4 @@
 
 ----------------------------------------------------------
 
+	vim.cmd 'colorscheme codedark'
