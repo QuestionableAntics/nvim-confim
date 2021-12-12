@@ -21,7 +21,7 @@ opt.wildmenu = true
 opt.completeopt = {'menuone','noinsert','noselect'}
 
 -- Set default grep to ripgrep
-opt.grepprg=[[rg\]] ---vimgrep
+opt.grepprg = [[rg\]] ---vimgrep
 
 -- Make tab width equivalent to 4 spaces
 opt.tabstop = 4

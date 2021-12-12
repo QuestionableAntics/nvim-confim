@@ -121,10 +121,6 @@
 		-- A collection of common configurations for Neovim's built-in language server client
 		-- Handles automatically launching and initializing installed language servers
 		Plug 'neovim/nvim-lspconfig'
-		-- SQL language server
-		Plug 'nanotee/sqls.nvim'
-		-- TS language server
-		Plug 'typescript-language-server/typescript-language-server'
 		-- LSP installer
 		Plug 'williamboman/nvim-lsp-installer'
 
