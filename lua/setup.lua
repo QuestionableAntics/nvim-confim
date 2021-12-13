@@ -143,7 +143,7 @@ local trouble = require 'trouble'
 			delay = 200,
 		},
 	}
-	lualine.setup { options = { theme = 'onedark' } }
+	lualine.setup { options = { theme = 'onedark' }, sections = { lualine_a = { { 'filename', path = 1 } } } }
 	project.setup {}
 	stabilize.setup()
 	trouble.setup {}
