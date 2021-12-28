@@ -47,6 +47,7 @@ tmap('jk', [[<C-\><C-N>]])
 	nmap('<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>')
 	nmap('<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<cr>')
 	nmap('<leader>fo', '<cmd>lua require("telescope.builtin").oldfiles()<cr>')
+	nmap('<leader>fs', '<cmd>lua require("session-lens").search_session()<cr>')
 	nmap('<leader>e', '<cmd>Telescope projects<cr>')
 	nmap('gh', '<cmd>Telescope lsp_references<cr>')
 
@@ -69,6 +70,7 @@ tmap('jk', [[<C-\><C-N>]])
 	nmap('<leader>dn', '<cmd>lua require("dap-python").test_method()<CR>')
 	nmap('<leader>df', '<cmd>lua require("dap-python").test_class()<CR>')
 	vmap('<leader>ds', '<ESC>:lua require("dap-python").debug_selection()<CR>')
+
 	nmap('<leader>dct', '<cmd>lua require"dap".continue()<CR>')
 	nmap('<leader>dsv', '<cmd>lua require"dap".step_over()<CR>')
 	nmap('<leader>dsi', '<cmd>lua require"dap".step_into()<CR>')
@@ -134,9 +136,26 @@ tmap('jk', [[<C-\><C-N>]])
 	nmap('<leader>hS', '<cmd>Gitsigns stage_buffer<CR>')
 	nmap('<leader>hU', '<cmd>Gitsigns reset_buffer_index<CR>')
 
+---------------------------------------------------------
+
+
 ---------------- Motions ----------------
 
 	nmap('s', '<cmd>HopChar2<CR>')
 
 -----------------------------------------
 
+
+---------------- Tabs ----------------
+
+	nmap('<leader>ta', ':$tabnew<CR>')
+	nmap('<leader>tc', ':tabclose<CR>')
+	nmap('<leader>to', ':tabonly<CR>')
+	nmap('<leader>tn', ':tabnext<CR>')
+	nmap('<leader>tp', ':tabprevious<CR>')
+	-- move current tab to previous position
+	nmap('<leader>tmp', ':-tabmove<CR>')
+	-- move current tab to next position
+	nmap('<leader>tmn', ':+tabmove<CR>')
+
+--------------------------------------

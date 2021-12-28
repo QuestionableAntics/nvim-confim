@@ -1,5 +1,6 @@
 local opt = vim.opt
 local wo = vim.wo
+local o = vim.o
 
 -- Let me backspace like I want
 opt.backspace = {'indent','eol','start'}
@@ -54,6 +55,12 @@ opt.cursorline = true
 -- table.insert(runtime_path, 'lua/?.lua')
 -- table.insert(runtime_path, 'lua/?/init.lua')
 
+-- ooo pretty colors 😯
+opt.termguicolors = true
+
+-- Recommended settings for auto-session via the readme file
+o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+
 ---------- Configurations ----------
 
 	----- Autocomplete -----
@@ -75,6 +82,7 @@ opt.cursorline = true
 		vim.cmd 'colorscheme codedark'
 		vim.g.db_ui_use_nerd_fonts = 1
 		vim.g.diagnostic_enable_virtual_text = 1
+		vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
 
 	-------------------
 

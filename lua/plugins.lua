@@ -8,8 +8,6 @@ Plug 'lewis6991/impatient.nvim'
 
 ---------- Visuals ----------
 
-	-- pretty icons everywhere
-	Plug 'ryanoasis/vim-devicons'
 	-- More pretty icons
 	Plug 'kyazdani42/nvim-web-devicons'
 	-- highlight matching html tags
@@ -18,6 +16,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'tomasiser/vim-code-dark'
 	-- Nice status bar
 	Plug 'nvim-lualine/lualine.nvim'
+	-- Tabline
+	Plug 'nanozuki/tabby.nvim'
 	-- VS Code Icons for LSP
 	Plug 'onsails/lspkind-nvim'
 
@@ -77,7 +77,9 @@ Plug 'lewis6991/impatient.nvim'
 	-- Fast motions
 	Plug 'phaazon/hop.nvim'
 	-- Session Management
-	-- Plug 'rmagatti/auto-session'
+	Plug 'rmagatti/auto-session'
+	-- Session integration for Telescope
+	Plug 'rmagatti/session-lens'
 	-- Fast project switching
 	Plug 'ahmedkhalf/project.nvim'
 
@@ -144,6 +146,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'lukas-reineke/indent-blankline.nvim'
 	-- Use vim anywhere
 	vim.cmd [[ Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } ]]
+	-- Weather lol
+	-- Plug 'wyattjsmith1/weather.nvim'
 
 --------------------------------
 

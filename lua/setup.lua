@@ -1,3 +1,5 @@
+local util = require("lspconfig.util")
+
 -- Auto start coq (must be run before require 'coq')
 vim.g.coq_settings = {
 	-- always start coq (silently)
@@ -13,10 +15,12 @@ vim.cmd "autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sour
 
 require 'impatient'
 
+local auto_session = require 'auto-session' 
 local coq = require 'coq'
 local dap = require 'dap'
 local dap_python = require 'dap-python'
 local dap_ui = require 'dapui'
+local dap_vscode_ext = require 'dap.ext.vscode'
 local gitsigns = require 'gitsigns'
 local hop = require 'hop'
 local indent_blankline = require 'indent_blankline'
@@ -27,42 +31,62 @@ local lualine = require 'lualine'
 -- local null_ls = require 'null-ls'
 local project = require 'project_nvim'
 local stabilize = require 'stabilize'
+local tabby = require 'tabby'
 local telescope = require 'telescope'
 local treesitter = require 'nvim-treesitter.configs'
 local trouble = require 'trouble'
+-- local weather = require'weather'
+
+
+local null_ls_formatting = function(client)
+	client.resolved_capabilities.document_formatting = false
+	client.resolved_capabilities.document_range_formatting = false
+end
+
 
 ------------ Language Servers ------------
 
-	local servers = {'pyright', 'tsserver', 'omnisharp', 'sumneko_lua'}
+	local server_configs = {
+		sumneko_lua = {
+			settings = {
+				Lua = {
+					runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
+					diagnostics = { globals = { "vim" } },
+					workspace = {
+						library = {
+							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+							[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+						},
+					},
+				},
+			}
+		},
+		tsserver = {
+			root_dir = util.root_pattern("package.json"),
+			on_attach = function(client, _)
+				null_ls_formatting(client)
+			end,
+			init_options = {
+				lint = true,
+			},
+		},
+		-- Setup guide for C#
+		-- https://rudism.com/coding-csharp-in-neovim/
+		omnisharp = {
+			on_attach = function(_, bufnr)
+				vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+			end,
+			cmd = { "/Users/kean.mattingly@equipmentshare.com/Downloads/omnisharp-osx/run", "--languageserver" , "--hostPID", tostring(pid) },
+		},
+		pyright = {},
+	}
 
-	for _, server in ipairs(servers) do
+	for server, config in pairs(server_configs) do
 		local server_available, requested_server = lsp_installer_servers.get_server(server)
+
 		if server_available then
 			requested_server:on_ready(function ()
-				local opts = {
-					coq.lsp_ensure_capabilities{
-						capabilities = capabilities
-					},
-				}
-
-				if server.name == 'sumneko_lua' then
-					opts.settings = { ['Lua.diagnostic.globals'] = { 'vim' } }
-				end
-
-				-- Setup guide for C#
-				-- https://rudism.com/coding-csharp-in-neovim/
-				if server == 'omnisharp' then
-					opts = {
-						-- required for coq
-						coq.lsp_ensure_capabilities{
-							capabilities = capabilities
-						},
-						on_attach = function(_, bufnr)
-							vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-						end,
-						cmd = { "/Users/kean.mattingly@equipmentshare.com/Downloads/omnisharp-osx/run", "--languageserver" , "--hostPID", tostring(pid) },
-					}
-				end
+				local opts = { coq.lsp_ensure_capabilities(config) }
 
 				requested_server:setup(opts)
 			end)
@@ -122,6 +146,7 @@ local trouble = require 'trouble'
 	}
 	dap_python.setup('~/.pyenv/versions/debugpy/bin/python')
 	dap_ui.setup()
+	dap_vscode_ext.load_launchjs()
 
 -----------------------------------------------
 
@@ -135,24 +160,39 @@ local trouble = require 'trouble'
 
 ---------------------------------------
 
+
 ----- Misc -----
 
-	gitsigns.setup{
+	auto_session.setup {
+		auto_session_root_dir = os.getenv('HOME') .. '/.vim/sessions/',
+	}
+	tabby.setup()
+	project.setup()
+	stabilize.setup()
+	trouble.setup()
+	-- weather.setup {}
+	gitsigns.setup {
 		current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
 		current_line_blame_opts = {
 			delay = 200,
 		},
 	}
-	lualine.setup { options = { theme = 'onedark' }, sections = { lualine_a = { { 'filename', path = 1 } } } }
-	project.setup {}
-	stabilize.setup()
-	trouble.setup {}
 	indent_blankline.setup {
 		show_current_context = true,
 		show_current_context_start = true,
 	}
-
-	lspkind.init( {
+	lualine.setup {
+		options = { theme = 'onedark' },
+		sections = {
+			lualine_a = {
+				{ 'filename', path = 1 },
+				-- { "require'weather.lualine'.custom(my_custom_formatter, { pending = '羽', error = '' })" }
+			},
+			-- lualine_b = { "require'weather.lualine'.custom(my_custom_formatter)" },
+			-- lualine_c = { default_f },
+		},
+	}
+	lspkind.init {
 		-- enables text annotations
 		--
 		-- default: true
@@ -195,6 +235,6 @@ local trouble = require 'trouble'
 		  Operator = "",
 		  TypeParameter = ""
 		},
-	} )
+	}
 
 ----------------
