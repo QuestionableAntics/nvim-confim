@@ -35,6 +35,7 @@ local tabby = require 'tabby'
 local telescope = require 'telescope'
 local treesitter = require 'nvim-treesitter.configs'
 local trouble = require 'trouble'
+local ultest = require 'ultest'
 -- local weather = require'weather'
 
 
@@ -153,22 +154,76 @@ local trouble = require 'trouble'
 
 
 -------------------- Debug --------------------
+	-- Reference for debugging setup
+	-- https://github.com/mfussenegger/dotfiles/blob/master/vim/.config/nvim/lua/me/dap.lua
 
 	dap_python.setup(os.getenv('HOME') .. '/.pyenv/versions/debugpy/bin/python')
-	-- table.insert(dap.configurations.python, {
-	-- 	type = 'python',
-	-- 	request = 'launch',
-	-- 	program = '${workspaceFolder}/${file}',
-	-- 	console = 'integratedTerminal',
-	-- 	name = 'Launch file with autoReload',
-	-- 	autoReload = {
-	-- 		enable = true,
-	-- 	}
-	-- })
 	dap_python.test_runner = 'pytest'
+
+	-- dap.adapters.node2 = {
+	-- 	type = 'executable',
+	-- 	command = 'node',
+	-- 	args = {os.getenv('HOME') .. '/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js'},
+	-- }
+	-- dap.configurations.javascript = {
+	-- 	{
+	-- 		type = 'node2',
+	-- 		request = 'launch',
+	-- 		program = '${workspaceFolder}/${file}',
+	-- 		cwd = '/tmp/',
+	-- 		sourceMaps = true,
+	-- 		protocol = 'inspector',
+	-- 		console = 'integratedTerminal',
+	-- 	},
+	-- }
+	-- dap.adapters.netcoredbg = {
+	-- 	type = 'executable',
+	-- 	command = os.getenv('HOME') .. '/.local/dotnet/netcoredbg/netcoredbg',
+	-- 	args = {'--interpreter=vscode'}
+	-- }
+
+	-- dap.configurations.cs = {
+	-- 	{
+	-- 		type = "netcoredbg",
+	-- 		name = "launch - netcoredbg",
+	-- 		request = "launch",
+	-- 		program = function()
+	-- 			return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+	-- 		end,
+	-- 		stopAtEntry = true,
+	-- 	},
+	-- }
+	
+	ultest.setup({
+		builders = {
+			['python#pytest'] = function (cmd)
+				-- The command can start with python command directly or an env manager
+				local non_modules = {'python', 'pipenv', 'poetry'}
+				-- Index of the python module to run the test.
+				local module_index = 1
+				if vim.tbl_contains(non_modules, cmd[1]) then
+					module_index = 3
+				end
+				local module = cmd[module_index]
+
+				-- Remaining elements are arguments to the module
+				local args = vim.list_slice(cmd, module_index + 1)
+				return {
+					dap = {
+						type = 'python',
+						request = 'launch',
+						module = module,
+						args = args
+					}
+				}
+			end
+		}
+	})
+
 	dap_ui.setup()
-	-- If this gets more fleshed out it might be worth converting, but ^ works for now
-	-- dap_vscode_ext.load_launchjs()
+	-- loads VS Code 'launch.json' for project (if this gets more fleshed out it might be worth converting, but ^ works for now)
+	dap_vscode_ext.load_launchjs()
+
 
 -----------------------------------------------
 

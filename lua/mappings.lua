@@ -65,30 +65,44 @@ tmap('jk', [[<C-\><C-N>]])
 --------------------------------------------------
 
 
+------------ Testing ------------
+
+	nmap('<leader>dn', '<Plug>(ultest-debug-nearest)<CR>')
+	nmap('<leader>df', '<Plug>(ultest-debug)<CR>')
+	nmap(']t', '<Plug>(ultest-next-fail)<CR>')
+	nmap('[t', '<Plug>(ultest-prev-fail)<CR>')
+	nmap('<leader>uf', '<Plug>(ultest-run-file)<CR>')
+	nmap('<leader>un', '<Plug>(ultest-run-nearest)<CR>')
+	nmap('<leader>ul', '<Plug>(ultest-run-last)<CR>')
+	nmap('<leader>us', '<Plug>(ultest-summary-toggle)<CR>')
+	nmap('<leader>uo', '<Plug>(ultest-output-show)<CR>')
+
+---------------------------------
+
+
 --------------- Debug ---------------
 
-	nmap('<leader>dn', '<cmd>lua require("dap-python").test_method()<CR>')
-	nmap('<leader>df', '<cmd>lua require("dap-python").test_class()<CR>')
+	-- Debug 
+	-- nmap('<leader>dn', '<cmd>lua require("dap-python").test_method()<CR>')
+	-- nmap('<leader>df', '<cmd>lua require("dap-python").test_class()<CR>')
 	vmap('<leader>ds', '<ESC>:lua require("dap-python").debug_selection()<CR>')
 
-	nmap('<leader>dct', '<cmd>lua require"dap".continue()<CR>')
-	nmap('<leader>dsv', '<cmd>lua require"dap".step_over()<CR>')
-	nmap('<leader>dsi', '<cmd>lua require"dap".step_into()<CR>')
-	nmap('<leader>dso', '<cmd>lua require"dap".step_out()<CR>')
-	nmap('<leader>dtb', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
-
-	nmap('<leader>dsc', '<cmd>lua require"dap.ui.variables".scopes()<CR>')
-	nmap('<leader>dhh', '<cmd>lua require"dap.ui.variables".hover()<CR>')
-	vmap('<leader>dhv', '<cmd>lua require"dap.ui.variables".visual_hover()<CR>')
+	nmap('<F9>', '<cmd>lua require"dap".continue()<CR>')
+	nmap('<F10>', '<cmd>lua require"dap".step_over()<CR>')
+	nmap('<F11>', '<cmd>lua require"dap".step_into()<CR>')
+	nmap('<F12>', '<cmd>lua require"dap".step_out()<CR>')
+	nmap('<leader>db', '<cmd>lua require"dap".toggle_breakpoint()<CR>')
 
 	nmap('<leader>duh', '<cmd>lua require"dap.ui.widgets".hover()<CR>')
-	nmap('<leader>duf', "<cmd>lua local widget=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>")
+	nmap('<leader>duf', "<cmd>lua local widget=require'dap.ui.widgets'.centered_float(require'dap.ui.widgets'.scopes)<CR>")
 
 	nmap('<leader>dsbr', '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>')
 	nmap('<leader>dsbm', '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>')
-	nmap('<leader>dro', '<cmd>lua require"dap".repl.open()<CR>')
-	nmap('<leader>drl', '<cmd>lua require"dap".repl.run_last()<CR>')
+	nmap('<leader>dr', '<cmd>lua require"dap".repl.open()<CR>')
+	nmap('<leader>dl', '<cmd>lua require"dap".repl.run_last()<CR>')
 
+	-- dap ui
+	nmap('<leader>dui', '<cmd>lua require"dapui".toggle()<CR>')
 
 	-- telescope-dap
 	nmap('<leader>dcc', '<cmd>lua require"telescope".extensions.dap.commands{}<CR>')

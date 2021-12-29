@@ -80,12 +80,16 @@ o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,termin
 
 	----- Visuals -----
 
-		-- Highlight on yank
+		-- Highlight yanked text on yank
 		vim.cmd [[ autocmd TextYankPost * silent! lua vim.highlight.on_yank() ]]
 		vim.cmd 'colorscheme codedark'
+		-- Nice icons for DBUI
 		vim.g.db_ui_use_nerd_fonts = 1
 		vim.g.diagnostic_enable_virtual_text = 1
+		-- Brazen breakpoint symbol
 		vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
+		-- colorize test output for ultest
+		vim.g.ultest_use_pty = 1
 
 	-------------------
 

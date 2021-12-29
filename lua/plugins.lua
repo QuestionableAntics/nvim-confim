@@ -66,6 +66,9 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'theHamsta/nvim-dap-virtual-text'
 	-- Pretty diagnostics and easy navigation
 	Plug 'folke/trouble.nvim'
+	-- Testing
+	Plug 'vim-test/vim-test' -- required for ultest
+	Plug('rcarriga/vim-ultest', { ['do'] = ':UpdateRemotePlugins' } )
 
 ------------------------------------------------------------
 
