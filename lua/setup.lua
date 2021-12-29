@@ -15,7 +15,7 @@ vim.cmd "autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sour
 
 require 'impatient'
 
-local auto_session = require 'auto-session' 
+local auto_session = require 'auto-session'
 local coq = require 'coq'
 local dap = require 'dap'
 local dap_python = require 'dap-python'
@@ -38,34 +38,42 @@ local trouble = require 'trouble'
 -- local weather = require'weather'
 
 
-local null_ls_formatting = function(client)
-	client.resolved_capabilities.document_formatting = false
-	client.resolved_capabilities.document_range_formatting = false
-end
+-- local null_ls_formatting = function(client)
+-- 	client.resolved_capabilities.document_formatting = false
+-- 	client.resolved_capabilities.document_range_formatting = false
+-- end
 
 
 ------------ Language Servers ------------
 
+	local lua_rtp = vim.split(package.path, ";")
+	table.insert(lua_rtp, "lua/?.lua")
+	table.insert(lua_rtp, "lua/?/init.lua")
+
 	local server_configs = {
+		-- the biggest config for the by far least used language
 		sumneko_lua = {
 			settings = {
 				Lua = {
-					runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
-					diagnostics = { globals = { "vim" } },
+					runtime = {
+						version = "LuaJIT",
+						path = lua_rtp,
+					},
+					diagnostics = { globals = { "vim", "coq" } },
 					workspace = {
-						library = {
-							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-							[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-						},
+						library = vim.api.nvim_get_runtime_file('', true),
+					},
+					telemetry = {
+						enable = false,
 					},
 				},
 			}
 		},
 		tsserver = {
 			root_dir = util.root_pattern("package.json"),
-			on_attach = function(client, _)
-				null_ls_formatting(client)
-			end,
+			-- on_attach = function(client, _)
+			-- 	null_ls_formatting(client)
+			-- end,
 			init_options = {
 				lint = true,
 			},
@@ -76,8 +84,14 @@ end
 			on_attach = function(_, bufnr)
 				vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 			end,
-			cmd = { "/Users/kean.mattingly@equipmentshare.com/Downloads/omnisharp-osx/run", "--languageserver" , "--hostPID", tostring(pid) },
+			cmd = {
+				"/Users/kean.mattingly@equipmentshare.com/Downloads/omnisharp-osx/run",
+				"--languageserver",
+				"--hostPID",
+				tostring(pid)
+			},
 		},
+		-- and the smallest for the most used lol
 		pyright = {},
 	}
 
@@ -86,9 +100,9 @@ end
 
 		if server_available then
 			requested_server:on_ready(function ()
-				local opts = { coq.lsp_ensure_capabilities(config) }
-
-				requested_server:setup(opts)
+				requested_server:setup(
+					coq.lsp_ensure_capabilities(config)
+				)
 			end)
 
 			if not requested_server:is_installed() then
@@ -140,13 +154,21 @@ end
 
 -------------------- Debug --------------------
 
-	dap.adapters.python = {
-		type = 'executable',
-		command = '/Users/kean.mattingly@equipmentshare.com/.pyenv/versions/debugpy/bin/python',
-	}
-	dap_python.setup('~/.pyenv/versions/debugpy/bin/python')
+	dap_python.setup(os.getenv('HOME') .. '/.pyenv/versions/debugpy/bin/python')
+	-- table.insert(dap.configurations.python, {
+	-- 	type = 'python',
+	-- 	request = 'launch',
+	-- 	program = '${workspaceFolder}/${file}',
+	-- 	console = 'integratedTerminal',
+	-- 	name = 'Launch file with autoReload',
+	-- 	autoReload = {
+	-- 		enable = true,
+	-- 	}
+	-- })
+	dap_python.test_runner = 'pytest'
 	dap_ui.setup()
-	dap_vscode_ext.load_launchjs()
+	-- If this gets more fleshed out it might be worth converting, but ^ works for now
+	-- dap_vscode_ext.load_launchjs()
 
 -----------------------------------------------
 
@@ -165,6 +187,7 @@ end
 
 	auto_session.setup {
 		auto_session_root_dir = os.getenv('HOME') .. '/.vim/sessions/',
+		-- auto_session_root_dir = '~/.vim/sessions/',
 	}
 	tabby.setup()
 	project.setup()

@@ -15,13 +15,16 @@ opt.ignorecase = true
 -- If a capital is included, make the search case sensitive
 opt.smartcase = true
 
--- Show completion options in command view
+-- Show completion popup menu in command view
 opt.wildmenu = true
 
--- Set completeopt to have a better completion experience
+-- Set the completion popup menu to
+--  - always show the menu
+--  - not insert match until manually selected
+--  - not auto select match
 opt.completeopt = {'menuone','noinsert','noselect'}
 
--- Set default grep to ripgrep
+-- Set default grep to ripgrep (faster fuzzy finding)
 opt.grepprg = [[rg\]] ---vimgrep
 
 -- Make tab width equivalent to 4 spaces

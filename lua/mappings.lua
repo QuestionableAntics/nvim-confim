@@ -57,8 +57,8 @@ tmap('jk', [[<C-\><C-N>]])
 -------------------- Diagnostics --------------------
 
 	nmap('<leader>xx', '<cmd>TroubleToggle<cr>')
-	nmap('<leader>xw', '<cmd>TroubleToggle lsp_workspace_diagnostics<cr>')
-	nmap('<leader>xd', '<cmd>TroubleToggle lsp_document_diagnostics<cr>')
+	nmap('<leader>xw', '<cmd>TroubleToggle workspace_diagnostics<cr>')
+	nmap('<leader>xd', '<cmd>TroubleToggle document_diagnostics<cr>')
 	nmap('<leader>xq', '<cmd>TroubleToggle quickfix<cr>')
 	nmap('<leader>xl', '<cmd>TroubleToggle loclist<cr>')
 
