@@ -6,7 +6,7 @@ local nmap = utils.nmap
 local tmap = utils.tmap
 local vmap = utils.vmap
 local cmap = utils.cmap
-local xmap = utils.xmap
+-- local xmap = utils.xmap
 
 vim.g.mapleader = ';'
 imap('jk', '<ESC>')
@@ -48,7 +48,6 @@ tmap('jk', [[<C-\><C-N>]])
 	nmap('<leader>fh', '<cmd>lua require("telescope.builtin").help_tags()<cr>')
 	nmap('<leader>fo', '<cmd>lua require("telescope.builtin").oldfiles()<cr>')
 	nmap('<leader>fs', '<cmd>lua require("session-lens").search_session()<cr>')
-	nmap('<leader>e', '<cmd>Telescope projects<cr>')
 	nmap('gh', '<cmd>Telescope lsp_references<cr>')
 
 -----------------------------------------
@@ -67,24 +66,21 @@ tmap('jk', [[<C-\><C-N>]])
 
 ------------ Testing ------------
 
-	nmap('<leader>dn', '<Plug>(ultest-debug-nearest)<CR>')
-	nmap('<leader>df', '<Plug>(ultest-debug)<CR>')
+	nmap('<leader>dn', '<cmd>UltestDebugNearest<CR>')
+	nmap('<leader>df', '<cmd>UltestDebug<CR>')
 	nmap(']t', '<Plug>(ultest-next-fail)<CR>')
 	nmap('[t', '<Plug>(ultest-prev-fail)<CR>')
-	nmap('<leader>uf', '<Plug>(ultest-run-file)<CR>')
-	nmap('<leader>un', '<Plug>(ultest-run-nearest)<CR>')
-	nmap('<leader>ul', '<Plug>(ultest-run-last)<CR>')
-	nmap('<leader>us', '<Plug>(ultest-summary-toggle)<CR>')
-	nmap('<leader>uo', '<Plug>(ultest-output-show)<CR>')
+	nmap('<leader>uf', '<cmd><Plug>(ultest-run-file)<CR>')
+	nmap('<leader>un', '<cmd>UltestNearest<CR>')
+	nmap('<leader>ul', '<cmd>UltestLast<CR>')
+	nmap('<leader>us', '<cmd>UltestSummary<CR>')
+	nmap('<leader>uo', '<cmd>UltestOutput<CR>')
 
 ---------------------------------
 
 
 --------------- Debug ---------------
 
-	-- Debug 
-	-- nmap('<leader>dn', '<cmd>lua require("dap-python").test_method()<CR>')
-	-- nmap('<leader>df', '<cmd>lua require("dap-python").test_class()<CR>')
 	vmap('<leader>ds', '<ESC>:lua require("dap-python").debug_selection()<CR>')
 
 	nmap('<F9>', '<cmd>lua require"dap".continue()<CR>')
@@ -109,7 +105,7 @@ tmap('jk', [[<C-\><C-N>]])
 	nmap('<leader>dco', '<cmd>lua require"telescope".extensions.dap.configurations{}<CR>')
 	nmap('<leader>dlb', '<cmd>lua require"telescope".extensions.dap.list_breakpoints{}<CR>')
 	nmap('<leader>dv', '<cmd>lua require"telescope".extensions.dap.variables{}<CR>')
-	nmap('<leader>df', '<cmd>lua require"telescope".extensions.dap.frames{}<CR>')
+	-- nmap('<leader>df', '<cmd>lua require"telescope".extensions.dap.frames{}<CR>')
 
 -------------------------------------
 

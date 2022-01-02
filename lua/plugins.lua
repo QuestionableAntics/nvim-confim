@@ -48,14 +48,8 @@ Plug 'lewis6991/impatient.nvim'
 ------------------------------------------------------
 
 
----------- Code Functionality ----------
+------------- Debug/Test -------------
 
-	-- Automatic pairing of ([{--'
-	Plug 'tmsvg/pear-tree'
-	-- Syntax tree parser for better syntax highlighting
-	Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' } )
-	-- Comment stuff out
-	Plug 'tpope/vim-commentary'
 	-- Debug adapter protocol, base plugin for debugging
 	Plug 'mfussenegger/nvim-dap'
 	-- Defaults for Python debugging
@@ -64,11 +58,21 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'rcarriga/nvim-dap-ui'
 	-- Virtual Text
 	Plug 'theHamsta/nvim-dap-virtual-text'
-	-- Pretty diagnostics and easy navigation
-	Plug 'folke/trouble.nvim'
 	-- Testing
 	Plug 'vim-test/vim-test' -- required for ultest
 	Plug('rcarriga/vim-ultest', { ['do'] = ':UpdateRemotePlugins' } )
+
+---------------------------------
+
+
+---------- Code Functionality ----------
+
+	-- Automatic pairing of ([{--'
+	Plug 'tmsvg/pear-tree'
+	-- Syntax tree parser for better syntax highlighting
+	Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' } )
+	-- Pretty diagnostics and easy navigation
+	Plug 'folke/trouble.nvim'
 
 ------------------------------------------------------------
 
@@ -83,8 +87,11 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'rmagatti/auto-session'
 	-- Session integration for Telescope
 	Plug 'rmagatti/session-lens'
-	-- Fast project switching
-	Plug 'ahmedkhalf/project.nvim'
+	-- Enhanced clipboard
+	Plug 'AckslD/nvim-neoclip.lua'
+	Plug('tami5/sqlite.lua', { module = 'sqlite' } )
+	-- Comment stuff out
+	Plug 'tpope/vim-commentary'
 
 --------------------------------------------------
 
@@ -133,7 +140,7 @@ Plug 'lewis6991/impatient.nvim'
 	-- a bunch of nice functions that creators of nvim plugins don't want to rewrite
 	Plug 'nvim-lua/plenary.nvim'
 	-- language server for alternative completions provided through LSP (don't have a use for it right now, but it seems neat)
-	-- Plug 'jose-elias-alvarez/null-ls.nvim'
+	Plug 'jose-elias-alvarez/null-ls.nvim'
 
 ------------------------------------------------------------------
 
@@ -149,8 +156,6 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'lukas-reineke/indent-blankline.nvim'
 	-- Use vim anywhere
 	vim.cmd [[ Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } ]]
-	-- Weather lol
-	-- Plug 'wyattjsmith1/weather.nvim'
 
 --------------------------------
 

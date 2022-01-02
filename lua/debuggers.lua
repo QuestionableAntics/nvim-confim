@@ -1,136 +1,99 @@
-local dap = require 'dap'
-
-local function attach()
-	dap.run{
-		type = 'node2',
-		requirest = 'attach',
-		cwd = vim.fn.getcwd(),
-		sourceMaps = true,
-		protocol = 'inspector',
-		skipFiles = {'<node_internals>/**/*.js'}
-	}
-end
-
-dap.adapters.node2 = {
-	type = 'executable',
-	command = 'node',
-	args = {os.getenv('HOME') .. '/apps/vscode-js-debug/src/debugServer.ts'}
-}
-
-return {
-	attach = attach
-}
-
-
-
-
-
-
-
-
-
-
-
-
+local dap_python = require 'dap-python'
+local dap_ui = require 'dapui'
+-- local dap_vscode_ext = require 'dap.ext.vscode'
 -- local dap = require 'dap'
--- local utils = require 'utils'
--- dap.set_log_level('TRACE'); -- logs live at ~/.cache/nvim/dap.log
+local ultest = require 'ultest'
 
--- -- Enable virtual text.
--- vim.g.dap_virtual_text = true
--- -- Fancy breakpoint symbol.
--- vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
+--------------- Config ----------------
 
--- local ensure_script = os.getenv('PLAID_PATH') .. '/go.git/scripts/ensure_debugger_session.sh';
--- local batch_mocha_script = os.getenv('HOME') .. '/.start_mocha_batch.sh';
+-- Enable virtual text.
+vim.g.dap_virtual_text = true
 
--- local function get_debugging_port(service_name)
---   if service_name == 'stasher' then
---     service_name = 'scheduler_stasher'
---   end
---   local ports_compose = io.open(
---     os.getenv('PLAID_PATH') .. '/go.git/proto/src/plaidtypes/coretypes/service.proto', 'r'
---   )
---   local port = nil
---   for line in ports_compose:lines() do
---     -- Match lines like: "    SERVICE_FEATURE_SERVER_CONSUMER = 181 [" and pull the 181.
---     local proto_base = string.match(
---       line,
---       '^%s-SERVICE_' .. string.upper(service_name) .. '%s-=%s-(%d+)%s-%['
---     )
---     if proto_base ~= nil then
---       port = 50000 + (proto_base + 1) * 10 - 1
---       break
---     end
---   end
---   ports_compose:close()
---   return port
--- end
+-- Fancy breakpoint symbol.
+vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
+
+-- logs live at ~/.cache/nvim/dap.log
+-- one of TRACE, DEBUG, INFO, WARN, ERROR
+-- dap.set_log_level('DEBUG')
+
+-- Colored output
+vim.g.ultest_use_pty = 1
+
+-- Display variable values as virtual text next to the variable
+vim.g.diagnostic_enable_virtual_text = 1
+
+---------------------------------------
 
 
--- local function start_devenv_debug_session()
---   local service_name = vim.fn.input('\nDebugee Service: ')
---   local port = get_debugging_port(service_name) or vim.fn.input('\nDebuggee Port: ')
---   -- Start the debugger in the devenv service.
---   vim.fn.system({ensure_script, service_name})
---   io.write(string.format('Debug session for %s with port %d', service_name, port))
---   return service_name, port;
--- end
+-------------------- Debug --------------------
+	-- Reference for debugging setup
+	-- https://github.com/mfussenegger/dotfiles/blob/master/vim/.config/nvim/lua/me/dap.lua
 
--- local function get_devenv_host()
---   local remoteness = vim.fn.input('\nRemote or Local Devenv: ')
---   local host;
---   if remoteness == 'remote' then
---     host = '10.131.1.149';
---   elseif remoteness == 'local' then
---     host = '127.0.0.1';
---   else
---     io.write(string.format('Unusable remoteness value: %s', remoteness));
---   end
---   return host
--- end
+	dap_python.setup(os.getenv('HOME') .. '/.pyenv/versions/debugpy/bin/python')
+	dap_python.test_runner = 'pytest'
 
+	-- dap.adapters.node2 = {
+	-- 	type = 'executable',
+	-- 	command = 'node',
+	-- 	args = {os.getenv('HOME') .. '/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js'},
+	-- }
+	-- dap.configurations.javascript = {
+	-- 	{
+	-- 		type = 'node2',
+	-- 		request = 'launch',
+	-- 		program = '${workspaceFolder}/${file}',
+	-- 		cwd = '/tmp/',
+	-- 		sourceMaps = true,
+	-- 		protocol = 'inspector',
+	-- 		console = 'integratedTerminal',
+	-- 	},
+	-- }
+	-- dap.adapters.netcoredbg = {
+	-- 	type = 'executable',
+	-- 	command = os.getenv('HOME') .. '/.local/dotnet/netcoredbg/netcoredbg',
+	-- 	args = {'--interpreter=vscode'}
+	-- }
 
--- ------ Adapters ------
+	-- dap.configurations.cs = {
+	-- 	{
+	-- 		type = "netcoredbg",
+	-- 		name = "launch - netcoredbg",
+	-- 		request = "launch",
+	-- 		program = function()
+	-- 			return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+	-- 		end,
+	-- 		stopAtEntry = true,
+	-- 	},
+	-- }
+	
+	ultest.setup({
+		builders = {
+			['python#pytest'] = function (cmd)
+				-- The command can start with python command directly or an env manager
+				local non_modules = {'python', 'pipenv', 'poetry'}
+				-- Index of the python module to run the test.
+				local module_index = 1
+				if vim.tbl_contains(non_modules, cmd[1]) then
+					module_index = 3
+				end
+				local module = cmd[module_index]
 
--- -- NODE / TYPESCRIPT
--- dap.adapters.node2 = function(cb, config)
---   local cb_input = {
---     type = 'executable';
---     command = os.getenv('HOME') .. '/.nvm/versions/node/v12.18.2/bin/node';
---     args = { os.getenv('HOME') .. '/vscode-node-debug2/out/src/nodeDebug.js' };
---   };
---   if config.request == 'attach' and config.mode == 'remote' then
---     local _, port = start_devenv_debug_session()
---     cb_input.enrich_config = function(config, on_config)
---       local f_config = vim.deepcopy(config)
---       f_config.port = tonumber(port)
---       on_config(f_config)
---     end;
---   elseif config.mode == 'test' then
---     if config.request == 'attach' then
---       local _, port = start_devenv_debug_session();
---       local host = get_devenv_host();
---       vim.fn.input('\n[Optional] test flter: ');
---       vim.fn.system({batch_mocha_script});
---       cb_input.enrich_config = function(config, on_config)
---         local f_config = vim.deepcopy(config)
---         f_config.port = tonumber(port)
---         f_config.host = host;
---         on_config(f_config)
---       end;
---     elseif config.request == 'launch' then
---       cb_input.enrich_config = function(config, on_config)
---         local f_config = vim.deepcopy(config)
---         local grepFilter = vim.fn.input('\n[Optional] test filter: ');
---         if grepFilter ~= '' then
---           table.insert(f_config.args, 1, string.format("--grep=%s", grepFilter));
---         end
---         print(utils.debug_print(f_config));
---         on_config(f_config);
---       end;
---     end
---   end
+				-- Remaining elements are arguments to the module
+				local args = vim.list_slice(cmd, module_index + 1)
+				return {
+					dap = {
+						type = 'python',
+						request = 'launch',
+						module = module,
+						args = args
+					}
+				}
+			end
+		}
+	})
 
---   cb(cb_input);
--- end
+	dap_ui.setup()
+	-- loads VS Code 'launch.json' for project (if this allows adding env variables it'd be worth adding back in)
+	-- dap_vscode_ext.load_launchjs()
+
+-----------------------------------------------

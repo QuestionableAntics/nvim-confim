@@ -43,54 +43,31 @@ opt.updatetime = 300
 -- Don't pass messages to |ins-completion-menu|.
 opt.shortmess:append('c')
 
--- Allow for width of numbers and arbitrary symbols in sign column
-opt.signcolumn = 'yes:1'
-
 -- Maintain undo history between sessions
 opt.undofile = true
 opt.undodir = os.getenv('HOME') .. [[/.vim/undodir/]]
 
--- Highlight the current line
-opt.cursorline = true
-
--- Add more paths to the lua package search path
--- local runtime_path = vim.split(package.path, ';')
--- table.insert(runtime_path, 'lua/?.lua')
--- table.insert(runtime_path, 'lua/?/init.lua')
-
--- ooo pretty colors 😯
-opt.termguicolors = true
-
 -- Recommended settings for auto-session via the readme file
 o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 
----------- Configurations ----------
+----- Visuals -----
 
-	----- Autocomplete -----
+	-- Highlight yanked text on yank
+	vim.cmd [[ autocmd TextYankPost * silent! lua vim.highlight.on_yank() ]]
 
-		-- Make sure `substring` is part of this list. Other items are optional for this completion source
-		vim.g.completion_matching_strategy_list = {'fuzzy', 'exact', 'substring'}
-		vim.g.completion_matching_ignore_case = 1
+	-- No other way to set colorscheme in Lua config currently
+	vim.cmd 'colorscheme codedark'
 
-		-- Source is automatically added, you just need to include it in the chain complete list
-		vim.g.completion_chain_complete_list = { sql = { complete_items = { 'vim-dadbod-completion' } } }
+	-- Nice icons for DBUI
+	vim.g.db_ui_use_nerd_fonts = 1
 
-	------------------------
+	-- Highlight the current line
+	opt.cursorline = true
 
+	-- ooo pretty colors 😯
+	opt.termguicolors = true
 
-	----- Visuals -----
+	-- Allow for width of numbers and arbitrary symbols in sign column
+	opt.signcolumn = 'yes:1'
 
-		-- Highlight yanked text on yank
-		vim.cmd [[ autocmd TextYankPost * silent! lua vim.highlight.on_yank() ]]
-		vim.cmd 'colorscheme codedark'
-		-- Nice icons for DBUI
-		vim.g.db_ui_use_nerd_fonts = 1
-		vim.g.diagnostic_enable_virtual_text = 1
-		-- Brazen breakpoint symbol
-		vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''})
-		-- colorize test output for ultest
-		vim.g.ultest_use_pty = 1
-
-	-------------------
-
-------------------------------------------------------------------------------------------
+-------------------
