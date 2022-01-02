@@ -1,7 +1,8 @@
 local dap_python = require 'dap-python'
 local dap_ui = require 'dapui'
 -- local dap_vscode_ext = require 'dap.ext.vscode'
--- local dap = require 'dap'
+local dap = require 'dap'
+local dap_install = require 'dap-install'
 local ultest = require 'ultest'
 
 --------------- Config ----------------
@@ -22,6 +23,13 @@ vim.g.ultest_use_pty = 1
 -- Display variable values as virtual text next to the variable
 vim.g.diagnostic_enable_virtual_text = 1
 
+vim.diagnostic.config( {
+    virtual_text = true,
+    signs = true,
+    float = { border = "single" },
+} )
+-- vim.cmd [[ let test#javascript#runner = "jest" ]]
+
 ---------------------------------------
 
 
@@ -32,22 +40,72 @@ vim.g.diagnostic_enable_virtual_text = 1
 	dap_python.setup(os.getenv('HOME') .. '/.pyenv/versions/debugpy/bin/python')
 	dap_python.test_runner = 'pytest'
 
-	-- dap.adapters.node2 = {
-	-- 	type = 'executable',
-	-- 	command = 'node',
-	-- 	args = {os.getenv('HOME') .. '/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js'},
-	-- }
-	-- dap.configurations.javascript = {
-	-- 	{
-	-- 		type = 'node2',
-	-- 		request = 'launch',
-	-- 		program = '${workspaceFolder}/${file}',
-	-- 		cwd = '/tmp/',
-	-- 		sourceMaps = true,
-	-- 		protocol = 'inspector',
-	-- 		console = 'integratedTerminal',
-	-- 	},
-	-- }
+
+	local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
+
+	for _, debugger in ipairs(dbg_list) do
+		dap_install.config(debugger)
+	end
+
+	dap_install.setup()
+
+	dap.adapters.node2 = {
+		type = "executable",
+		command = "node",
+		args = {
+			os.getenv("HOME") .. "/Dev/repos/vscode-node-debug2/out/src/nodeDebug.js",
+		},
+	}
+	dap.configurations.javascript = {
+		{
+			type = "node2",
+			request = "launch",
+			program = "${workspaceFolder}/${file}",
+			cwd = vim.fn.getcwd(),
+			sourceMaps = true,
+			protocol = "inspector",
+			console = "integratedTerminal",
+			runner = 'jest'
+		},
+	}
+	dap.configurations.typescript = dap.configurations.javascript
+
+
+-- 	dap.adapters.node2 = {
+-- 		type = 'executable',
+-- 		command = 'node',
+-- 		args = {
+-- 			vim.fn.stdpath("data") .. "/dapinstall/jsnode/" .. '/vscode-node-debug2/out/src/nodeDebug.js'
+-- 		}
+-- 	}
+
+-- 	dap.configurations.javascript = {
+-- 		{
+-- 			type = 'node2',
+-- 			request = 'launch',
+-- 			program = '${workspaceFolder}/${file}',
+-- 			cwd = vim.fn.getcwd(),
+-- 			sourceMaps = true,
+-- 			protocol = 'inspector',
+-- 			console = 'integratedTerminal'
+-- 		}
+-- 	}
+-- 	dap.adapters.node2 = {
+-- 		type = 'executable',
+-- 		command = 'node',
+-- 		args = {os.getenv('HOME') .. '/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js'},
+-- 	}
+-- 	dap.configurations.javascript = {
+-- 		{
+-- 			type = 'node2',
+-- 			request = 'launch',
+-- 			program = '${workspaceFolder}/${file}',
+-- 			cwd = '/tmp/',
+-- 			sourceMaps = true,
+-- 			protocol = 'inspector',
+-- 			console = 'integratedTerminal',
+-- 		},
+-- 	}
 	-- dap.adapters.netcoredbg = {
 	-- 	type = 'executable',
 	-- 	command = os.getenv('HOME') .. '/.local/dotnet/netcoredbg/netcoredbg',

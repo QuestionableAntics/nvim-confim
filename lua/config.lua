@@ -24,6 +24,9 @@ opt.wildmenu = true
 --  - not auto select match
 opt.completeopt = {'menuone','noinsert','noselect'}
 
+-- enable mouse for not me
+opt.mouse = "a"
+
 -- Set default grep to ripgrep (faster fuzzy finding)
 opt.grepprg = [[rg\]] ---vimgrep
 
@@ -49,6 +52,9 @@ opt.undodir = os.getenv('HOME') .. [[/.vim/undodir/]]
 
 -- Recommended settings for auto-session via the readme file
 o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+
+-- Keep a buffer of 10 lines/columns between cursor and edge when scrolling
+vim.opt.scrolloff = 10
 
 ----- Visuals -----
 

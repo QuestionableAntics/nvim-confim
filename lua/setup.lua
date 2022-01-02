@@ -4,7 +4,6 @@ local auto_session = require 'auto-session'
 local gitsigns = require 'gitsigns'
 local hop = require 'hop'
 local indent_blankline = require 'indent_blankline'
-local lspkind = require 'lspkind'
 local lualine = require 'lualine'
 local neoclip = require 'neoclip'
 local stabilize = require 'stabilize'
@@ -64,50 +63,6 @@ local trouble = require 'trouble'
 			lualine_a = {
 				{ 'filename', path = 1 },
 			},
-		},
-	}
-	lspkind.init {
-		-- enables text annotations
-		--
-		-- default: true
-		with_text = true,
-
-		-- default symbol map
-		-- can be either 'default' (requires nerd-fonts font) or
-		-- 'codicons' for codicon preset (requires vscode-codicons font)
-		--
-		-- default: 'default'
-		preset = 'codicons',
-
-		-- override preset symbols
-		--
-		-- default: {}
-		symbol_map = {
-		  Text = "",
-		  Method = "",
-		  Function = "",
-		  Constructor = "",
-		  Field = "ﰠ",
-		  Variable = "",
-		  Class = "ﴯ",
-		  Interface = "",
-		  Module = "",
-		  Property = "ﰠ",
-		  Unit = "塞",
-		  Value = "",
-		  Enum = "",
-		  Keyword = "",
-		  Snippet = "",
-		  Color = "",
-		  File = "",
-		  Reference = "",
-		  Folder = "",
-		  EnumMember = "",
-		  Constant = "",
-		  Struct = "פּ",
-		  Event = "",
-		  Operator = "",
-		  TypeParameter = ""
 		},
 	}
 

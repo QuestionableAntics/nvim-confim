@@ -19,7 +19,7 @@ Plug 'lewis6991/impatient.nvim'
 	-- Tabline
 	Plug 'nanozuki/tabby.nvim'
 	-- VS Code Icons for LSP
-	Plug 'onsails/lspkind-nvim'
+	-- Plug 'onsails/lspkind-nvim'
 
 --------------------------------------
 
@@ -61,6 +61,10 @@ Plug 'lewis6991/impatient.nvim'
 	-- Testing
 	Plug 'vim-test/vim-test' -- required for ultest
 	Plug('rcarriga/vim-ultest', { ['do'] = ':UpdateRemotePlugins' } )
+	-- Debug installer
+	Plug 'Pocco81/DAPInstall.nvim'
+	-- Debug Jest
+	Plug 'David-Kunz/jester'
 
 ---------------------------------
 
