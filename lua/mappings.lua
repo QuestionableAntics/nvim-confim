@@ -42,8 +42,6 @@ tmap('jk', [[<C-\><C-N>]])
 
 --------------- Fuzzy Finder ---------------
 
-
-
 	nmap('<leader>ff', '<cmd>lua require("telescope.builtin").find_files()<cr>')
 	nmap('<leader>fg', '<cmd>lua require("telescope.builtin").live_grep()<cr>')
 	nmap('<leader>fb', '<cmd>lua require("telescope.builtin").buffers()<cr>')
@@ -51,16 +49,6 @@ tmap('jk', [[<C-\><C-N>]])
 	nmap('<leader>fo', '<cmd>lua require("telescope.builtin").oldfiles()<cr>')
 	nmap('<leader>fs', '<cmd>lua require("session-lens").search_session()<cr>')
 	nmap('gh', '<cmd>Telescope lsp_references<cr>')
-
-	local telescope_keybinds = {
-		['<leader>ff'] = '<cmd>lua require("telescope.builtin").find_files()<cr>',
-		['<leader>fg'] = '<cmd>lua require("telescope.builtin").live_grep()<cr>',
-		['<leader>fb'] = '<cmd>lua require("telescope.builtin").buffers()<cr>',
-		['<leader>fh'] = '<cmd>lua require("telescope.builtin").help_tags()<cr>',
-		['<leader>fo'] = '<cmd>lua require("telescope.builtin").oldfiles()<cr>',
-		['<leader>fs'] = '<cmd>lua require("session-lens").search_session()<cr>',
-		['gh'] = '<cmd>Telescope lsp_references<cr>',
-	}
 
 -----------------------------------------
 
