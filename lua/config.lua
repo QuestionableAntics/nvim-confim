@@ -41,7 +41,10 @@ vim.cmd 'filetype plugin indent on'
 
 -- How long before a swp file is written and a CursorHold event is triggered
 -- Having longer updatetime (default is 4000 ms) leads to noticeable delays and poor user experience.
-opt.updatetime = 300
+opt.updatetime = 100
+
+-- Faster completion
+opt.timeoutlen = 500
 
 -- Don't pass messages to |ins-completion-menu|.
 opt.shortmess:append('c')
@@ -54,7 +57,23 @@ opt.undodir = os.getenv('HOME') .. [[/.vim/undodir/]]
 o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 
 -- Keep a buffer of 10 lines/columns between cursor and edge when scrolling
-vim.opt.scrolloff = 10
+opt.scrolloff = 10
+
+-- I save often enough
+opt.swapfile = false
+
+-- No noise please (no sound effects for errors)
+opt.errorbells = false
+
+-- Always use system clipboard
+opt.clipboard = 'unnamed,unnamedplus'
+
+-- Faster macros and less errors in complicated mappings
+opt.lazyredraw = true
+
+-- Better indenting
+opt.smarttab = true
+opt.smartindent = true
 
 ----- Visuals -----
 

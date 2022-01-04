@@ -8,7 +8,7 @@ local vmap = utils.vmap
 local cmap = utils.cmap
 -- local xmap = utils.xmap
 
-vim.g.mapleader = ';'
+vim.g.mapleader = ' '
 imap('jk', '<ESC>')
 cmap('jk', '<ESC>')
 -- Get me the fuck out of the terminal
@@ -37,6 +37,10 @@ tmap('jk', [[<C-\><C-N>]])
 	nmap('=', ':resize +5<CR>')
 	nmap('-', ':resize -5<CR>')
 
+	-- Harpoon
+	nmap('<leader>fm', '<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>')
+	nmap('<leader>am', '<cmd>lua require("harpoon.mark").add_file()<CR>')
+
 -----------------------------------------------
 
 
@@ -49,6 +53,7 @@ tmap('jk', [[<C-\><C-N>]])
 	nmap('<leader>fo', '<cmd>lua require("telescope.builtin").oldfiles()<cr>')
 	nmap('<leader>fs', '<cmd>lua require("session-lens").search_session()<cr>')
 	nmap('gh', '<cmd>Telescope lsp_references<cr>')
+
 
 -----------------------------------------
 
@@ -68,9 +73,9 @@ tmap('jk', [[<C-\><C-N>]])
 
 	nmap('<leader>dn', '<cmd>UltestDebugNearest<CR>')
 	nmap('<leader>df', '<cmd>UltestDebug<CR>')
-	nmap(']t', '<Plug>(ultest-next-fail)<CR>')
-	nmap('[t', '<Plug>(ultest-prev-fail)<CR>')
-	nmap('<leader>uf', '<cmd><Plug>(ultest-run-file)<CR>')
+	vim.cmd [[nmap ]t <Plug>(ultest-next-fail)<CR>]]
+	vim.cmd [[nmap [t <Plug>(ultest-prev-fail)<CR>]]
+	vim.cmd [[nmap <leader>uf <Plug>(ultest-run-file)<CR>]]
 	nmap('<leader>un', '<cmd>UltestNearest<CR>')
 	nmap('<leader>ul', '<cmd>UltestLast<CR>')
 	nmap('<leader>us', '<cmd>UltestSummary<CR>')

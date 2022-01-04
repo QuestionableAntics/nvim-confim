@@ -2,6 +2,7 @@ local dap_python = require 'dap-python'
 local dap_ui = require 'dapui'
 -- local dap_vscode_ext = require 'dap.ext.vscode'
 local dap = require 'dap'
+-- local dap_utils = require 'dap.utils'
 local dap_install = require 'dap-install'
 local ultest = require 'ultest'
 
@@ -40,36 +41,56 @@ vim.diagnostic.config( {
 	dap_python.setup(os.getenv('HOME') .. '/.pyenv/versions/debugpy/bin/python')
 	dap_python.test_runner = 'pytest'
 
-
 	local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
 
 	for _, debugger in ipairs(dbg_list) do
 		dap_install.config(debugger)
 	end
 
+-- 	dap.adapters.firefox = {
+-- 		type = 'exectuable',
+-- 		command = 'node',
+
 	dap_install.setup()
 
-	dap.adapters.node2 = {
-		type = "executable",
-		command = "node",
-		args = {
-			os.getenv("HOME") .. "/Dev/repos/vscode-node-debug2/out/src/nodeDebug.js",
-		},
-	}
-	dap.configurations.javascript = {
-		{
-			type = "node2",
-			request = "launch",
-			program = "${workspaceFolder}/${file}",
-			cwd = vim.fn.getcwd(),
-			sourceMaps = true,
-			protocol = "inspector",
-			console = "integratedTerminal",
-			runner = 'jest'
-		},
-	}
-	dap.configurations.typescript = dap.configurations.javascript
-
+	-- dap.adapters.node2 = {
+	-- 	type = "executable",
+	-- 	command = "node",
+	-- 	args = {
+	-- 		os.getenv("HOME") .. "/Dev/repos/vscode-node-debug2/out/src/nodeDebug.js",
+	-- 	},
+	-- }
+	-- dap.configurations.javascript = {
+	-- 	{
+	-- 		type = "node2",
+	-- 		request = "launch",
+	-- 		program = "${workspaceFolder}/${file}",
+	-- 		cwd = vim.fn.getcwd(),
+	-- 		sourceMaps = true,
+	-- 		protocol = "inspector",
+	-- 		console = "integratedTerminal",
+	-- 		runner = 'jest'
+	-- 	},
+	-- }
+	-- dap.configurations.typescript = {
+	-- 	{
+	-- 		name = 'Run',
+	-- 		type = 'node2',
+	-- 		request = 'launch',
+	-- 		program = '${file}',
+	-- 		cwd = vim.fn.getcwd(),
+	-- 		sourceMaps = true,
+	-- 		protocol = 'inspector',
+	-- 		console = 'integratedTerminal',
+	-- 		outFiles = {"${workspaceFolder}/build/**/*.js"},
+	-- 	},
+	-- 	{
+	-- 		name = 'Attach to process',
+	-- 		type = 'node2',
+	-- 		request = 'attach',
+	-- 		processId = dap_utils.pick_process,
+	-- 	},
+	-- }
 
 -- 	dap.adapters.node2 = {
 -- 		type = 'executable',

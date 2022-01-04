@@ -96,6 +96,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug('tami5/sqlite.lua', { module = 'sqlite' } )
 	-- Comment stuff out
 	Plug 'tpope/vim-commentary'
+	-- Per project navigation
+	Plug 'ThePrimeagen/harpoon'
 
 --------------------------------------------------
 
