@@ -1,6 +1,6 @@
 local dap_python = require 'dap-python'
 local dap_ui = require 'dapui'
--- local dap_vscode_ext = require 'dap.ext.vscode'
+local dap_vscode_ext = require 'dap.ext.vscode'
 local dap = require 'dap'
 -- local dap_utils = require 'dap.utils'
 local dap_install = require 'dap-install'
@@ -173,6 +173,6 @@ vim.diagnostic.config( {
 
 	dap_ui.setup()
 	-- loads VS Code 'launch.json' for project (if this allows adding env variables it'd be worth adding back in)
-	-- dap_vscode_ext.load_launchjs()
+	dap_vscode_ext.load_launchjs()
 
 -----------------------------------------------

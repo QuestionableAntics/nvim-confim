@@ -9,6 +9,8 @@ local cmap = utils.cmap
 -- local xmap = utils.xmap
 
 vim.g.mapleader = ' '
+nmap(';', ':')
+
 imap('jk', '<ESC>')
 cmap('jk', '<ESC>')
 -- Get me the fuck out of the terminal
