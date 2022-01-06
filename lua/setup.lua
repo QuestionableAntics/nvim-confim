@@ -40,6 +40,7 @@ local trouble = require 'trouble'
 
 	auto_session.setup {
 		auto_session_root_dir = os.getenv('HOME') .. '/.vim/sessions/',
+		auto_session_suppress_dirs = { '~/' },
 	}
 	neoclip.setup {
 		enable_persistant_history = true,
