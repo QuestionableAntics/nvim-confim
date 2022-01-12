@@ -1,6 +1,7 @@
 local opt = vim.opt
 local wo = vim.wo
 local o = vim.o
+local autocmd = require 'utils'.autcmd
 
 -- Let me backspace like I want
 opt.backspace = {'indent','eol','start'}
@@ -96,3 +97,17 @@ opt.smartindent = true
 	opt.signcolumn = 'yes:1'
 
 -------------------
+
+
+--------- Miscellaneous ----------
+
+-- Check if file changed outside vim & re-read file
+autocmd('focus_gain', [[FocusGained * silent! noautocmd checktime]], true)
+
+-- Use the beta lua filetype checker
+-- vim.g.do_filetype_lua = 1
+
+-- Faster file type checking
+vim.g.did_load_filetypes = 1
+----------------------------------
+

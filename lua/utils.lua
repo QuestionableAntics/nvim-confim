@@ -1,3 +1,5 @@
+local cmd = vim.cmd
+
 local function map(mode, shortcut, command)
   vim.api.nvim_set_keymap(mode, shortcut, command, {noremap = true, silent = true})
 end
@@ -26,6 +28,19 @@ local function xmap(shortcut, command)
   map('x', shortcut, command)
 end
 
+-- Borrowed from https://github.com/wbthomason/dotfiles/blob/9134e87b00102cda07f875805f900775244067fe/neovim/.config/nvim/lua/config/utils.lua#L10-L17
+---@param group string augroup
+---@param cmds string|table autocmd
+---@param clear boolean clear augroup
+local autocmd = function (group, cmds, clear)
+  clear = clear == nil and false or clear
+  if type(cmds) == 'string' then cmds = {cmds} end
+  cmd('augroup ' .. group)
+  if clear then cmd [[autocmd!]] end
+  for _, c in ipairs(cmds) do cmd('autocmd ' .. c) end
+  cmd [[augroup END]]
+end
+
 return {
   map = map,
   imap = imap,
@@ -34,4 +49,5 @@ return {
   vmap = vmap,
   cmap = cmap,
   xmap = xmap,
+  autcmd = autocmd,
 }

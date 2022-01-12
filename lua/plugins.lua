@@ -77,6 +77,14 @@ Plug 'lewis6991/impatient.nvim'
 	Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' } )
 	-- Pretty diagnostics and easy navigation
 	Plug 'folke/trouble.nvim'
+	-- Highlight other instances of word under cursor
+	Plug 'yamatsum/nvim-cursorline'
+	-- Show function signature while typing
+	Plug 'ray-x/lsp_signature.nvim'
+	-- Auto close and update jsx tags
+	Plug 'windwp/nvim-ts-autotag'
+	-- jsx aware commenting
+	Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
 ------------------------------------------------------------
 
@@ -98,6 +106,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'tpope/vim-commentary'
 	-- Per project navigation
 	Plug 'ThePrimeagen/harpoon'
+	-- Folding
+	Plug 'anuvyklack/pretty-fold.nvim'
 
 --------------------------------------------------
 
@@ -147,6 +157,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'nvim-lua/plenary.nvim'
 	-- language server for alternative completions provided through LSP (don't have a use for it right now, but it seems neat)
 	Plug 'jose-elias-alvarez/null-ls.nvim'
+	-- Make working with TS LS better
+	Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
 ------------------------------------------------------------------
 
@@ -154,14 +166,12 @@ Plug 'lewis6991/impatient.nvim'
 
 	-- Don't change initial buffer position when opening new buffer
 	Plug 'luukvbaal/stabilize.nvim'
-	-- Personal Plugins
-	Plug '~/Projects/Personal/nvim-plugins/layout.nvim'
 	-- More speed up
 	Plug 'nathom/filetype.nvim'
 	-- Virtual text to add indentation guides
 	Plug 'lukas-reineke/indent-blankline.nvim'
 	-- Use vim anywhere
-	vim.cmd [[ Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } ]]
+	-- vim.cmd [[ Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } ]]
 
 --------------------------------
 
