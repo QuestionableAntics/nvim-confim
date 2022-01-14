@@ -4,7 +4,7 @@ local o = vim.o
 local autocmd = require 'utils'.autcmd
 
 -- Let me backspace like I want
-opt.backspace = {'indent','eol','start'}
+opt.backspace = { 'indent','eol','start' }
 
 -- Hybrid line numbers: shows relative number for all lines, but shows absolute for current line
 wo.relativenumber = true
@@ -23,7 +23,7 @@ opt.wildmenu = true
 --  - always show the menu
 --  - not insert match until manually selected
 --  - not auto select match
-opt.completeopt = {'menuone','noinsert','noselect'}
+opt.completeopt = { 'menuone','noinsert','noselect' }
 
 -- enable mouse for not me
 opt.mouse = "a"
@@ -38,7 +38,7 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 
 -- https://vi.stackexchange.com/questions/10124/what-is-the-difference-between-filetype-plugin-indent-on-and-filetype-indent
-vim.cmd 'filetype plugin indent on'
+vim.cmd [[filetype plugin indent on]]
 
 -- How long before a swp file is written and a CursorHold event is triggered
 -- Having longer updatetime (default is 4000 ms) leads to noticeable delays and poor user experience.
@@ -57,8 +57,8 @@ opt.undodir = os.getenv('HOME') .. [[/.vim/undodir/]]
 -- Recommended settings for auto-session via the readme file
 o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 
--- Keep a buffer of 10 lines/columns between cursor and edge when scrolling
-opt.scrolloff = 10
+-- Keep a buffer of 8 lines/columns between cursor and edge when scrolling
+opt.scrolloff = 8
 
 -- I save often enough
 opt.swapfile = false
@@ -109,5 +109,5 @@ autocmd('focus_gain', [[FocusGained * silent! noautocmd checktime]], true)
 
 -- Faster file type checking
 vim.g.did_load_filetypes = 1
-----------------------------------
 
+----------------------------------

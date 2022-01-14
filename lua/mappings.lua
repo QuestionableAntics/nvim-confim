@@ -158,11 +158,11 @@ tmap('jk', [[<C-\><C-N>]])
 
 ---------------- Motions ----------------
 
-	nmap('s', '<cmd>HopChar2<CR>')
+	nmap( 's', '<cmd>HopChar2<CR>', { disable = false } )
 
 	-- Quicker moving to front and back of lines
-	nmap('H', '^')
-	nmap('L', '$')
+	nmap( 'H', '^', { disable = false } )
+	nmap( 'L', '$', { disable = false } )
 
 -----------------------------------------
 

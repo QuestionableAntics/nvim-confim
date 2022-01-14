@@ -1,11 +1,26 @@
 require 'impatient'
 
+
+local hop = require 'hop'
+
+--------------- Motions ---------------
+
+	hop.setup(
+		-- Themes will overwrite this sometimes, this ensures that hop greys out non highlighted letters
+		{ create_hl_autocmd = true }
+	)
+
+---------------------------------------
+
+if vim.g.vscode then
+	return
+end
+
+
 local autotag = require 'nvim-ts-autotag'
 local auto_session = require 'auto-session'
 local gitsigns = require 'gitsigns'
-local hop = require 'hop'
 local indent_blankline = require 'indent_blankline'
-local lsp_signature = require 'lsp_signature'
 local lualine = require 'lualine'
 local neoclip = require 'neoclip'
 local pretty_fold = require 'pretty-fold'
@@ -33,16 +48,6 @@ local trouble = require 'trouble'
 -----------------------------------------
 
 
---------------- Motions ---------------
-
-	hop.setup(
-		-- Themes will overwrite this sometimes, this ensures that hop greys out non highlighted letters
-		{ create_hl_autocmd = true }
-	)
-
----------------------------------------
-
-
 ----- Misc -----
 
 	autotag.setup()
@@ -50,7 +55,6 @@ local trouble = require 'trouble'
 		auto_session_root_dir = os.getenv('HOME') .. '/.vim/sessions/',
 		auto_session_suppress_dirs = { '~/' },
 	}
-	lsp_signature.setup()
 	neoclip.setup {
 		enable_persistant_history = true,
 	}

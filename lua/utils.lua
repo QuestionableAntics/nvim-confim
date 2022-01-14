@@ -1,31 +1,44 @@
 local cmd = vim.cmd
 
-local function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(mode, shortcut, command, {noremap = true, silent = true})
+local vscode = vim.g.vscode
+
+local function map(mode, shortcut, command, opts)
+	opts = opts or {}
+	local disable = vscode
+
+	if opts.disable ~= nil then
+		disable = opts.disable
+	end
+
+	if disable then
+		return
+	end
+
+	vim.api.nvim_set_keymap( mode, shortcut, command, { noremap = true, silent = true } )
 end
 
-local function imap(shortcut, command)
-  map('i', shortcut, command)
+local function imap(shortcut, command, opts)
+  map('i', shortcut, command, opts)
 end
 
-local function nmap(shortcut, command)
-  map('n', shortcut, command)
+local function nmap(shortcut, command, opts)
+  map('n', shortcut, command, opts)
 end
 
-local function tmap(shortcut, command)
-  map('t', shortcut, command)
+local function tmap(shortcut, command, opts)
+  map('t', shortcut, command, opts)
 end
 
-local function vmap(shortcut, command)
-  map('v', shortcut, command)
+local function vmap(shortcut, command, opts)
+  map('v', shortcut, command, opts)
 end
 
-local function cmap(shortcut, command)
-  map('c', shortcut, command)
+local function cmap(shortcut, command, opts)
+  map('c', shortcut, command, opts)
 end
 
-local function xmap(shortcut, command)
-  map('x', shortcut, command)
+local function xmap(shortcut, command, opts)
+  map('x', shortcut, command, opts)
 end
 
 -- Borrowed from https://github.com/wbthomason/dotfiles/blob/9134e87b00102cda07f875805f900775244067fe/neovim/.config/nvim/lua/config/utils.lua#L10-L17

@@ -9,7 +9,7 @@ local util = require("lspconfig.util")
 	vim.cmd [[ autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} }) ]]
 
 	-- Run lint on save
-	vim.cmd [[ autocmd BufWritePre <buffer> <cmd>EslintFixAll<CR> ]]
+	-- vim.cmd [[ autocmd BufWritePre <buffer> <cmd>EslintFixAll<CR> ]]
 
 	-- Auto start coq (must be run before require 'coq')
 	vim.g.coq_settings = {

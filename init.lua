@@ -6,9 +6,11 @@ vim.opt.emoji = true
 
 require('plugins')
 require('setup')
-require('null-ls-config')
-require('telescope-config')
-require('language-servers')
-require('debug-config')
+if not vim.g.vscode then
+	require('null-ls-config')
+	require('telescope-config')
+	require('language-servers')
+	require('debug-config')
+end
 require('config')
 require('mappings')
