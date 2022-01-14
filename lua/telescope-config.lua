@@ -5,7 +5,7 @@ local telescope = require 'telescope'
 	telescope.setup{
 		defaults = {
 			-- rip grep really lives up to the rip part in certain projects otherwise
-			file_ignore_patterns = { "node_modules", "^.git/", "^.aws-sam/" },
+			file_ignore_patterns = { "node_modules", ".git/", ".aws-sam/" },
 		},
 		pickers = {
 			find_files = {
