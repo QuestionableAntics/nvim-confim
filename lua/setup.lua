@@ -19,12 +19,14 @@ end
 
 local autotag = require 'nvim-ts-autotag'
 local auto_session = require 'auto-session'
+local fidget = require 'fidget'
 local gitsigns = require 'gitsigns'
 local indent_blankline = require 'indent_blankline'
 local lualine = require 'lualine'
 local neoclip = require 'neoclip'
 local pretty_fold = require 'pretty-fold'
 local pretty_fold_preview = require 'pretty-fold.preview'
+local sidebar = require 'sidebar-nvim'
 local stabilize = require 'stabilize'
 local tabby = require 'tabby'
 local treesitter = require 'nvim-treesitter.configs'
@@ -38,7 +40,7 @@ local trouble = require 'trouble'
 		-- false will disable the whole extension
 		highlight = { enable = true },
 		-- something else does indentations already, this would probably be better if I can disable whatever else is indenting
-		indent = { enable = false },
+		-- indent = { enable = false },
 		-- enable nvim-ts-context-commentstring
 		context_comment_string = {
 			enable = true,
@@ -55,12 +57,20 @@ local trouble = require 'trouble'
 		auto_session_root_dir = os.getenv('HOME') .. '/.vim/sessions/',
 		auto_session_suppress_dirs = { '~/' },
 	}
+	fidget.setup()
 	neoclip.setup {
 		enable_persistant_history = true,
 	}
 	pretty_fold.setup{}
 	pretty_fold_preview.setup_keybinding()
-	stabilize.setup()
+	sidebar.setup()
+	stabilize.setup {
+		dap = {
+			breakpoints = {
+				icon = "🛑"
+			}
+		}
+	}
 	tabby.setup()
 	trouble.setup()
 	gitsigns.setup {

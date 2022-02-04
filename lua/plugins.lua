@@ -7,10 +7,10 @@ local function Plug(config)
 		return
 	end
 
-	if config.opts then
+	if type(config) == 'string' then
+		VimPlug(config)
+	elseif type(config) == 'table' then
 		VimPlug(config.name, config.opts)
-	else
-		VimPlug(config.name)
 	end
 end
 
@@ -18,22 +18,28 @@ end
 vim.call('plug#begin', '~/.vim/plugged')
 
 -- Speed up
-Plug { name = 'lewis6991/impatient.nvim' }
+Plug 'lewis6991/impatient.nvim'
 
 ---------- Visuals ----------
 
 	-- More pretty icons
-	Plug { name = 'kyazdani42/nvim-web-devicons' }
+	Plug 'kyazdani42/nvim-web-devicons'
 	-- highlight matching html tags
-	Plug { name = 'gregsexton/MatchTag' }
+	Plug 'gregsexton/MatchTag'
 	-- VS Code theme
-	Plug { name = 'tomasiser/vim-code-dark' }
+	Plug 'tomasiser/vim-code-dark'
 	-- Nice status bar
-	Plug { name = 'nvim-lualine/lualine.nvim' }
+	Plug 'nvim-lualine/lualine.nvim'
 	-- Tabline
-	Plug { name = 'nanozuki/tabby.nvim' }
+	Plug 'nanozuki/tabby.nvim'
 	-- VS Code Icons for LSP
 	-- Plug { name = 'onsails/lspkind-nvim' }
+	-- Sidebar
+	Plug 'sidebar-nvim/sidebar.nvim'
+	-- Dap extension for sidebar
+	Plug 'sidebar-nvim/sections-dap'
+	-- LSP progress
+	Plug 'j-hui/fidget.nvim'
 
 --------------------------------------
 
@@ -41,11 +47,11 @@ Plug { name = 'lewis6991/impatient.nvim' }
 ---------- DB ----------
 
 	-- DB interface
-	Plug { name = 'tpope/vim-dadbod' }
+	Plug 'tpope/vim-dadbod'
 	-- UI for DB interface
-	Plug { name = 'kristijanhusak/vim-dadbod-ui' }
+	Plug 'kristijanhusak/vim-dadbod-ui'
 	-- Postgres driver
-	Plug { name = 'jackc/pgx' }
+	Plug 'jackc/pgx'
 
 ----------------------------
 
@@ -53,11 +59,11 @@ Plug { name = 'lewis6991/impatient.nvim' }
 ---------- Version Control ----------
 
 	-- git functions on vim command line
-	Plug { name = 'tpope/vim-fugitive' }
+	Plug 'tpope/vim-fugitive'
 	-- sign column symbols for git changes and git hunk actions
-	Plug { name = 'lewis6991/gitsigns.nvim' }
+	Plug 'lewis6991/gitsigns.nvim'
 	-- git commit browser
-	Plug { name = 'junegunn/gv.vim' }
+	Plug 'junegunn/gv.vim'
 
 ------------------------------------------------------
 
@@ -65,20 +71,20 @@ Plug { name = 'lewis6991/impatient.nvim' }
 ------------- Debug/Test -------------
 
 	-- Debug adapter protocol, base plugin {name = for debugging}
-	Plug { name = 'mfussenegger/nvim-dap' }
+	Plug 'mfussenegger/nvim-dap'
 	-- Defaults for Python debugging
-	Plug { name = 'mfussenegger/nvim-dap-python' }
+	Plug 'mfussenegger/nvim-dap-python'
 	-- UI for nvim dap
-	Plug { name = 'rcarriga/nvim-dap-ui' }
+	Plug 'rcarriga/nvim-dap-ui'
 	-- Virtual Text
-	Plug { name = 'theHamsta/nvim-dap-virtual-text' }
+	Plug 'theHamsta/nvim-dap-virtual-text'
 	-- Testing
-	Plug { name = 'vim-test/vim-test' } -- required for ultest
+	Plug 'vim-test/vim-test' -- required for ulte
 	Plug { name = 'rcarriga/vim-ultest', opts = { ['do'] = ':UpdateRemotePlugins' } }
 	-- Debug installer
-	Plug { name = 'Pocco81/DAPInstall.nvim' }
+	Plug 'Pocco81/DAPInstall.nvim'
 	-- Debug Jest
-	Plug { name = 'David-Kunz/jester' }
+	Plug 'David-Kunz/jester'
 
 ---------------------------------
 
@@ -86,17 +92,19 @@ Plug { name = 'lewis6991/impatient.nvim' }
 ---------- Code Functionality ----------
 
 	-- Automatic pairing of ([{--'
-	Plug { name = 'tmsvg/pear-tree' }
+	Plug 'tmsvg/pear-tree'
 	-- Syntax tree parser for better syntax highlighting
 	Plug { name = 'nvim-treesitter/nvim-treesitter', opts = { ['do'] = ':TSUpdate' } }
 	-- Pretty diagnostics and easy navigation
-	Plug { name = 'folke/trouble.nvim' }
+	Plug 'folke/trouble.nvim'
 	-- Highlight other instances of word under cursor
-	Plug { name = 'yamatsum/nvim-cursorline' }
+	Plug 'yamatsum/nvim-cursorline'
 	-- Auto close and update jsx tags
-	Plug { name = 'windwp/nvim-ts-autotag' }
+	Plug 'windwp/nvim-ts-autotag'
 	-- jsx aware commenting
-	Plug { name = 'JoosepAlviste/nvim-ts-context-commentstring' }
+	Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+	-- REPL
+	Plug 'metakirby5/codi.vim'
 
 ------------------------------------------------------------
 
@@ -107,19 +115,21 @@ Plug { name = 'lewis6991/impatient.nvim' }
 	Plug { name = 'ms-jpq/chadtree', opts = { branch = 'chad', ['do'] = 'python3 -m chadtree deps' } }
 	-- Fast motions
 	Plug { name = 'phaazon/hop.nvim', disable = vim.g.vscode}
+	-- Fuzzy motions
+	Plug 'rlane/pounce.nvim'
 	-- Session Management
-	Plug { name = 'rmagatti/auto-session' }
+	Plug 'rmagatti/auto-session'
 	-- Session integration for Telescope
-	Plug { name = 'rmagatti/session-lens' }
+	Plug 'rmagatti/session-lens'
 	-- Enhanced clipboard
-	Plug { name = 'AckslD/nvim-neoclip.lua' }
+	Plug 'AckslD/nvim-neoclip.lua'
 	Plug { name = 'tami5/sqlite.lua', opts = { module = 'sqlite' } }
 	-- Comment stuff out
-	Plug { name = 'tpope/vim-commentary' }
+	Plug 'tpope/vim-commentary'
 	-- Per project navigation
-	Plug { name = 'ThePrimeagen/harpoon' }
+	Plug 'ThePrimeagen/harpoon'
 	-- Folding
-	Plug { name = 'anuvyklack/pretty-fold.nvim' }
+	Plug 'anuvyklack/pretty-fold.nvim'
 
 --------------------------------------------------
 
@@ -131,13 +141,13 @@ Plug { name = 'lewis6991/impatient.nvim' }
 	-- coq.nvim dependency
 	Plug { name = 'ms-jpq/coq.artifacts', opts = { branch = 'artifacts' } }
 	-- coq.nvim snippets and other third party sources of completion
-	Plug { name = 'ms-jpq/coq.thirdparty' }
+	Plug 'ms-jpq/coq.thirdparty'
 	-- AI in my code
-	Plug { name = 'github/copilot.vim' }
+	Plug 'github/copilot.vim'
 	-- Autocomplete source for vim dadbod (database)
-	Plug { name = 'kristijanhusak/vim-dadbod-completion' }
+	Plug 'kristijanhusak/vim-dadbod-completion'
 	---- nvim cmp
-	Plug { name = 'hrsh7th/nvim-cmp' }
+	Plug 'hrsh7th/nvim-cmp'
 
 --------------------------------------------
 
@@ -145,11 +155,11 @@ Plug { name = 'lewis6991/impatient.nvim' }
 ---------- Search ----------
 
 	-- Pretty fuzzy finder
-	Plug { name = 'nvim-telescope/telescope.nvim' }
+	Plug 'nvim-telescope/telescope.nvim'
 	-- fzf
 	Plug { name = 'nvim-telescope/telescope-fzf-native.nvim', opts = { ['do'] = 'make' } }
 	-- dap integration
-	Plug { name = 'nvim-telescope/telescope-dap.nvim' }
+	Plug 'nvim-telescope/telescope-dap.nvim'
 
 ------------------------------------
 
@@ -158,30 +168,30 @@ Plug { name = 'lewis6991/impatient.nvim' }
 
 	-- A collection of common configurations for Neovim's built-in language server client
 	-- Handles automatically launching and initializing installed language servers
-	Plug { name = 'neovim/nvim-lspconfig' }
+	Plug 'neovim/nvim-lspconfig'
 	-- LSP installer
-	Plug { name = 'williamboman/nvim-lsp-installer' }
+	Plug 'williamboman/nvim-lsp-installer'
 
 	---- General dependencies
 	-- popup window interface
-	Plug { name = 'nvim-lua/popup.nvim' }
+	Plug 'nvim-lua/popup.nvim'
 	-- a bunch of nice functions that creators of nvim plugins don't want to rewrite
-	Plug { name = 'nvim-lua/plenary.nvim' }
+	Plug 'nvim-lua/plenary.nvim'
 	-- language server for alternative completions provided through LSP (don't have a use for it right now, but it seems neat)
-	Plug { name = 'jose-elias-alvarez/null-ls.nvim' }
+	Plug 'jose-elias-alvarez/null-ls.nvim'
 	-- Make working with TS LS better
-	Plug { name = 'jose-elias-alvarez/nvim-lsp-ts-utils' }
+	Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
 ------------------------------------------------------------------
 
 ---------- Misc ----------
 
 	-- Don't change initial buffer position when opening new buffer
-	Plug { name = 'luukvbaal/stabilize.nvim' }
+	Plug 'luukvbaal/stabilize.nvim'
 	-- More speed up
-	Plug { name = 'nathom/filetype.nvim' }
+	Plug 'nathom/filetype.nvim'
 	-- Virtual text to add indentation guides
-	Plug { name = 'lukas-reineke/indent-blankline.nvim' }
+	Plug 'lukas-reineke/indent-blankline.nvim'
 	-- Use vim anywhere
 	-- vim.cmd [[ Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } ]]
 

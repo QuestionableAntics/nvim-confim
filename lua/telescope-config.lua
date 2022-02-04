@@ -5,7 +5,36 @@ local telescope = require 'telescope'
 	telescope.setup{
 		defaults = {
 			-- rip grep really lives up to the rip part in certain projects otherwise
-			file_ignore_patterns = { "node_modules", ".git/", ".aws-sam/" },
+			file_ignore_patterns = { "node_modules", ".git/", ".aws-sam/", "build", "dist", ".idea", ".pytest_cache" },
+			-- prompt_prefix = "   ",
+			-- selection_caret = "  ",
+			-- entry_prefix = "  ",
+			-- initial_mode = "insert",
+			-- selection_strategy = "reset",
+			-- sorting_strategy = "ascending",
+			-- layout_strategy = "horizontal",
+			-- layout_config = {
+			-- 	horizontal = {
+			-- 		prompt_position = "top",
+			-- 		preview_width = 0.55,
+			-- 		results_width = 0.8,
+			-- 	},
+			-- 	vertical = {
+			-- 		mirror = false,
+			-- 	},
+			-- 	width = 0.87,
+			-- 	height = 0.80,
+			-- 	preview_cutoff = 120,
+			-- },
+			-- winblend = 0,
+			-- border = {},
+			-- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+			-- color_devicons = true,
+			-- use_less = true,
+			-- set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+			-- file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+			-- grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+			-- qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
 		},
 		pickers = {
 			find_files = {
@@ -23,3 +52,31 @@ local telescope = require 'telescope'
 	-- telescope.extensions.macroscope.default()
 
 -------------------------------------
+
+-- local colors = require("colors").get()
+
+-- local black = colors.black
+-- local black2 = colors.black2
+-- local darker_black = colors.darker_black
+-- local green = colors.green
+-- local red = colors.red
+-- local white = colors.white
+
+-- -- functions for setting highlights
+-- local fg = require("core.utils").fg
+-- local fg_bg = require("core.utils").fg_bg
+
+-- ---------------- Highlights --------------
+-- 	fg_bg("TelescopeBorder", darker_black, darker_black)
+-- 	fg_bg("TelescopePromptBorder", black2, black2)
+
+-- 	fg_bg("TelescopePromptNormal", white, black2)
+-- 	fg_bg("TelescopePromptPrefix", red, black2)
+
+-- 	bg("TelescopeNormal", darker_black)
+
+-- 	fg_bg("TelescopePreviewTitle", black, green)
+-- 	fg_bg("TelescopePromptTitle", black, red)
+-- 	fg_bg("TelescopeResultsTitle", darker_black, darker_black)
+
+-- 	bg("TelescopeSelection", black2)
