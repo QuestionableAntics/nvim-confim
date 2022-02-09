@@ -1,7 +1,7 @@
 local opt = vim.opt
 local wo = vim.wo
 local o = vim.o
-local autocmd = require 'utils'.autcmd
+local autocmd = require 'utils'.autocmd
 
 -- Let me backspace like I want
 opt.backspace = { 'indent','eol','start' }

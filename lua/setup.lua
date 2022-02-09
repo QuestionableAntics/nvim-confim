@@ -5,10 +5,10 @@ local hop = require 'hop'
 
 --------------- Motions ---------------
 
-	hop.setup(
+	hop.setup {
 		-- Themes will overwrite this sometimes, this ensures that hop greys out non highlighted letters
-		{ create_hl_autocmd = true }
-	)
+		create_hl_autocmd = true
+	}
 
 ---------------------------------------
 
@@ -31,6 +31,8 @@ local stabilize = require 'stabilize'
 local tabby = require 'tabby'
 local treesitter = require 'nvim-treesitter.configs'
 local trouble = require 'trouble'
+local which_key = require 'which-key'
+
 
 --------------- Treesitter ---------------
 
@@ -59,7 +61,7 @@ local trouble = require 'trouble'
 	}
 	fidget.setup()
 	neoclip.setup {
-		enable_persistant_history = true,
+		enable_persistent_history = true,
 	}
 	pretty_fold.setup{}
 	pretty_fold_preview.setup_keybinding()
@@ -91,5 +93,6 @@ local trouble = require 'trouble'
 			},
 		},
 	}
+	which_key.setup {}
 
 ----------------

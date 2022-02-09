@@ -27,8 +27,7 @@ tmap('jk', [[<C-\><C-N>]])
 	-- Open Sidebar
 	nmap('<leader>s', sidebar.toggle)
 
-	-- vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', { expr = true, silent = true, script = true })
-	imap('<C-J>', 'copilot#Accept("\\<CR>")', { expr = true, silent = true, script = true })
+	vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', { expr = true, silent = true, script = true })
 
 	-- change pane by direction
 	map('', '<C-j>', '<C-W>j')
@@ -80,7 +79,7 @@ tmap('jk', [[<C-\><C-N>]])
 
 -------------------- Diagnostics --------------------
 	local trouble = require('trouble')
-	-- trouble.toggle
+	-- local trouble_providers = require('trouble.providers')
 
 	nmap('<leader>xx', trouble.toggle)
 	nmap('<leader>xw', '<cmd>TroubleToggle workspace_diagnostics<cr>')
@@ -143,6 +142,7 @@ tmap('jk', [[<C-\><C-N>]])
 
 
 ------------------ LSP Mappings ------------------
+
 	nmap('gd', vim.lsp.buf.definition)
 	nmap('gD', vim.lsp.buf.declaration)
 	nmap('gi', vim.lsp.buf.implementation)
@@ -163,6 +163,7 @@ tmap('jk', [[<C-\><C-N>]])
 
 
 ---------------------------- Git ------------------------
+
 	local gitsigns = require'gitsigns'
 
 	nmap(']c', gitsigns.next_hunk)
@@ -180,6 +181,7 @@ tmap('jk', [[<C-\><C-N>]])
 
 
 ---------------- Motions ----------------
+
 	local hop = require('hop')
 	local pounce = require('pounce')
 

@@ -105,6 +105,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 	-- REPL
 	Plug 'metakirby5/codi.vim'
+	-- Check your surroundings
+	Plug 'tpope/vim-surround'
 
 ------------------------------------------------------------
 
@@ -194,6 +196,7 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'lukas-reineke/indent-blankline.nvim'
 	-- Use vim anywhere
 	-- vim.cmd [[ Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } ]]
+	Plug 'folke/which-key.nvim'
 
 --------------------------------
 
