@@ -5,9 +5,6 @@ local util = require("lspconfig.util")
 	-- Source is automatically added, you just need to include it in the chain complete list
 	vim.g.completion_chain_complete_list = { sql = { complete_items = { 'vim-dadbod-completion' } } }
 
-	-- Database autocompletion on entering a sql buffer
-	vim.cmd [[ autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer({ sources = {{ name = 'vim-dadbod-completion' }} }) ]]
-
 	-- Run lint on save
 	-- vim.cmd [[ autocmd BufWritePre <buffer> <cmd>EslintFixAll<CR> ]]
 

@@ -188,7 +188,6 @@ tmap('jk', [[<C-\><C-N>]])
 	nmap( 's', hop.hint_char2, { disable = false } )
 	nmap( 'S', pounce.pounce, { disable = false } )
 
-
 	-- Quicker moving to front and back of lines
 	nmap( 'H', '^', { disable = false } )
 	vmap( 'H', '^', { disable = false } )

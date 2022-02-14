@@ -1,3 +1,4 @@
+-- Speeds up loading of lua modules for better start up time. Periodically check if this is needed (it will be merged into neovim main at some point)
 require 'impatient'
 
 
@@ -42,7 +43,7 @@ local which_key = require 'which-key'
 		-- false will disable the whole extension
 		highlight = { enable = true },
 		-- something else does indentations already, this would probably be better if I can disable whatever else is indenting
-		-- indent = { enable = false },
+		indent = { enable = false },
 		-- enable nvim-ts-context-commentstring
 		context_comment_string = {
 			enable = true,
@@ -58,6 +59,10 @@ local which_key = require 'which-key'
 	auto_session.setup {
 		auto_session_root_dir = os.getenv('HOME') .. '/.vim/sessions/',
 		auto_session_suppress_dirs = { '~/' },
+	}
+	require('coq_3p') {
+		{ src = 'vim_dadbod_completion', short_name = 'DB' },
+		{ src = 'dap' }
 	}
 	fidget.setup()
 	neoclip.setup {

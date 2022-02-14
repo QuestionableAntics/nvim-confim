@@ -105,7 +105,7 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 	-- REPL
 	Plug 'metakirby5/codi.vim'
-	-- Check your surroundings
+	-- Change the surroundings
 	Plug 'tpope/vim-surround'
 
 ------------------------------------------------------------
@@ -116,7 +116,7 @@ Plug 'lewis6991/impatient.nvim'
 	-- File explorer
 	Plug { name = 'ms-jpq/chadtree', opts = { branch = 'chad', ['do'] = 'python3 -m chadtree deps' } }
 	-- Fast motions
-	Plug { name = 'phaazon/hop.nvim', disable = vim.g.vscode}
+	Plug 'phaazon/hop.nvim'
 	-- Fuzzy motions
 	Plug 'rlane/pounce.nvim'
 	-- Session Management
@@ -148,8 +148,6 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'github/copilot.vim'
 	-- Autocomplete source for vim dadbod (database)
 	Plug 'kristijanhusak/vim-dadbod-completion'
-	---- nvim cmp
-	Plug 'hrsh7th/nvim-cmp'
 
 --------------------------------------------
 
