@@ -6,6 +6,16 @@ local telescope = require 'telescope'
 		defaults = {
 			-- rip grep really lives up to the rip part in certain projects otherwise
 			file_ignore_patterns = { "node_modules", ".git/", ".aws-sam/", "build", "dist", ".idea", ".pytest_cache" },
+			vimgrep_arguments = {
+				"rg",
+				"--color=never",
+				"--no-heading",
+				"--with-filename",
+				"--line-number",
+				"--column",
+				"--smart-case",
+				"--trim"
+			},
 			-- prompt_prefix = "   ",
 			-- selection_caret = "  ",
 			-- entry_prefix = "  ",

@@ -17,6 +17,7 @@ if vim.g.vscode then
 	return
 end
 
+local mappings = require 'mappings'
 
 local autotag = require 'nvim-ts-autotag'
 local auto_session = require 'auto-session'
@@ -51,6 +52,19 @@ local which_key = require 'which-key'
 	}
 
 -----------------------------------------
+
+
+----------- Which Key ---------------
+
+	local which_key_mappings = {}
+
+	for k, v in pairs(mappings) do
+		which_key_mappings[k] = { v.action, v.label }
+	end
+
+	which_key.register(which_key_mappings)
+
+-------------------------------------
 
 
 ----- Misc -----
@@ -98,6 +112,5 @@ local which_key = require 'which-key'
 			},
 		},
 	}
-	which_key.setup {}
 
 ----------------

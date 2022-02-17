@@ -85,6 +85,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'Pocco81/DAPInstall.nvim'
 	-- Debug Jest
 	Plug 'David-Kunz/jester'
+	-- Develop inside Docker containers
+	-- Plug 'jamestthompson3/nvim-remote-containers'
 
 ---------------------------------
 
@@ -194,8 +196,18 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'lukas-reineke/indent-blankline.nvim'
 	-- Use vim anywhere
 	-- vim.cmd [[ Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } ]]
+	-- Hints for keybindings
 	Plug 'folke/which-key.nvim'
+	-- Rest Client
+	-- Plug 'NTBBloodbath/rest.nvim'
 
 --------------------------------
+
+-------- Development --------
+
+	-- Reusable UI components
+	Plug 'MunifTanjim/nui.nvim'
+
+-----------------------------
 
 vim.call('plug#end')

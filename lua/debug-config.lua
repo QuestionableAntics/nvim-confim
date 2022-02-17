@@ -144,7 +144,7 @@ vim.diagnostic.config( {
 	-- 		stopAtEntry = true,
 	-- 	},
 	-- }
-	
+
 	ultest.setup({
 		builders = {
 			['python#pytest'] = function (cmd)
