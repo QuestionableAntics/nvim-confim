@@ -110,4 +110,6 @@ autocmd('focus_gain', [[FocusGained * silent! noautocmd checktime]], true)
 -- Faster file type checking
 vim.g.did_load_filetypes = 1
 
+vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/versions/3.9.7/envs/nvim/bin/python3.9/'
+
 ----------------------------------

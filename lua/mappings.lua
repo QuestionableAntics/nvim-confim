@@ -62,19 +62,20 @@ tmap('jk', [[<C-\><C-N>]])
 
 --------------- Fuzzy Finder ---------------
 
+	local telescope = require('telescope')
 	local telescope_builtin = require('telescope.builtin')
 	local session_lens = require('session-lens')
 
 	local fuzzy_finder_mappings = {
 		['<leader>ff'] = { mode = 'n', action = telescope_builtin.find_files, label = 'Find files' },
-		['<leader>fg'] = { mode = 'n', action = telescope_builtin.live_grep, label = 'Live Grep' },
+		-- ['<leader>fg'] = { mode = 'n', action = telescope_builtin.live_grep, label = 'Live Grep' },
+		['<leader>fg'] = { mode = 'n', action = telescope.extensions.live_grep_raw.live_grep_raw, label = 'Live Grep' },
 		['<leader>fb'] = { mode = 'n', action = telescope_builtin.buffers, label = 'Find Buffers' },
 		['<leader>fh'] = { mode = 'n', action = telescope_builtin.help_tags, label = 'Find Help Tags' },
 		['<leader>fo'] = { mode = 'n', action = telescope_builtin.oldfiles, label = 'Find Old Files' },
 		['<leader>fl'] = { mode = 'n', action = telescope_builtin.resume, label = 'Last Search Results' },
 		['<leader>fs'] = { mode = 'n', action = session_lens.search_session, label = 'Search Sessions' },
 		['gh'] = { mode = 'n', action = telescope_builtin.lsp_references, label = 'Find References' },
-		['<leader>ft'] = { mode = 'n', action = utils.live_grep, label = 'Live Grep' },
 	}
 
 -----------------------------------------

@@ -160,6 +160,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'nvim-telescope/telescope.nvim'
 	-- fzf
 	Plug { name = 'nvim-telescope/telescope-fzf-native.nvim', opts = { ['do'] = 'make' } }
+	-- rg raw live grep
+	Plug 'nvim-telescope/telescope-rg.nvim'
 	-- dap integration
 	Plug 'nvim-telescope/telescope-dap.nvim'
 
@@ -200,6 +202,7 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'folke/which-key.nvim'
 	-- Rest Client
 	-- Plug 'NTBBloodbath/rest.nvim'
+	Plug 'dstein64/vim-startuptime'
 
 --------------------------------
 
