@@ -4,9 +4,7 @@ local map = utils.base_map
 local imap = utils.imap
 local nmap = utils.nmap
 local tmap = utils.tmap
-local vmap = utils.vmap
 local cmap = utils.cmap
--- local xmap = utils.xmap
 
 vim.g.mapleader = ' '
 nmap(';', ':')
@@ -15,6 +13,8 @@ imap('jk', '<ESC>')
 cmap('jk', '<ESC>')
 -- Get me the fuck out of the terminal
 tmap('jk', [[<C-\><C-N>]])
+
+local stems = {}
 
 ------------------- Random -------------------
 
@@ -45,7 +45,7 @@ tmap('jk', [[<C-\><C-N>]])
 		['-'] = { mode = 'n', action = ':resize -5<CR>', label = 'Horizontal Size Decrease' },
 
 		-- harpoon
-		['<leader>fm'] = { mode = 'n', action = harpoon_ui.toggle_quick_menu, label = 'Open Harpoon Quick Menu' },
+		['<leader>jm'] = { mode = 'n', action = harpoon_ui.toggle_quick_menu, label = 'Open Harpoon Quick Menu' },
 		['<leader>am'] = { mode = 'n', action = harpoon_mark.add_file, label = 'Add file to Harpoon Mark' },
 
 		-- notes
@@ -55,7 +55,16 @@ tmap('jk', [[<C-\><C-N>]])
 		['<leader>rpy'] = { mode = 'n', action = '<cmd>Codi python<CR>', label = 'Open Python REPL' },
 		['<leader>rjs'] = { mode = 'n', action = '<cmd>Codi javascript<CR>', label = 'Open JS REPL' },
 		['<leader>rts'] = { mode = 'n', action = '<cmd>Codi typescript<CR>', label = 'Open TS REPL' },
+
+		-- copy path to file from CWD
+		['cp'] = { mode = 'n', action = ':let @* = expand("%")<CR>', label = 'Copy file path from CWD' },
+		-- copy current relative file path
+		['crp'] = { mode = 'n', action = ':let @* = expand("%:~")<CR>', label = 'Copy current file path from home directory' },
+		-- copy current file name
+		['cn'] = { mode = 'n', action = ':let @* = expand("%:t")<CR>', label = 'Copy current file name' },
 	}
+
+	stems['<leader>r'] = { label =  'REPL' }
 
 -----------------------------------------------
 
@@ -75,8 +84,14 @@ tmap('jk', [[<C-\><C-N>]])
 		['<leader>fo'] = { mode = 'n', action = telescope_builtin.oldfiles, label = 'Find Old Files' },
 		['<leader>fl'] = { mode = 'n', action = telescope_builtin.resume, label = 'Last Search Results' },
 		['<leader>fs'] = { mode = 'n', action = session_lens.search_session, label = 'Search Sessions' },
+		['<leader>fm'] = { mode = 'n', action = telescope.extensions.macroscope.default, label = 'Search Macros' },
+		['<leader>fxd'] = { mode = 'n', action = function() telescope_builtin.diagnostics {bufnr=0} end, label = 'Find Diagnostics in Focused Buffer'},
+		['<leader>fxw'] = { mode = 'n', action = telescope_builtin.diagnostics, label = 'Find Diagnostics in Open Buffers'},
 		['gh'] = { mode = 'n', action = telescope_builtin.lsp_references, label = 'Find References' },
 	}
+
+	stems['<leader>f'] = { label = 'Fuzzy Finder' }
+	stems['<leader>fx'] = { label = 'Find Diagnostics' }
 
 -----------------------------------------
 
@@ -92,6 +107,8 @@ tmap('jk', [[<C-\><C-N>]])
 		['<leader>xq'] = { mode = 'n', action = '<cmd>TroubleToggle quickfix<cr>', label = 'Toggle Quickfix' },
 		['<leader>xl'] = { mode = 'n', action = '<cmd>TroubleToggle loclist<cr>', label = 'Toggle Loclist' },
 	}
+
+	stems['<leader>x'] = { label = 'Diagnostics' }
 
 --------------------------------------------------
 
@@ -111,6 +128,8 @@ tmap('jk', [[<C-\><C-N>]])
 		['<leader>uo'] = { mode = 'n', action = '<cmd>UltestOutput<CR>', label = 'Run Output' },
 	}
 
+	stems['<leader>u'] = { label = 'Testing' }
+
 ---------------------------------
 
 
@@ -120,7 +139,6 @@ tmap('jk', [[<C-\><C-N>]])
 	local dap = require('dap')
 	local dap_ui_widgets = require('dap.ui.widgets')
 	local dapui = require('dapui')
-	local telescope = require('telescope')
 
 	local debug_mappings = {
 		-- dap
@@ -146,6 +164,10 @@ tmap('jk', [[<C-\><C-N>]])
 		-- ['<leader>df'] = { mode = 'n', action = telescope.extensions.dap.frames, label = 'Debug Frames'},
 	}
 
+	stems['<leader>d'] = { label = 'Debug' }
+	stems['<leader>du'] = { label = 'Debug UI' }
+	stems['<leader>dc'] = { label = 'Debug Telescope' }
+
 -------------------------------------
 
 
@@ -154,7 +176,7 @@ tmap('jk', [[<C-\><C-N>]])
 	local lsp_mappings = {
 		['gd'] = { mode = 'n', action = vim.lsp.buf.definition, label = 'Go to definition' },
 		['gD'] = { mode = 'n', action = vim.lsp.buf.declaration, label = 'Go to declaration' },
-		['gi'] = { mode = 'n', action = vim.lsp.buf.implementation, label = 'Go to implementation' },
+		-- ['gi'] = { mode = 'n', action = vim.lsp.buf.implementation, label = 'Go to implementation' },
 		['gs'] = { mode = 'n', action = vim.lsp.buf.signature_help, label = 'Signature help' },
 		['gr'] = { mode = 'n', action = vim.lsp.buf.rename, label = 'Rename' },
 		['gt'] = { mode = 'n', action = vim.lsp.buf.type_definition, label = 'Go to type definition' },
@@ -164,9 +186,11 @@ tmap('jk', [[<C-\><C-N>]])
 		['[e'] = { mode = 'n', action = vim.diagnostic.goto_prev, label = 'Previous diagnostic' },
 		['<leader>gw'] = { mode = 'n', action = vim.lsp.buf.document_symbol, label = 'Document symbols' },
 		['<leader>gW'] = { mode = 'n', action = vim.lsp.buf.workspace_symbol, label = 'Workspace symbols' },
-		['<leader>dd'] = { mode = 'n', action = vim.diagnostic.open_float, label = 'Diagnostics' },
 		['<leader>='] = { mode = 'n', action = vim.lsp.buf.formatting, label = 'Formatting' },
 		['<leader>-'] = { mode = 'n', action = vim.diagnostic.setloclist, label = 'Diagnostic locations' },
+
+		['gi'] = { mode = 'n', action = ":TSLspImportCurrent<CR>", label = "Import Current"},
+		['gia'] = { mode = 'n', action = ":TSLspImportAll<CR>", label = "Import All"},
 	}
 
 ---------------------------------------------------
@@ -188,6 +212,8 @@ tmap('jk', [[<C-\><C-N>]])
 		['<leader>hS'] = { mode = 'n', action = gitsigns.stage_buffer, label = 'Stage buffer' },
 		['<leader>hU'] = { mode = 'n', action = gitsigns.reset_buffer_index, label = 'Reset buffer index' },
 	}
+
+	stems['<leader>h'] = { label = 'Git' }
 
 ---------------------------------------------------------
 
@@ -221,6 +247,9 @@ tmap('jk', [[<C-\><C-N>]])
 		['<leader>tmn'] = { mode = 'n', action = ':+tabmove<CR>', label = 'Move tab to next position' },
 	}
 
+	stems['<leader>t'] = { label = 'Tabs' }
+	stems['<leader>tm'] = { label = 'Move tab' }
+
 --------------------------------------
 
 
@@ -240,4 +269,7 @@ for k, v in pairs(all_mappings) do
 	map(v.mode, k, v.action, v.opts, v.map_opts)
 end
 
-return all_mappings
+return {
+	all_mappings = all_mappings,
+	stems = stems,
+}

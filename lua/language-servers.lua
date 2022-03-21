@@ -53,16 +53,23 @@ local lspconfig = require 'lspconfig'
 				},
 			}
 		},
+
 		tsserver = {
 			root_dir = util.root_pattern("package.json"),
-			-- on_attach = function(client, _)
-			-- 	null_ls_formatting(client)
-			-- end,
+			on_attach = function(client, _)
+				local ts_utils = require("nvim-lsp-ts-utils")
+				ts_utils.setup {
+					always_organize_imports = false,
+				}
+				ts_utils.setup_client(client)
+			end,
 			init_options = {
 				lint = true,
 			},
 		},
+
 		eslint = {},
+
 		-- Setup guide for C#
 		-- https://rudism.com/coding-csharp-in-neovim/
 		omnisharp = {
@@ -76,6 +83,7 @@ local lspconfig = require 'lspconfig'
 				tostring(pid)
 			},
 		},
+
 		-- and the smallest for the most used lol
 		pyright = {},
 	}

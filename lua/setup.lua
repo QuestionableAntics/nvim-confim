@@ -21,6 +21,7 @@ local mappings = require 'mappings'
 
 local autotag = require 'nvim-ts-autotag'
 local auto_session = require 'auto-session'
+local bqf = require 'bqf'
 local fidget = require 'fidget'
 local gitsigns = require 'gitsigns'
 local indent_blankline = require 'indent_blankline'
@@ -46,9 +47,9 @@ local which_key = require 'which-key'
 		-- something else does indentations already, this would probably be better if I can disable whatever else is indenting
 		indent = { enable = false },
 		-- enable nvim-ts-context-commentstring
-		context_comment_string = {
-			enable = true,
-		}
+		context_comment_string = { enable = true },
+		-- Better auto indent
+		-- yati = { enable = true },
 	}
 
 -----------------------------------------
@@ -58,8 +59,12 @@ local which_key = require 'which-key'
 
 	local which_key_mappings = {}
 
-	for k, v in pairs(mappings) do
+	for k, v in pairs(mappings.all_mappings) do
 		which_key_mappings[k] = { v.action, v.label }
+	end
+
+	for k,v in pairs(mappings.stems) do
+		which_key_mappings[k] = v.label
 	end
 
 	which_key.register(which_key_mappings)
@@ -74,6 +79,7 @@ local which_key = require 'which-key'
 		auto_session_root_dir = os.getenv('HOME') .. '/.vim/sessions/',
 		auto_session_suppress_dirs = { '~/' },
 	}
+	bqf.setup()
 	require('coq_3p') {
 		{ src = 'vim_dadbod_completion', short_name = 'DB' },
 		{ src = 'dap' }
@@ -81,6 +87,8 @@ local which_key = require 'which-key'
 	fidget.setup()
 	neoclip.setup {
 		enable_persistent_history = true,
+		default_register_macros = 'q',
+		enable_macro_history = true,
 	}
 	pretty_fold.setup{}
 	pretty_fold_preview.setup_keybinding()

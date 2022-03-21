@@ -33,7 +33,7 @@ Plug 'lewis6991/impatient.nvim'
 	-- Tabline
 	Plug 'nanozuki/tabby.nvim'
 	-- VS Code Icons for LSP
-	-- Plug { name = 'onsails/lspkind-nvim' }
+	-- Plug 'onsails/lspkind-nvim'
 	-- Sidebar
 	Plug 'sidebar-nvim/sidebar.nvim'
 	-- Dap extension for sidebar
@@ -58,7 +58,7 @@ Plug 'lewis6991/impatient.nvim'
 
 ---------- Version Control ----------
 
-	-- git functions on vim command line
+	-- git in vim
 	Plug 'tpope/vim-fugitive'
 	-- sign column symbols for git changes and git hunk actions
 	Plug 'lewis6991/gitsigns.nvim'
@@ -79,7 +79,7 @@ Plug 'lewis6991/impatient.nvim'
 	-- Virtual Text
 	Plug 'theHamsta/nvim-dap-virtual-text'
 	-- Testing
-	Plug 'vim-test/vim-test' -- required for ulte
+	Plug 'vim-test/vim-test' -- required for ultest
 	Plug { name = 'rcarriga/vim-ultest', opts = { ['do'] = ':UpdateRemotePlugins' } }
 	-- Debug installer
 	Plug 'Pocco81/DAPInstall.nvim'
@@ -95,7 +95,7 @@ Plug 'lewis6991/impatient.nvim'
 
 	-- Automatic pairing of ([{--'
 	Plug 'tmsvg/pear-tree'
-	-- Syntax tree parser for better syntax highlighting
+	-- Syntax tree parser for better syntax highlighting among other things
 	Plug { name = 'nvim-treesitter/nvim-treesitter', opts = { ['do'] = ':TSUpdate' } }
 	-- Pretty diagnostics and easy navigation
 	Plug 'folke/trouble.nvim'
@@ -109,6 +109,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'metakirby5/codi.vim'
 	-- Change the surroundings
 	Plug 'tpope/vim-surround'
+	-- Better auto indent
+	Plug 'yioneko/nvim-yati'
 
 ------------------------------------------------------------
 
@@ -134,6 +136,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'ThePrimeagen/harpoon'
 	-- Folding
 	Plug 'anuvyklack/pretty-fold.nvim'
+	-- Better Quickfix
+	Plug 'kevinhwang91/nvim-bqf'
 
 --------------------------------------------------
 
@@ -158,12 +162,14 @@ Plug 'lewis6991/impatient.nvim'
 
 	-- Pretty fuzzy finder
 	Plug 'nvim-telescope/telescope.nvim'
-	-- fzf
+	-- Telescope fzf integration
 	Plug { name = 'nvim-telescope/telescope-fzf-native.nvim', opts = { ['do'] = 'make' } }
 	-- rg raw live grep
 	Plug 'nvim-telescope/telescope-rg.nvim'
 	-- dap integration
 	Plug 'nvim-telescope/telescope-dap.nvim'
+	-- Uses telescope for the native ui-select
+	Plug 'nvim-telescope/telescope-ui-select.nvim'
 
 ------------------------------------
 
@@ -202,14 +208,15 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'folke/which-key.nvim'
 	-- Rest Client
 	-- Plug 'NTBBloodbath/rest.nvim'
-	Plug 'dstein64/vim-startuptime'
+	-- Breakdown of what vim spends time on when starting up
+	-- Plug 'dstein64/vim-startuptime'
 
 --------------------------------
 
 -------- Development --------
 
 	-- Reusable UI components
-	Plug 'MunifTanjim/nui.nvim'
+	-- Plug 'MunifTanjim/nui.nvim'
 
 -----------------------------
 
