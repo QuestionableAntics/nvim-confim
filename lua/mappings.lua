@@ -1,4 +1,4 @@
-local utils = require('utils')
+local utils = require 'utils'
 
 local map = utils.base_map
 local imap = utils.imap
@@ -16,6 +16,8 @@ tmap('jk', [[<C-\><C-N>]])
 
 local stems = {}
 
+local mappings = {}
+
 ------------------- Random -------------------
 
 	local sidebar = require('sidebar-nvim')
@@ -26,7 +28,7 @@ local stems = {}
 	imap('<C-J>', 'copilot#Accept("\\<CR>")', { override = true }, { expr = true, silent = true, script = true })
 	map('', '<C-j>', '<C-W>j')
 
-	local random_mappings = {
+	mappings['random'] = {
 		['<esc>'] = { mode = 'n', action = '<esc>:noh<CR>', label = 'Remove Highlights' },
 		['<leader>v'] = { mode = 'n', action = '<cmd>CHADopen<cr>', label = 'Open file explorer' },
 		['<leader>s'] = { mode = 'n', action = sidebar.toggle, label = 'Open Sidebar' },
@@ -75,7 +77,7 @@ local stems = {}
 	local telescope_builtin = require('telescope.builtin')
 	local session_lens = require('session-lens')
 
-	local fuzzy_finder_mappings = {
+	mappings['fuzzy_finder'] = {
 		['<leader>ff'] = { mode = 'n', action = telescope_builtin.find_files, label = 'Find files' },
 		-- ['<leader>fg'] = { mode = 'n', action = telescope_builtin.live_grep, label = 'Live Grep' },
 		['<leader>fg'] = { mode = 'n', action = telescope.extensions.live_grep_raw.live_grep_raw, label = 'Live Grep' },
@@ -100,7 +102,7 @@ local stems = {}
 
 	local trouble = require('trouble')
 
-	local diagnostics_mappings = {
+	mappings['diagnostics'] = {
 		['<leader>xx'] = { mode = 'n', action = trouble.toggle, label = 'Toggle Diagnostics' },
 		['<leader>xw'] = { mode = 'n', action = '<cmd>TroubleToggle workspace_diagnostics<cr>', label = 'Toggle Workspace Diagnostics' },
 		['<leader>xd'] = { mode = 'n', action = '<cmd>TroubleToggle document_diagnostics<cr>', label = 'Toggle Document Diagnostics' },
@@ -119,7 +121,7 @@ local stems = {}
 	vim.cmd [[nmap [t <Plug>(ultest-prev-fail)<CR>]]
 	vim.cmd [[nmap <leader>uf <Plug>(ultest-run-file)<CR>]]
 
-	local testing_mappings = {
+	mappings['testing'] = {
 		['<leader>dn'] = { mode = 'n', action = '<cmd>UltestDebugNearest<CR>', label = 'Debug Nearest Test' },
 		['<leader>df'] = { mode = 'n', action = '<cmd>UltestDebug<CR>', label = 'Debug Test' },
 		['<leader>un'] = { mode = 'n', action = '<cmd>UltestNearest<CR>', label = 'Run Nearest Test' },
@@ -140,7 +142,7 @@ local stems = {}
 	local dap_ui_widgets = require('dap.ui.widgets')
 	local dapui = require('dapui')
 
-	local debug_mappings = {
+	mappings['debug'] = {
 		-- dap
 		['<leader>ds'] = { mode = 'v', action = dap_python.debug_selection, label = 'Debug Python Selection' },
 		['<F9>'] = { mode = 'n', action = dap.continue, label = 'Debug Continue'},
@@ -173,7 +175,7 @@ local stems = {}
 
 ------------------ LSP Mappings ------------------
 
-	local lsp_mappings = {
+	mappings['lsp'] = {
 		['gd'] = { mode = 'n', action = vim.lsp.buf.definition, label = 'Go to definition' },
 		['gD'] = { mode = 'n', action = vim.lsp.buf.declaration, label = 'Go to declaration' },
 		-- ['gi'] = { mode = 'n', action = vim.lsp.buf.implementation, label = 'Go to implementation' },
@@ -198,9 +200,9 @@ local stems = {}
 
 ---------------------------- Git ------------------------
 
-	local gitsigns = require'gitsigns'
+	local gitsigns = require('gitsigns')
 
-	local git_mappings = {
+	mappings['git'] = {
 		[']c'] = { mode = 'n', action = gitsigns.next_hunk, label = 'Next hunk' },
 		['[c'] = { mode = 'n', action = gitsigns.prev_hunk, label = 'Previous hunk' },
 		['<leader>hs'] = { mode = 'n', action = gitsigns.stage_hunk, label = 'Stage hunk' },
@@ -223,13 +225,13 @@ local stems = {}
 	local hop = require('hop')
 	local pounce = require('pounce')
 
-	local motion_mappings = {
-		['s'] = { mode = 'n', action = hop.hint_char2, label = 'Hint character', opts = { disable = false } },
-		['S'] = { mode = 'n', action = pounce.pounce, label = 'Pounce', opts = { disable = false } },
+	mappings['motion'] = {
+		['s'] = { mode = '', action = hop.hint_char2, label = 'Hint character', opts = { disable = false } },
+		['S'] = { mode = '', action = pounce.pounce, label = 'Pounce', opts = { disable = false } },
 
 		-- Quicker moving to front and back of lines
-		['H'] = { mode = {'n', 'v'}, action = '^', label = 'Move to start of line' },
-		['L'] = { mode = {'n', 'v'}, action = '$', label = 'Move to end of line' },
+		['H'] = { mode = '', action = '^', label = 'Move to start of line' },
+		['L'] = { mode = '', action = '$', label = 'Move to end of line' },
 	}
 
 -----------------------------------------
@@ -237,7 +239,7 @@ local stems = {}
 
 ---------------- Tabs ----------------
 
-	local tab_mappings = {
+	mappings['tab'] = {
 		['<leader>ta'] = { mode = 'n', action = ':$tabnew<CR>', label = 'New tab' },
 		['<leader>tc'] = { mode = 'n', action = ':tabclose<CR>', label = 'Close tab' },
 		['<leader>to'] = { mode = 'n', action = ':tabonly<CR>', label = 'Close Other Tabs' },
@@ -252,21 +254,22 @@ local stems = {}
 
 --------------------------------------
 
+local all_mappings = {}
 
-local all_mappings = utils.merge_tables {
-	random_mappings,
-	fuzzy_finder_mappings,
-	diagnostics_mappings,
-	testing_mappings,
-	debug_mappings,
-	lsp_mappings,
-	git_mappings,
-	motion_mappings,
-	tab_mappings,
-}
+for _, v in pairs(mappings) do
+	for k2, v2 in pairs(v) do
+		all_mappings[k2] = v2
+	end
+end
 
 for k, v in pairs(all_mappings) do
-	map(v.mode, k, v.action, v.opts, v.map_opts)
+	if type(v.mode) == 'string' then
+		v.mode = { v.mode }
+	end
+
+	for _, mode in ipairs(v.mode) do
+		map(mode, k, v.action, v.opts, v.map_opts)
+	end
 end
 
 return {

@@ -100,7 +100,7 @@ local which_key = require 'which-key'
 			}
 		}
 	}
-	tabby.setup()
+	tabby.setup {}
 	trouble.setup()
 	gitsigns.setup {
 		current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`

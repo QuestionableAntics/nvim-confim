@@ -64,6 +64,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'lewis6991/gitsigns.nvim'
 	-- git commit browser
 	Plug 'junegunn/gv.vim'
+	-- easy conflict resolution
+	Plug 'rhysd/conflict-marker.vim'
 
 ------------------------------------------------------
 
