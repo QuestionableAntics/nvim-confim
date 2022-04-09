@@ -1,9 +1,7 @@
 local VimPlug = vim.fn['plug#']
 
 local function Plug(config)
-	local disable = config.disable or false
-
-	if disable then
+	if config.disable then
 		return
 	end
 
@@ -32,12 +30,6 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'nvim-lualine/lualine.nvim'
 	-- Tabline
 	Plug 'nanozuki/tabby.nvim'
-	-- VS Code Icons for LSP
-	-- Plug 'onsails/lspkind-nvim'
-	-- Sidebar
-	Plug 'sidebar-nvim/sidebar.nvim'
-	-- Dap extension for sidebar
-	Plug 'sidebar-nvim/sections-dap'
 	-- LSP progress
 	Plug 'j-hui/fidget.nvim'
 
@@ -58,7 +50,7 @@ Plug 'lewis6991/impatient.nvim'
 
 ---------- Version Control ----------
 
-	-- git in vim
+	-- git in vim (required for other git plugins)
 	Plug 'tpope/vim-fugitive'
 	-- sign column symbols for git changes and git hunk actions
 	Plug 'lewis6991/gitsigns.nvim'
@@ -96,11 +88,9 @@ Plug 'lewis6991/impatient.nvim'
 ---------- Code Functionality ----------
 
 	-- Automatic pairing of ([{--'
-	Plug 'tmsvg/pear-tree'
+	Plug 'windwp/nvim-autopairs'
 	-- Syntax tree parser for better syntax highlighting among other things
 	Plug { name = 'nvim-treesitter/nvim-treesitter', opts = { ['do'] = ':TSUpdate' } }
-	-- Pretty diagnostics and easy navigation
-	Plug 'folke/trouble.nvim'
 	-- Highlight other instances of word under cursor
 	Plug 'yamatsum/nvim-cursorline'
 	-- Auto close and update jsx tags
@@ -154,6 +144,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'ms-jpq/coq.thirdparty'
 	-- AI in my code
 	Plug 'github/copilot.vim'
+	-- Lua AI in my code
+	-- Plug 'zbirenbaum/copilot.lua'
 	-- Autocomplete source for vim dadbod (database)
 	Plug 'kristijanhusak/vim-dadbod-completion'
 
@@ -189,7 +181,7 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'nvim-lua/popup.nvim'
 	-- a bunch of nice functions that creators of nvim plugins don't want to rewrite
 	Plug 'nvim-lua/plenary.nvim'
-	-- language server for alternative completions provided through LSP (don't have a use for it right now, but it seems neat)
+	-- language server for alternative completions provided through LSP
 	Plug 'jose-elias-alvarez/null-ls.nvim'
 	-- Make working with TS LS better
 	Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
@@ -204,8 +196,6 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'nathom/filetype.nvim'
 	-- Virtual text to add indentation guides
 	Plug 'lukas-reineke/indent-blankline.nvim'
-	-- Use vim anywhere
-	-- vim.cmd [[ Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } } ]]
 	-- Hints for keybindings
 	Plug 'folke/which-key.nvim'
 	-- Rest Client

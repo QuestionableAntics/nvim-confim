@@ -1,5 +1,4 @@
 local cmd = vim.cmd
-local vscode = vim.g.vscode
 
 local M = {}
 
@@ -19,7 +18,7 @@ M.base_map = function(modes, shortcut, command, opts, map_opts)
 	opts = opts or {}
 	map_opts = map_opts or {}
 
-	if opts.disable == nil and vscode then
+	if opts.disable == true then
 		return
 	end
 

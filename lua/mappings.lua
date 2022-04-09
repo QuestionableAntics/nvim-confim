@@ -20,19 +20,16 @@ local mappings = {}
 
 ------------------- Random -------------------
 
-	local sidebar = require('sidebar-nvim')
 	local harpoon_ui = require('harpoon.ui')
 	local harpoon_mark = require('harpoon.mark')
 
 	-- These clash despite lua table indexes being case sensitive?
-	imap('<C-J>', 'copilot#Accept("\\<CR>")', { override = true }, { expr = true, silent = true, script = true })
+	-- imap('<C-J>', 'copilot#Accept("\\<CR>")', { override = true }, { expr = true, silent = true, script = true })
 	map('', '<C-j>', '<C-W>j')
 
 	mappings['random'] = {
 		['<esc>'] = { mode = 'n', action = '<esc>:noh<CR>', label = 'Remove Highlights' },
 		['<leader>v'] = { mode = 'n', action = '<cmd>CHADopen<cr>', label = 'Open file explorer' },
-		['<leader>s'] = { mode = 'n', action = sidebar.toggle, label = 'Open Sidebar' },
-		-- ['<C-J>'] = { mode = 'i', action = 'copilot#Accept("\\<CR>")', label = 'Accept copilot', opts = { override = true }, map_opts = { expr = true, silent = true, script = true } },
 
 		-- change pane by direction
 		-- ['<C-j>'] = { mode = 'n', action = '<C-W>j', label = 'Go to pane underneath' },
@@ -75,7 +72,6 @@ local mappings = {}
 
 	local telescope = require('telescope')
 	local telescope_builtin = require('telescope.builtin')
-	local session_lens = require('session-lens')
 
 	mappings['fuzzy_finder'] = {
 		['<leader>ff'] = { mode = 'n', action = telescope_builtin.find_files, label = 'Find files' },
@@ -85,7 +81,6 @@ local mappings = {}
 		['<leader>fh'] = { mode = 'n', action = telescope_builtin.help_tags, label = 'Find Help Tags' },
 		['<leader>fo'] = { mode = 'n', action = telescope_builtin.oldfiles, label = 'Find Old Files' },
 		['<leader>fl'] = { mode = 'n', action = telescope_builtin.resume, label = 'Last Search Results' },
-		['<leader>fs'] = { mode = 'n', action = session_lens.search_session, label = 'Search Sessions' },
 		['<leader>fm'] = { mode = 'n', action = telescope.extensions.macroscope.default, label = 'Search Macros' },
 		['<leader>fxd'] = { mode = 'n', action = function() telescope_builtin.diagnostics {bufnr=0} end, label = 'Find Diagnostics in Focused Buffer'},
 		['<leader>fxw'] = { mode = 'n', action = telescope_builtin.diagnostics, label = 'Find Diagnostics in Open Buffers'},
@@ -96,23 +91,6 @@ local mappings = {}
 	stems['<leader>fx'] = { label = 'Find Diagnostics' }
 
 -----------------------------------------
-
-
--------------------- Diagnostics --------------------
-
-	local trouble = require('trouble')
-
-	mappings['diagnostics'] = {
-		['<leader>xx'] = { mode = 'n', action = trouble.toggle, label = 'Toggle Diagnostics' },
-		['<leader>xw'] = { mode = 'n', action = '<cmd>TroubleToggle workspace_diagnostics<cr>', label = 'Toggle Workspace Diagnostics' },
-		['<leader>xd'] = { mode = 'n', action = '<cmd>TroubleToggle document_diagnostics<cr>', label = 'Toggle Document Diagnostics' },
-		['<leader>xq'] = { mode = 'n', action = '<cmd>TroubleToggle quickfix<cr>', label = 'Toggle Quickfix' },
-		['<leader>xl'] = { mode = 'n', action = '<cmd>TroubleToggle loclist<cr>', label = 'Toggle Loclist' },
-	}
-
-	stems['<leader>x'] = { label = 'Diagnostics' }
-
---------------------------------------------------
 
 
 ------------ Testing ------------

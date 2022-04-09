@@ -13,15 +13,13 @@ local hop = require 'hop'
 
 ---------------------------------------
 
-if vim.g.vscode then
-	return
-end
-
 local mappings = require 'mappings'
 
+local autopairs = require 'nvim-autopairs'
 local autotag = require 'nvim-ts-autotag'
 local auto_session = require 'auto-session'
 local bqf = require 'bqf'
+-- local copilot = require 'copilot'
 local fidget = require 'fidget'
 local gitsigns = require 'gitsigns'
 local indent_blankline = require 'indent_blankline'
@@ -29,11 +27,9 @@ local lualine = require 'lualine'
 local neoclip = require 'neoclip'
 local pretty_fold = require 'pretty-fold'
 local pretty_fold_preview = require 'pretty-fold.preview'
-local sidebar = require 'sidebar-nvim'
 local stabilize = require 'stabilize'
 local tabby = require 'tabby'
 local treesitter = require 'nvim-treesitter.configs'
-local trouble = require 'trouble'
 local which_key = require 'which-key'
 
 
@@ -47,7 +43,7 @@ local which_key = require 'which-key'
 		-- something else does indentations already, this would probably be better if I can disable whatever else is indenting
 		indent = { enable = false },
 		-- enable nvim-ts-context-commentstring
-		context_comment_string = { enable = true },
+		context_commentstring = { enable = true },
 		-- Better auto indent
 		-- yati = { enable = true },
 	}
@@ -74,15 +70,20 @@ local which_key = require 'which-key'
 
 ----- Misc -----
 
+	autopairs.setup{}
 	autotag.setup()
 	auto_session.setup {
 		auto_session_root_dir = os.getenv('HOME') .. '/.vim/sessions/',
 		auto_session_suppress_dirs = { '~/' },
 	}
 	bqf.setup()
+	-- copilot.setup {
+	-- 	plugin_manager_path = os.getenv('HOME') .. '/.vim/plugged',
+	-- }
 	require('coq_3p') {
 		{ src = 'vim_dadbod_completion', short_name = 'DB' },
-		{ src = 'dap' }
+		{ src = 'dap' },
+		-- { src = 'copilot', short_name = 'COP', accept_key = '<C-J>'}
 	}
 	fidget.setup()
 	neoclip.setup {
@@ -92,7 +93,6 @@ local which_key = require 'which-key'
 	}
 	pretty_fold.setup{}
 	pretty_fold_preview.setup_keybinding()
-	sidebar.setup()
 	stabilize.setup {
 		dap = {
 			breakpoints = {
@@ -101,7 +101,6 @@ local which_key = require 'which-key'
 		}
 	}
 	tabby.setup {}
-	trouble.setup()
 	gitsigns.setup {
 		current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
 		current_line_blame_opts = {
