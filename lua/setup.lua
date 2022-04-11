@@ -39,9 +39,10 @@ local which_key = require 'which-key'
 	treesitter.setup {
 		-- one of "all", "maintained" (parsers with maintainers), or a list of languages
 		ensure_installed = { "lua", "python", "c_sharp", "javascript", "typescript", "yaml", "graphql", "java", "tsx", "scss", "css", "html", "jsdoc", "dockerfile", "toml", "json", "json5", "markdown" },
-		-- ensure_installed = "maintained",
 		-- false will disable the whole extension
 		highlight = { enable = true },
+		-- async installation of parsers
+		sync_install = false,
 		-- something else does indentations already, this would probably be better if I can disable whatever else is indenting
 		indent = { enable = false },
 		-- enable nvim-ts-context-commentstring

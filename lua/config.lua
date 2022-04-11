@@ -3,6 +3,8 @@ local wo = vim.wo
 local o = vim.o
 local autocmd = require 'utils'.autocmd
 
+-- o.runtimepath = vim.fn.stdpath('data') .. '/site/pack/*/start/*,' .. vim.o.runtimepath
+
 -- Let me backspace like I want
 opt.backspace = { 'indent','eol','start' }
 

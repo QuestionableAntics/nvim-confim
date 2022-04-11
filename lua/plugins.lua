@@ -1,214 +1,222 @@
-local VimPlug = vim.fn['plug#']
+-- https://github.com/wbthomason/packer.nvim
 
-local function Plug(config)
-	if type(config) == 'string' then
-		VimPlug(config)
-	elseif type(config) == 'table' then
-		VimPlug(config.name, config.opts)
-	end
-end
+require('packer').startup(function(use)
 
+	-- Speed up
+	use 'lewis6991/impatient.nvim'
 
-vim.call('plug#begin', '~/.vim/plugged')
+	-- package manager
+	use 'wbthomason/packer.nvim'
 
--- Speed up
-Plug 'lewis6991/impatient.nvim'
+	---------- Visuals ----------
 
----------- Visuals ----------
+		-- More pretty icons
+		use 'kyazdani42/nvim-web-devicons'
+		-- highlight matching html tags
+		use 'gregsexton/MatchTag'
+		-- VS Code theme
+		use 'tomasiser/vim-code-dark'
+		-- Nice status bar
+		use 'nvim-lualine/lualine.nvim'
+		-- Tabline
+		use 'nanozuki/tabby.nvim'
+		-- LSP progress
+		use 'j-hui/fidget.nvim'
 
-	-- More pretty icons
-	Plug 'kyazdani42/nvim-web-devicons'
-	-- highlight matching html tags
-	Plug 'gregsexton/MatchTag'
-	-- VS Code theme
-	Plug 'tomasiser/vim-code-dark'
-	-- Nice status bar
-	Plug 'nvim-lualine/lualine.nvim'
-	-- Tabline
-	Plug 'nanozuki/tabby.nvim'
-	-- LSP progress
-	Plug 'j-hui/fidget.nvim'
-
---------------------------------------
+	--------------------------------------
 
 
----------- DB ----------
+	---------- DB ----------
 
-	-- DB interface
-	Plug 'tpope/vim-dadbod'
-	-- UI for DB interface
-	Plug 'kristijanhusak/vim-dadbod-ui'
-	-- Postgres driver
-	Plug 'jackc/pgx'
+		-- DB interface
+		use 'tpope/vim-dadbod'
+		-- UI for DB interface
+		use 'kristijanhusak/vim-dadbod-ui'
+		-- Postgres driver
+		use 'jackc/pgx'
 
-----------------------------
-
-
----------- Version Control ----------
-
-	-- git in vim (required for other git plugins)
-	Plug 'tpope/vim-fugitive'
-	-- sign column symbols for git changes and git hunk actions
-	Plug 'lewis6991/gitsigns.nvim'
-	-- git commit browser
-	Plug 'junegunn/gv.vim'
-	-- easy conflict resolution
-	Plug 'rhysd/conflict-marker.vim'
-
-------------------------------------------------------
+	----------------------------
 
 
-------------- Debug/Test -------------
+	---------- Version Control ----------
 
-	-- Debug adapter protocol, base plugin {name = for debugging}
-	Plug 'mfussenegger/nvim-dap'
-	-- Defaults for Python debugging
-	Plug 'mfussenegger/nvim-dap-python'
-	-- UI for nvim dap
-	Plug 'rcarriga/nvim-dap-ui'
-	-- Virtual Text
-	Plug 'theHamsta/nvim-dap-virtual-text'
-	-- Testing
-	Plug 'vim-test/vim-test' -- required for ultest
-	Plug { name = 'rcarriga/vim-ultest', opts = { ['do'] = ':UpdateRemotePlugins' } }
-	-- Debug installer
-	Plug 'Pocco81/DAPInstall.nvim'
-	-- Debug Jest
-	Plug 'David-Kunz/jester'
-	-- Develop inside Docker containers
-	-- Plug 'jamestthompson3/nvim-remote-containers'
+		-- git in vim (required for other git plugins)
+		use 'tpope/vim-fugitive'
+		-- sign column symbols for git changes and git hunk actions
+		use 'lewis6991/gitsigns.nvim'
+		-- git commit browser
+		use 'junegunn/gv.vim'
+		-- easy conflict resolution
+		use 'rhysd/conflict-marker.vim'
 
----------------------------------
+	------------------------------------------------------
 
 
----------- Code Functionality ----------
+	------------- Debug/Test -------------
 
-	-- Automatic pairing of ([{--'
-	Plug 'windwp/nvim-autopairs'
-	-- Syntax tree parser for better syntax highlighting among other things
-	Plug { name = 'nvim-treesitter/nvim-treesitter', opts = { ['do'] = ':TSUpdate' } }
-	-- Highlight other instances of word under cursor
-	Plug 'yamatsum/nvim-cursorline'
-	-- Auto close and update jsx tags
-	Plug 'windwp/nvim-ts-autotag'
-	-- jsx aware commenting
-	Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-	-- REPL
-	Plug 'metakirby5/codi.vim'
-	-- Change the surroundings
-	Plug 'tpope/vim-surround'
-	-- Better auto indent
-	Plug 'yioneko/nvim-yati'
-	-- Assorted things
-	-- Plug 'echasnovski/mini.nvim'
+		-- Debug adapter protocol, base plugin {name = for debugging}
+		use 'mfussenegger/nvim-dap'
+		-- Defaults for Python debugging
+		use 'mfussenegger/nvim-dap-python'
+		-- UI for nvim dap
+		use 'rcarriga/nvim-dap-ui'
+		-- Virtual Text
+		use 'theHamsta/nvim-dap-virtual-text'
+		-- Testing
+		use 'vim-test/vim-test' -- required for ultest
+		use { 'rcarriga/vim-ultest', run = ':UpdateRemotePlugins' }
+		-- Debug installer
+		use 'Pocco81/DAPInstall.nvim'
+		-- Debug Jest
+		use 'David-Kunz/jester'
+		-- Develop inside Docker containers
+		-- use 'jamestthompson3/nvim-remote-containers'
 
-------------------------------------------------------------
-
-
----------- Functionality ----------
-
-	-- File explorer
-	Plug { name = 'ms-jpq/chadtree', opts = { branch = 'chad', ['do'] = 'python3 -m chadtree deps' } }
-	-- Fast motions
-	Plug 'phaazon/hop.nvim'
-	-- Fuzzy motions
-	Plug 'rlane/pounce.nvim'
-	-- Session Management
-	Plug 'rmagatti/auto-session'
-	-- Session integration for Telescope
-	Plug 'rmagatti/session-lens'
-	-- Enhanced clipboard
-	Plug 'AckslD/nvim-neoclip.lua'
-	Plug { name = 'tami5/sqlite.lua', opts = { module = 'sqlite' } }
-	-- Comment stuff out with lua (does not work with nvim-ts-context-commentstring currently)
-	-- Plug 'numToStr/Comment.nvim'
-	Plug 'tpope/vim-commentary'
-	-- Per project navigation
-	Plug 'ThePrimeagen/harpoon'
-	-- Folding
-	Plug 'anuvyklack/pretty-fold.nvim'
-	-- Better Quickfix
-	Plug 'kevinhwang91/nvim-bqf'
-
---------------------------------------------------
+	---------------------------------
 
 
----------- Completion ----------
+	---------- Code Functionality ----------
 
-	-- Fast as FUCK autocompletion
-	Plug { name = 'ms-jpq/coq_nvim', opts = { branch = 'coq' } }
-	-- coq.nvim dependency
-	Plug { name = 'ms-jpq/coq.artifacts', opts = { branch = 'artifacts' } }
-	-- coq.nvim snippets and other third party sources of completion
-	Plug 'ms-jpq/coq.thirdparty'
-	-- AI in my code
-	Plug 'github/copilot.vim'
-	-- Lua AI in my code
-	-- Plug 'zbirenbaum/copilot.lua'
-	-- Autocomplete source for vim dadbod (database)
-	Plug 'kristijanhusak/vim-dadbod-completion'
+		-- Automatic pairing of ([{--'
+		use 'windwp/nvim-autopairs'
+		-- Syntax tree parser for better syntax highlighting among other things
+		use {
+			'nvim-treesitter/nvim-treesitter',
+			run = ':TSUpdate'
+		}
+		-- use { name = 'nvim-treesitter/nvim-treesitter', opts = { ['do'] = ':TSUpdate' } }
+		-- Highlight other instances of word under cursor
+		use 'yamatsum/nvim-cursorline'
+		-- Auto close and update jsx tags
+		use 'windwp/nvim-ts-autotag'
+		-- jsx aware commenting
+		use 'JoosepAlviste/nvim-ts-context-commentstring'
+		-- REPL
+		use 'metakirby5/codi.vim'
+		-- Change the surroundings
+		use 'tpope/vim-surround'
+		-- Better auto indent
+		use 'yioneko/nvim-yati'
+		-- Assorted things
+		-- use 'echasnovski/mini.nvim'
 
---------------------------------------------
-
-
----------- Search ----------
-
-	-- Pretty fuzzy finder
-	Plug 'nvim-telescope/telescope.nvim'
-	-- Telescope fzf integration
-	Plug { name = 'nvim-telescope/telescope-fzf-native.nvim', opts = { ['do'] = 'make' } }
-	-- rg raw live grep
-	Plug 'nvim-telescope/telescope-rg.nvim'
-	-- dap integration
-	Plug 'nvim-telescope/telescope-dap.nvim'
-	-- Uses telescope for the native ui-select
-	Plug 'nvim-telescope/telescope-ui-select.nvim'
-
-------------------------------------
+	------------------------------------------------------------
 
 
----------- Language Server Stuff ----------
+	---------- Functionality ----------
 
-	-- A collection of common configurations for Neovim's built-in language server client
-	-- Handles automatically launching and initializing installed language servers
-	Plug 'neovim/nvim-lspconfig'
-	-- LSP installer
-	Plug 'williamboman/nvim-lsp-installer'
+		-- File explorer
+		use { 'ms-jpq/chadtree', run = 'python3 -m chadtree deps', branch = 'chad' }
+		-- Fast motions
+		use 'phaazon/hop.nvim'
+		-- Fuzzy motions
+		use 'rlane/pounce.nvim'
+		-- Session Management
+		use 'rmagatti/auto-session'
+		-- Session integration for Telescope
+		use 'rmagatti/session-lens'
+		-- Enhanced clipboard
+		-- use 'AckslD/nvim-neoclip.lua'
+		-- use { name = 'tami5/sqlite.lua', opts = { module = 'sqlite' } }
+		use {
+		  "AckslD/nvim-neoclip.lua",
+		  requires = {
+			{'tami5/sqlite.lua', module = 'sqlite'},
+			{'nvim-telescope/telescope.nvim'},
+		  },
+		}
+		-- Comment stuff out with lua (does not work with nvim-ts-context-commentstring currently)
+		-- use 'numToStr/Comment.nvim'
+		-- Comment stuff out
+		use 'tpope/vim-commentary'
+		-- Per project navigation
+		use 'ThePrimeagen/harpoon'
+		-- Folding
+		use 'anuvyklack/pretty-fold.nvim'
+		-- Better Quickfix
+		use 'kevinhwang91/nvim-bqf'
 
-	---- General dependencies
-	-- popup window interface
-	Plug 'nvim-lua/popup.nvim'
-	-- a bunch of nice functions that creators of nvim plugins don't want to rewrite
-	Plug 'nvim-lua/plenary.nvim'
-	-- language server for alternative completions provided through LSP
-	Plug 'jose-elias-alvarez/null-ls.nvim'
-	-- Make working with TS LS better
-	Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+	--------------------------------------------------
 
-------------------------------------------------------------------
 
----------- Misc ----------
+	---------- Completion ----------
 
-	-- Don't change initial buffer position when opening new buffer
-	Plug 'luukvbaal/stabilize.nvim'
-	-- More speed up
-	Plug 'nathom/filetype.nvim'
-	-- Virtual text to add indentation guides
-	Plug 'lukas-reineke/indent-blankline.nvim'
-	-- Hints for keybindings
-	Plug 'folke/which-key.nvim'
-	-- Rest Client
-	-- Plug 'NTBBloodbath/rest.nvim'
-	-- Breakdown of what vim spends time on when starting up
-	-- Plug 'dstein64/vim-startuptime'
+		-- Fast as FUCK autocompletion
+		use { 'ms-jpq/coq_nvim', branch = 'coq' }
+		-- coq.nvim dependency
+		use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
+		-- coq.nvim snippets and other third party sources of completion
+		use 'ms-jpq/coq.thirdparty'
+		-- AI in my code
+		use 'github/copilot.vim'
+		-- Lua AI in my code
+		-- use 'zbirenbaum/copilot.lua'
+		-- Autocomplete source for vim dadbod (database)
+		use 'kristijanhusak/vim-dadbod-completion'
 
---------------------------------
+	--------------------------------------------
 
--------- Development --------
 
-	-- Reusable UI components
-	-- Plug 'MunifTanjim/nui.nvim'
+	---------- Search ----------
 
------------------------------
+		-- Pretty fuzzy finder
+		use 'nvim-telescope/telescope.nvim'
+		-- Telescope fzf integration
+		use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+		-- rg raw live grep
+		use 'nvim-telescope/telescope-rg.nvim'
+		-- dap integration
+		use 'nvim-telescope/telescope-dap.nvim'
+		-- Uses telescope for the native ui-select
+		use 'nvim-telescope/telescope-ui-select.nvim'
 
-vim.call('plug#end')
+	------------------------------------
+
+
+	---------- Language Server Stuff ----------
+
+		-- A collection of common configurations for Neovim's built-in language server client
+		-- Handles automatically launching and initializing installed language servers
+		use 'neovim/nvim-lspconfig'
+		-- LSP installer
+		use 'williamboman/nvim-lsp-installer'
+
+		---- General dependencies
+		-- popup window interface
+		use 'nvim-lua/popup.nvim'
+		-- a bunch of nice functions that creators of nvim plugins don't want to rewrite
+		use 'nvim-lua/plenary.nvim'
+		-- language server for alternative completions provided through LSP
+		use 'jose-elias-alvarez/null-ls.nvim'
+		-- Make working with TS LS better
+		use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+
+	------------------------------------------------------------------
+
+
+	---------- Misc ----------
+
+		-- Don't change initial buffer position when opening new buffer
+		use 'luukvbaal/stabilize.nvim'
+		-- More speed up
+		use 'nathom/filetype.nvim'
+		-- Virtual text to add indentation guides
+		use 'lukas-reineke/indent-blankline.nvim'
+		-- Hints for keybindings
+		use 'folke/which-key.nvim'
+		-- Rest Client
+		-- use 'NTBBloodbath/rest.nvim'
+		-- Breakdown of what vim spends time on when starting up
+		-- use 'dstein64/vim-startuptime'
+
+	--------------------------------
+
+
+	-------- Development --------
+
+		-- Reusable UI components
+		-- use 'MunifTanjim/nui.nvim'
+
+	-----------------------------
+
+end)
