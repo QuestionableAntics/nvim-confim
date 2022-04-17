@@ -19,6 +19,7 @@ local autopairs = require 'nvim-autopairs'
 local autotag = require 'nvim-ts-autotag'
 local auto_session = require 'auto-session'
 local bqf = require 'bqf'
+-- local comment = require 'Comment'
 -- local copilot = require 'copilot'
 local fidget = require 'fidget'
 local gitsigns = require 'gitsigns'
@@ -37,7 +38,8 @@ local which_key = require 'which-key'
 
 	treesitter.setup {
 		-- one of "all", "maintained" (parsers with maintainers), or a list of languages
-		ensure_installed = "maintained",
+		ensure_installed = { "lua", "python", "c_sharp", "javascript", "typescript", "yaml", "graphql", "java", "tsx", "scss", "css", "html", "jsdoc", "dockerfile", "toml", "json", "json5", "markdown" },
+		-- ensure_installed = "maintained",
 		-- false will disable the whole extension
 		highlight = { enable = true },
 		-- something else does indentations already, this would probably be better if I can disable whatever else is indenting
@@ -85,6 +87,7 @@ local which_key = require 'which-key'
 		{ src = 'dap' },
 		-- { src = 'copilot', short_name = 'COP', accept_key = '<C-J>'}
 	}
+	-- comment.setup()
 	fidget.setup()
 	neoclip.setup {
 		enable_persistent_history = true,

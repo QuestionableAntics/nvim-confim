@@ -123,6 +123,7 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'AckslD/nvim-neoclip.lua'
 	Plug { name = 'tami5/sqlite.lua', opts = { module = 'sqlite' } }
 	-- Comment stuff out
+	-- Plug 'numToStr/Comment.nvim'
 	Plug 'tpope/vim-commentary'
 	-- Per project navigation
 	Plug 'ThePrimeagen/harpoon'
