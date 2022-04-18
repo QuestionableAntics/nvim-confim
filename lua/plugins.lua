@@ -82,7 +82,43 @@ require('packer').startup(function(use)
 		-- Syntax tree parser for better syntax highlighting among other things
 		use {
 			'nvim-treesitter/nvim-treesitter',
-			run = ':TSUpdate'
+			run = ':TSUpdate',
+			config = function()
+				require('nvim-treesitter.configs').setup {
+					-- one of "all", "maintained" (parsers with maintainers), or a list of languages
+					ensure_installed = "maintained",
+					-- ensure_installed = {
+					-- 	"python",
+					-- 	"javascript",
+					-- 	"typescript",
+					-- 	"c_sharp",
+					-- 	"tsx",
+					-- 	"lua",
+					-- 	"yaml",
+					-- 	"graphql",
+					-- 	"java",
+					-- 	"scss",
+					-- 	"css",
+					-- 	"html",
+					-- 	"jsdoc",
+					-- 	"dockerfile",
+					-- 	"toml",
+					-- 	"json",
+					-- 	"json5",
+					-- 	"markdown"
+					-- },
+					-- false will disable the whole extension
+					highlight = { enable = true },
+					-- async installation of parsers
+					sync_install = false,
+					-- something else does indentations already, this would probably be better if I can disable whatever else is indenting
+					indent = { enable = false },
+					-- enable nvim-ts-context-commentstring
+					context_commentstring = { enable = true },
+					-- Better auto indent
+					-- yati = { enable = true },
+				}
+			end
 		}
 		-- use { name = 'nvim-treesitter/nvim-treesitter', opts = { ['do'] = ':TSUpdate' } }
 		-- Highlight other instances of word under cursor
