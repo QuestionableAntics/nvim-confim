@@ -86,27 +86,27 @@ require('packer').startup(function(use)
 			config = function()
 				require('nvim-treesitter.configs').setup {
 					-- one of "all", "maintained" (parsers with maintainers), or a list of languages
-					ensure_installed = "maintained",
-					-- ensure_installed = {
-					-- 	"python",
-					-- 	"javascript",
-					-- 	"typescript",
-					-- 	"c_sharp",
-					-- 	"tsx",
-					-- 	"lua",
-					-- 	"yaml",
-					-- 	"graphql",
-					-- 	"java",
-					-- 	"scss",
-					-- 	"css",
-					-- 	"html",
-					-- 	"jsdoc",
-					-- 	"dockerfile",
-					-- 	"toml",
-					-- 	"json",
-					-- 	"json5",
-					-- 	"markdown"
-					-- },
+					-- ensure_installed = "maintained",
+					ensure_installed = {
+						"python",
+						"javascript",
+						"typescript",
+						"c_sharp",
+						"tsx",
+						"lua",
+						"yaml",
+						"graphql",
+						"java",
+						"scss",
+						"css",
+						"html",
+						"jsdoc",
+						"dockerfile",
+						"toml",
+						"json",
+						"json5",
+						"markdown"
+					},
 					-- false will disable the whole extension
 					highlight = { enable = true },
 					-- async installation of parsers

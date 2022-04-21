@@ -230,6 +230,7 @@ _G.packer_plugins = {
     url = "https://github.com/AckslD/nvim-neoclip.lua"
   },
   ["nvim-treesitter"] = {
+    config = { "\27LJ\2\nÎ\2\0\0\4\0\f\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\0025\3\b\0=\3\t\0025\3\n\0=\3\v\2B\0\2\1K\0\1\0\26context_commentstring\1\0\1\venable\2\vindent\1\0\1\venable\1\14highlight\1\0\1\venable\2\21ensure_installed\1\0\1\17sync_install\1\1\19\0\0\vpython\15javascript\15typescript\fc_sharp\btsx\blua\tyaml\fgraphql\tjava\tscss\bcss\thtml\njsdoc\15dockerfile\ttoml\tjson\njson5\rmarkdown\nsetup\28nvim-treesitter.configs\frequire\0" },
     loaded = true,
     path = "/Users/kean.mattingly@equipmentshare.com/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -412,6 +413,10 @@ if not vim.g.packer_custom_loader_enabled then
   vim.g.packer_custom_loader_enabled = true
 end
 
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+try_loadstring("\27LJ\2\nÎ\2\0\0\4\0\f\0\0156\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\0025\3\6\0=\3\a\0025\3\b\0=\3\t\0025\3\n\0=\3\v\2B\0\2\1K\0\1\0\26context_commentstring\1\0\1\venable\2\vindent\1\0\1\venable\1\14highlight\1\0\1\venable\2\21ensure_installed\1\0\1\17sync_install\1\1\19\0\0\vpython\15javascript\15typescript\fc_sharp\btsx\blua\tyaml\fgraphql\tjava\tscss\bcss\thtml\njsdoc\15dockerfile\ttoml\tjson\njson5\rmarkdown\nsetup\28nvim-treesitter.configs\frequire\0", "config", "nvim-treesitter")
+time([[Config for nvim-treesitter]], false)
 if should_profile then save_profiles() end
 
 end)

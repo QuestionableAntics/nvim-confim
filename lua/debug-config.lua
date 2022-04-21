@@ -1,7 +1,7 @@
 local dap_python = require 'dap-python'
 local dap_ui = require 'dapui'
 local dap_vscode_ext = require 'dap.ext.vscode'
-local dap = require 'dap'
+-- local dap = require 'dap'
 -- local dap_utils = require 'dap.utils'
 -- renamed the entire package and now everything's broke lol
 -- local dap_buddy = require 'dap-buddy'
