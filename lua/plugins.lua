@@ -118,8 +118,7 @@ require('packer').startup(function(use)
 			run = ':TSUpdate',
 			config = function()
 				require('nvim-treesitter.configs').setup {
-					-- one of "all", "maintained" (parsers with maintainers), or a list of languages
-					-- ensure_installed = "maintained",
+					-- either "all" or {"a", "list", "of", "languages"}
 					ensure_installed = {
 						"python",
 						"javascript",
@@ -153,7 +152,6 @@ require('packer').startup(function(use)
 				}
 			end
 		}
-		-- use { name = 'nvim-treesitter/nvim-treesitter', opts = { ['do'] = ':TSUpdate' } }
 		-- Highlight other instances of word under cursor
 		use 'yamatsum/nvim-cursorline'
 		-- Auto close and update jsx tags
@@ -204,8 +202,6 @@ require('packer').startup(function(use)
 		-- Session integration for Telescope
 		use 'rmagatti/session-lens'
 		-- Enhanced clipboard
-		-- use 'AckslD/nvim-neoclip.lua'
-		-- use { name = 'tami5/sqlite.lua', opts = { module = 'sqlite' } }
 		use {
 			"AckslD/nvim-neoclip.lua",
 			config = function()
