@@ -2,8 +2,11 @@
 
 require('packer').startup(function(use)
 
-	-- Speed up
-	use 'lewis6991/impatient.nvim'
+	-- Speeds up loading of lua modules for better start up time. Periodically check if this is needed (it will be merged into neovim main at some point)
+	use {
+		'lewis6991/impatient.nvim',
+		config = function() require('impatient') end
+	}
 
 	-- package manager
 	use 'wbthomason/packer.nvim'
@@ -17,11 +20,29 @@ require('packer').startup(function(use)
 		-- VS Code theme
 		use 'tomasiser/vim-code-dark'
 		-- Nice status bar
-		use 'nvim-lualine/lualine.nvim'
+		use {
+			'nvim-lualine/lualine.nvim',
+			config = function()
+				require('lualine').config {
+					options = { theme = 'onedark' },
+					sections = {
+						lualine_a = {
+							{ 'filename', path = 1 },
+						},
+					},
+				}
+			end
+		}
 		-- Tabline
-		use 'nanozuki/tabby.nvim'
+		use {
+			'nanozuki/tabby.nvim',
+			config = require('tabby').setup{}
+		}
 		-- LSP progress
-		use 'j-hui/fidget.nvim'
+		use {
+			'j-hui/fidget.nvim',
+			config = function() require('fidget').setup() end
+		}
 
 	--------------------------------------
 
@@ -43,7 +64,15 @@ require('packer').startup(function(use)
 		-- git in vim (required for other git plugins)
 		use 'tpope/vim-fugitive'
 		-- sign column symbols for git changes and git hunk actions
-		use 'lewis6991/gitsigns.nvim'
+		use {
+			'lewis6991/gitsigns.nvim',
+			config = function()
+				require('gitsigns').setup {
+					current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+					current_line_blame_opts = { delay = 200, },
+				}
+			end
+		}
 		-- git commit browser
 		use 'junegunn/gv.vim'
 		-- easy conflict resolution
@@ -78,7 +107,10 @@ require('packer').startup(function(use)
 	---------- Code Functionality ----------
 
 		-- Automatic pairing of ([{--'
-		use 'windwp/nvim-autopairs'
+		use {
+			'windwp/nvim-autopairs',
+			config = function() require('nvim-autopairs').setup{} end
+		}
 		-- Syntax tree parser for better syntax highlighting among other things
 		use {
 			'nvim-treesitter/nvim-treesitter',
@@ -124,7 +156,10 @@ require('packer').startup(function(use)
 		-- Highlight other instances of word under cursor
 		use 'yamatsum/nvim-cursorline'
 		-- Auto close and update jsx tags
-		use 'windwp/nvim-ts-autotag'
+		use {
+			'windwp/nvim-ts-autotag',
+			config = function() require('nvim-ts-autotag').setup() end
+		}
 		-- jsx aware commenting
 		use 'JoosepAlviste/nvim-ts-context-commentstring'
 		-- REPL
@@ -144,33 +179,68 @@ require('packer').startup(function(use)
 		-- File explorer
 		use { 'ms-jpq/chadtree', run = 'python3 -m chadtree deps', branch = 'chad' }
 		-- Fast motions
-		use 'phaazon/hop.nvim'
+		use {
+			'phaazon/hop.nvim',
+			config = function()
+				require('hop').setup {
+				-- Themes will overwrite this sometimes, this ensures that hop greys out non highlighted letters
+				create_hl_autocmd = true
+				}
+			end
+		}
 		-- Fuzzy motions
 		use 'rlane/pounce.nvim'
 		-- Session Management
-		use 'rmagatti/auto-session'
+		use {
+			'rmagatti/auto-session',
+			config = function()
+				require('auto-session').setup{
+					auto_session_root_dir = os.getenv('HOME') .. '/.vim/sessions/',
+					auto_session_suppress_dirs = { '~/' },
+				}
+			end
+		}
 		-- Session integration for Telescope
 		use 'rmagatti/session-lens'
 		-- Enhanced clipboard
 		-- use 'AckslD/nvim-neoclip.lua'
 		-- use { name = 'tami5/sqlite.lua', opts = { module = 'sqlite' } }
 		use {
-		  "AckslD/nvim-neoclip.lua",
-		  requires = {
-			{'tami5/sqlite.lua', module = 'sqlite'},
-			{'nvim-telescope/telescope.nvim'},
-		  },
+			"AckslD/nvim-neoclip.lua",
+			config = function()
+				require('neoclip').setup{
+					enable_persistent_history = true,
+					default_register_macros = 'q',
+					enable_macro_history = true,
+				}
+			end,
+			requires = {
+				{'tami5/sqlite.lua', module = 'sqlite'},
+				{'nvim-telescope/telescope.nvim'},
+			},
 		}
 		-- Comment stuff out with lua (does not work with nvim-ts-context-commentstring currently)
-		-- use 'numToStr/Comment.nvim'
+		-- use {
+		-- 	'numToStr/Comment.nvim',
+		-- 	config = function() require('Comment').setup() end
+		-- }
 		-- Comment stuff out
 		use 'tpope/vim-commentary'
 		-- Per project navigation
 		use 'ThePrimeagen/harpoon'
 		-- Folding
-		use 'anuvyklack/pretty-fold.nvim'
+		use {
+			'anuvyklack/pretty-fold.nvim',
+			config = function()
+				require('pretty-fold').setup()
+				require('pretty-fold.preview').setup()
+			end
+		}
 		-- Better Quickfix
-		use 'kevinhwang91/nvim-bqf'
+		use {
+			'kevinhwang91/nvim-bqf',
+			config = function() require('bqf').setup() end
+		}
 
 	--------------------------------------------------
 
@@ -182,11 +252,27 @@ require('packer').startup(function(use)
 		-- coq.nvim dependency
 		use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
 		-- coq.nvim snippets and other third party sources of completion
-		use 'ms-jpq/coq.thirdparty'
+		use {
+			'ms-jpq/coq.thirdparty',
+			config = function()
+				require('coq_3p') {
+					{ src = 'vim_dadbod_completion', short_name = 'DB' },
+					{ src = 'dap' },
+					-- { src = 'copilot', short_name = 'COP', accept_key = '<C-J>'}
+				}
+			end
+		}
 		-- AI in my code
 		use 'github/copilot.vim'
 		-- Lua AI in my code
-		-- use 'zbirenbaum/copilot.lua'
+		-- use {
+		-- 	'zbirenbaum/copilot.lua',
+		-- 	config = function()
+		-- 		require('copilot').setup {
+		-- 			plugin_manager_path = os.getenv('HOME') .. '/.vim/plugged',
+		-- 		}
+		-- 	end
+		-- }
 		-- Autocomplete source for vim dadbod (database)
 		use 'kristijanhusak/vim-dadbod-completion'
 
@@ -233,11 +319,30 @@ require('packer').startup(function(use)
 	---------- Misc ----------
 
 		-- Don't change initial buffer position when opening new buffer
-		use 'luukvbaal/stabilize.nvim'
+		use {
+			'luukvbaal/stabilize.nvim',
+			config = function()
+				require('stabilize').setup{
+					dap = {
+						breakpoints = {
+							icon = "🛑"
+						}
+					}
+				}
+			end
+		}
 		-- More speed up
 		use 'nathom/filetype.nvim'
 		-- Virtual text to add indentation guides
-		use 'lukas-reineke/indent-blankline.nvim'
+		use {
+			'lukas-reineke/indent-blankline.nvim',
+			config = function()
+				require('indent_blankline').setup{
+					show_current_context = true,
+					show_current_context_start = true,
+				}
+			end
+		}
 		-- Hints for keybindings
 		use 'folke/which-key.nvim'
 		-- Rest Client

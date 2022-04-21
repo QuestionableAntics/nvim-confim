@@ -250,6 +250,25 @@ for k, v in pairs(all_mappings) do
 	end
 end
 
+local which_key = require 'which-key'
+
+
+----------- Which Key ---------------
+
+	local which_key_mappings = {}
+
+	for k, v in pairs(all_mappings) do
+		which_key_mappings[k] = { v.action, v.label }
+	end
+
+	for k,v in pairs(stems) do
+		which_key_mappings[k] = v.label
+	end
+
+	which_key.register(which_key_mappings)
+
+------------------------------------
+
 return {
 	all_mappings = all_mappings,
 	stems = stems,
