@@ -24,7 +24,7 @@ local mappings = {}
 	local harpoon_mark = require('harpoon.mark')
 
 	-- These clash despite lua table indexes being case sensitive?
-	-- imap('<C-J>', 'copilot#Accept("\\<CR>")', { override = true }, { expr = true, silent = true, script = true })
+	imap('<C-J>', 'copilot#Accept("\\<CR>")', { override = true }, { expr = true, silent = true, script = true })
 	map('', '<C-j>', '<C-W>j')
 
 	mappings['random'] = {

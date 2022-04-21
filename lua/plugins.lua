@@ -1,10 +1,6 @@
 local VimPlug = vim.fn['plug#']
 
 local function Plug(config)
-	if config.disable then
-		return
-	end
-
 	if type(config) == 'string' then
 		VimPlug(config)
 	elseif type(config) == 'table' then
@@ -103,6 +99,8 @@ Plug 'lewis6991/impatient.nvim'
 	Plug 'tpope/vim-surround'
 	-- Better auto indent
 	Plug 'yioneko/nvim-yati'
+	-- Assorted things
+	-- Plug 'echasnovski/mini.nvim'
 
 ------------------------------------------------------------
 
@@ -122,7 +120,7 @@ Plug 'lewis6991/impatient.nvim'
 	-- Enhanced clipboard
 	Plug 'AckslD/nvim-neoclip.lua'
 	Plug { name = 'tami5/sqlite.lua', opts = { module = 'sqlite' } }
-	-- Comment stuff out
+	-- Comment stuff out with lua (does not work with nvim-ts-context-commentstring currently)
 	-- Plug 'numToStr/Comment.nvim'
 	Plug 'tpope/vim-commentary'
 	-- Per project navigation

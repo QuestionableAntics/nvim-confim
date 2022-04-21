@@ -3,7 +3,8 @@ local dap_ui = require 'dapui'
 local dap_vscode_ext = require 'dap.ext.vscode'
 local dap = require 'dap'
 -- local dap_utils = require 'dap.utils'
-local dap_install = require 'dap-install'
+-- renamed the entire package and now everything's broke lol
+-- local dap_buddy = require 'dap-buddy'
 local ultest = require 'ultest'
 
 --------------- Config ----------------
@@ -41,17 +42,17 @@ vim.diagnostic.config( {
 	dap_python.setup(os.getenv('HOME') .. '/.pyenv/versions/debugpy/bin/python')
 	dap_python.test_runner = 'pytest'
 
-	local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
+	-- local dbg_list = require("dap-buddy.api.debuggers").get_installed_debuggers()
 
-	for _, debugger in ipairs(dbg_list) do
-		dap_install.config(debugger)
-	end
+	-- for _, debugger in ipairs(dbg_list) do
+	-- 	dap_buddy.config(debugger)
+	-- end
 
 -- 	dap.adapters.firefox = {
 -- 		type = 'exectuable',
 -- 		command = 'node',
 
-	dap_install.setup()
+	-- dap_buddy.setup()
 
 	-- dap.adapters.node2 = {
 	-- 	type = "executable",
