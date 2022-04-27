@@ -143,4 +143,10 @@ M.Spawn_note_window = function()
   ]]
 end
 
+M.packer_use = function()
+	local use = nil
+	require('packer').startup(function(pack_use) use = pack_use end)
+	return use
+end
+
 return M

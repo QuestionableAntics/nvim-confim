@@ -1,360 +1,368 @@
 -- https://github.com/wbthomason/packer.nvim
 
-require('packer').startup(function(use)
+local use = require('utils').packer_use()
 
-	-- Speeds up loading of lua modules for better start up time. Periodically check if this is needed (it will be merged into neovim main at some point)
+-- Speeds up loading of lua modules for better start up time. Periodically check if this is needed (it will be merged into neovim main at some point)
+use {
+	'lewis6991/impatient.nvim',
+	config = function() require('impatient') end
+}
+
+-- package manager
+use 'wbthomason/packer.nvim'
+
+---------- Visuals ----------
+
+	-- More pretty icons
+	use 'kyazdani42/nvim-web-devicons'
+	-- highlight matching html tags
+	use 'gregsexton/MatchTag'
+	-- VS Code theme
+	use 'tomasiser/vim-code-dark'
+	-- Nice status bar
 	use {
-		'lewis6991/impatient.nvim',
-		config = function() require('impatient') end
+		'nvim-lualine/lualine.nvim',
+		requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+		config = function()
+			require('lualine').setup {
+				options = { theme = 'onedark' },
+				sections = {
+					lualine_a = {
+						{ 'filename', path = 1 },
+					},
+				},
+			}
+		end
+	}
+	-- Tabline
+	use {
+		'nanozuki/tabby.nvim',
+		config = require('tabby').setup{}
+	}
+	-- LSP progress
+	use {
+		'j-hui/fidget.nvim',
+		config = function() require('fidget').setup() end
 	}
 
-	-- package manager
-	use 'wbthomason/packer.nvim'
-
-	---------- Visuals ----------
-
-		-- More pretty icons
-		use 'kyazdani42/nvim-web-devicons'
-		-- highlight matching html tags
-		use 'gregsexton/MatchTag'
-		-- VS Code theme
-		use 'tomasiser/vim-code-dark'
-		-- Nice status bar
-		use {
-			'nvim-lualine/lualine.nvim',
-			requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-			config = function()
-				require('lualine').setup {
-					options = { theme = 'onedark' },
-					sections = {
-						lualine_a = {
-							{ 'filename', path = 1 },
-						},
-					},
-				}
-			end
-		}
-		-- Tabline
-		use {
-			'nanozuki/tabby.nvim',
-			config = require('tabby').setup{}
-		}
-		-- LSP progress
-		use {
-			'j-hui/fidget.nvim',
-			config = function() require('fidget').setup() end
-		}
-
-	--------------------------------------
+--------------------------------------
 
 
-	---------- DB ----------
+---------- DB ----------
 
-		-- DB interface
-		use 'tpope/vim-dadbod'
-		-- UI for DB interface
-		use 'kristijanhusak/vim-dadbod-ui'
-		-- Postgres driver
-		use 'jackc/pgx'
+	-- DB interface
+	use 'tpope/vim-dadbod'
+	-- UI for DB interface
+	use 'kristijanhusak/vim-dadbod-ui'
+	-- Postgres driver
+	use 'jackc/pgx'
 
-	----------------------------
-
-
-	---------- Version Control ----------
-
-		-- git in vim (required for other git plugins)
-		use 'tpope/vim-fugitive'
-		-- sign column symbols for git changes and git hunk actions
-		use {
-			'lewis6991/gitsigns.nvim',
-			config = function()
-				require('gitsigns').setup {
-					current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
-					current_line_blame_opts = { delay = 200, },
-				}
-			end
-		}
-		-- git commit browser
-		use 'junegunn/gv.vim'
-		-- easy conflict resolution
-		use 'rhysd/conflict-marker.vim'
-
-	------------------------------------------------------
+----------------------------
 
 
-	------------- Debug/Test -------------
+---------- Version Control ----------
 
-		-- Debug adapter protocol, base plugin {name = for debugging}
-		use 'mfussenegger/nvim-dap'
-		-- Defaults for Python debugging
-		use 'mfussenegger/nvim-dap-python'
-		-- UI for nvim dap
-		use 'rcarriga/nvim-dap-ui'
-		-- Virtual Text
-		use 'theHamsta/nvim-dap-virtual-text'
-		-- Testing
-		use 'vim-test/vim-test' -- required for ultest
-		use { 'rcarriga/vim-ultest', run = ':UpdateRemotePlugins' }
-		-- Debug installer
-		use 'Pocco81/DAPInstall.nvim'
-		-- Debug Jest
-		use 'David-Kunz/jester'
-		-- Develop inside Docker containers
-		-- use 'jamestthompson3/nvim-remote-containers'
+	-- git in vim (required for other git plugins)
+	use 'tpope/vim-fugitive'
+	-- sign column symbols for git changes and git hunk actions
+	use {
+		'lewis6991/gitsigns.nvim',
+		config = function()
+			require('gitsigns').setup {
+				current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+				current_line_blame_opts = { delay = 200, },
+			}
+		end
+	}
+	-- git commit browser
+	use 'junegunn/gv.vim'
+	-- easy conflict resolution
+	use 'rhysd/conflict-marker.vim'
 
-	---------------------------------
-
-
-	---------- Code Functionality ----------
-
-		-- Automatic pairing of ([{--'
-		use {
-			'windwp/nvim-autopairs',
-			config = function() require('nvim-autopairs').setup{} end
-		}
-		-- Syntax tree parser for better syntax highlighting among other things
-		use {
-			'nvim-treesitter/nvim-treesitter',
-			run = ':TSUpdate',
-			config = function()
-				require('nvim-treesitter.configs').setup {
-					-- either "all" or {"a", "list", "of", "languages"}
-					ensure_installed = {
-						"python",
-						"javascript",
-						"typescript",
-						"c_sharp",
-						"tsx",
-						"lua",
-						"yaml",
-						"graphql",
-						"java",
-						"scss",
-						"css",
-						"html",
-						"jsdoc",
-						"dockerfile",
-						"toml",
-						"json",
-						"json5",
-						"markdown"
-					},
-					-- false will disable the whole extension
-					highlight = { enable = true },
-					-- async installation of parsers
-					sync_install = false,
-					-- something else does indentations already, this would probably be better if I can disable whatever else is indenting
-					indent = { enable = false },
-					-- enable nvim-ts-context-commentstring
-					context_commentstring = { enable = true },
-					-- Better auto indent
-					-- yati = { enable = true },
-				}
-			end
-		}
-		-- Highlight other instances of word under cursor
-		use 'yamatsum/nvim-cursorline'
-		-- Auto close and update jsx tags
-		use {
-			'windwp/nvim-ts-autotag',
-			config = function() require('nvim-ts-autotag').setup() end
-		}
-		-- jsx aware commenting
-		use 'JoosepAlviste/nvim-ts-context-commentstring'
-		-- REPL
-		use 'metakirby5/codi.vim'
-		-- Change the surroundings
-		use 'tpope/vim-surround'
-		-- Better auto indent
-		use 'yioneko/nvim-yati'
-		-- Assorted things
-		-- use 'echasnovski/mini.nvim'
-
-	------------------------------------------------------------
+------------------------------------------------------
 
 
-	---------- Functionality ----------
+------------- Debug/Test -------------
 
-		-- File explorer
-		use { 'ms-jpq/chadtree', run = 'python3 -m chadtree deps', branch = 'chad' }
-		-- Fast motions
-		use {
-			'phaazon/hop.nvim',
-			config = function()
-				require('hop').setup {
-				-- Themes will overwrite this sometimes, this ensures that hop greys out non highlighted letters
-				create_hl_autocmd = true
-				}
-			end
-		}
-		-- Fuzzy motions
-		use 'rlane/pounce.nvim'
-		-- Session Management
-		use {
-			'rmagatti/auto-session',
-			config = function()
-				require('auto-session').setup{
-					auto_session_root_dir = os.getenv('HOME') .. '/.vim/sessions/',
-					auto_session_suppress_dirs = { '~/' },
-				}
-			end
-		}
-		-- Session integration for Telescope
-		use 'rmagatti/session-lens'
-		-- Enhanced clipboard
-		use {
-			"AckslD/nvim-neoclip.lua",
-			config = function()
-				require('neoclip').setup{
-					enable_persistent_history = true,
-					default_register_macros = 'q',
-					enable_macro_history = true,
-				}
-			end,
-			requires = {
-				{'tami5/sqlite.lua', module = 'sqlite'},
-				{'nvim-telescope/telescope.nvim'},
-			},
-		}
-		-- Comment stuff out with lua (does not work with nvim-ts-context-commentstring currently)
-		-- use {
-		-- 	'numToStr/Comment.nvim',
-		-- 	config = function() require('Comment').setup() end
-		-- }
-		-- Comment stuff out
-		use 'tpope/vim-commentary'
-		-- Per project navigation
-		use 'ThePrimeagen/harpoon'
-		-- Folding
-		use {
-			'anuvyklack/pretty-fold.nvim',
-			config = function()
-				require('pretty-fold').setup()
-				require('pretty-fold.preview').setup()
-			end
-		}
-		-- Better Quickfix
-		use {
-			'kevinhwang91/nvim-bqf',
-			config = function() require('bqf').setup() end
-		}
+	-- Debug adapter protocol, base plugin {name = for debugging}
+	use 'mfussenegger/nvim-dap'
+	-- Defaults for Python debugging
+	use 'mfussenegger/nvim-dap-python'
+	-- UI for nvim dap
+	use 'rcarriga/nvim-dap-ui'
+	-- Virtual Text
+	use 'theHamsta/nvim-dap-virtual-text'
+	-- Testing
+	use 'vim-test/vim-test' -- required for ultest
+	use { 'rcarriga/vim-ultest', run = ':UpdateRemotePlugins' }
+	-- Debug installer
+	use 'Pocco81/DAPInstall.nvim'
+	-- Debug Jest
+	use 'David-Kunz/jester'
+	-- Develop inside Docker containers
+	-- use 'jamestthompson3/nvim-remote-containers'
 
-	--------------------------------------------------
+---------------------------------
 
 
-	---------- Completion ----------
+---------- Code Functionality ----------
 
-		-- Fast as FUCK autocompletion
-		use { 'ms-jpq/coq_nvim', branch = 'coq' }
-		-- coq.nvim dependency
-		use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
-		-- coq.nvim snippets and other third party sources of completion
-		use {
-			'ms-jpq/coq.thirdparty',
-			config = function()
-				require('coq_3p') {
-					{ src = 'vim_dadbod_completion', short_name = 'DB' },
-					{ src = 'dap' },
-					-- { src = 'copilot', short_name = 'COP', accept_key = '<C-J>'}
-				}
-			end
-		}
-		-- AI in my code
-		use 'github/copilot.vim'
-		-- Lua AI in my code
-		-- use {
-		-- 	'zbirenbaum/copilot.lua',
-		-- 	config = function()
-		-- 		require('copilot').setup {
-		-- 			plugin_manager_path = os.getenv('HOME') .. '/.vim/plugged',
-		-- 		}
-		-- 	end
-		-- }
-		-- Autocomplete source for vim dadbod (database)
-		use 'kristijanhusak/vim-dadbod-completion'
+	-- Automatic pairing of ([{--'
+	use {
+		'windwp/nvim-autopairs',
+		config = function() require('nvim-autopairs').setup{} end
+	}
+	-- Syntax tree parser for better syntax highlighting among other things
+	use {
+		'nvim-treesitter/nvim-treesitter',
+		run = ':TSUpdate',
+		config = function()
+			require('nvim-treesitter.configs').setup {
+				-- either "all" or {"a", "list", "of", "languages"}
+				ensure_installed = {
+					"python",
+					"javascript",
+					"typescript",
+					"c_sharp",
+					"tsx",
+					"lua",
+					"yaml",
+					"graphql",
+					"java",
+					"scss",
+					"css",
+					"html",
+					"jsdoc",
+					"dockerfile",
+					"toml",
+					"json",
+					"json5",
+					"markdown"
+				},
+				-- false will disable the whole extension
+				highlight = { enable = true },
+				-- async installation of parsers
+				sync_install = false,
+				-- something else does indentations already, this would probably be better if I can disable whatever else is indenting
+				indent = { enable = false },
+				-- enable nvim-ts-context-commentstring
+				context_commentstring = { enable = true },
+				-- Better auto indent
+				-- yati = { enable = true },
+			}
+		end
+	}
+	-- Highlight other instances of word under cursor
+	use 'yamatsum/nvim-cursorline'
+	-- Auto close and update jsx tags
+	use {
+		'windwp/nvim-ts-autotag',
+		config = function() require('nvim-ts-autotag').setup() end
+	}
+	-- jsx aware commenting
+	use 'JoosepAlviste/nvim-ts-context-commentstring'
+	-- REPL
+	use 'metakirby5/codi.vim'
+	-- Change the surroundings
+	use 'tpope/vim-surround'
+	-- Better auto indent
+	use 'yioneko/nvim-yati'
+	-- Assorted things
+	-- use 'echasnovski/mini.nvim'
 
-	--------------------------------------------
-
-
-	---------- Search ----------
-
-		-- Pretty fuzzy finder
-		use 'nvim-telescope/telescope.nvim'
-		-- Telescope fzf integration
-		use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-		-- rg raw live grep
-		use 'nvim-telescope/telescope-rg.nvim'
-		-- dap integration
-		use 'nvim-telescope/telescope-dap.nvim'
-		-- Uses telescope for the native ui-select
-		use 'nvim-telescope/telescope-ui-select.nvim'
-
-	------------------------------------
-
-
-	---------- Language Server Stuff ----------
-
-		-- A collection of common configurations for Neovim's built-in language server client
-		-- Handles automatically launching and initializing installed language servers
-		use 'neovim/nvim-lspconfig'
-		-- LSP installer
-		use 'williamboman/nvim-lsp-installer'
-
-		---- General dependencies
-		-- popup window interface
-		use 'nvim-lua/popup.nvim'
-		-- a bunch of nice functions that creators of nvim plugins don't want to rewrite
-		use 'nvim-lua/plenary.nvim'
-		-- language server for alternative completions provided through LSP
-		use 'jose-elias-alvarez/null-ls.nvim'
-		-- Make working with TS LS better
-		use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-
-	------------------------------------------------------------------
+------------------------------------------------------------
 
 
-	---------- Misc ----------
+---------- Functionality ----------
 
-		-- Don't change initial buffer position when opening new buffer
-		use {
-			'luukvbaal/stabilize.nvim',
-			config = function()
-				require('stabilize').setup{
-					dap = {
-						breakpoints = {
-							icon = "🛑"
-						}
+	-- File explorer
+	use {
+		'ms-jpq/chadtree',
+		run = 'python3 -m chadtree deps',
+		branch = 'chad'
+	}
+	-- Fast motions
+	use {
+		'phaazon/hop.nvim',
+		config = function()
+			require('hop').setup {
+			-- Themes will overwrite this sometimes, this ensures that hop greys out non highlighted letters
+			create_hl_autocmd = true
+			}
+		end
+	}
+	-- Fuzzy motions
+	use 'rlane/pounce.nvim'
+	-- Session Management
+	use {
+		'rmagatti/auto-session',
+		config = function()
+			require('auto-session').setup{
+				auto_session_root_dir = os.getenv('HOME') .. '/.vim/sessions/',
+				auto_session_suppress_dirs = { '~/' },
+			}
+		end
+	}
+	-- Session integration for Telescope
+	use 'rmagatti/session-lens'
+	-- Enhanced clipboard
+	use {
+		"AckslD/nvim-neoclip.lua",
+		config = function()
+			require('neoclip').setup{
+				enable_persistent_history = true,
+				default_register_macros = 'q',
+				enable_macro_history = true,
+			}
+		end,
+		requires = {
+			{'tami5/sqlite.lua', module = 'sqlite'},
+			{'nvim-telescope/telescope.nvim'},
+		},
+	}
+	-- Comment stuff out with lua (does not work with nvim-ts-context-commentstring currently)
+	-- use {
+	-- 	'numToStr/Comment.nvim',
+	-- 	config = function() require('Comment').setup() end
+	-- }
+	-- Comment stuff out
+	use 'tpope/vim-commentary'
+	-- Per project navigation
+	use 'ThePrimeagen/harpoon'
+	-- Folding
+	use {
+		'anuvyklack/pretty-fold.nvim',
+		config = function()
+			require('pretty-fold').setup()
+			require('pretty-fold.preview').setup()
+		end
+	}
+	-- Better Quickfix
+	use {
+		'kevinhwang91/nvim-bqf',
+		config = function() require('bqf').setup() end
+	}
+
+--------------------------------------------------
+
+
+---------- Completion ----------
+
+	-- Fast as FUCK autocompletion
+	use { 'ms-jpq/coq_nvim', branch = 'coq' }
+	-- coq.nvim dependency
+	use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
+	-- coq.nvim snippets and other third party sources of completion
+	use {
+		'ms-jpq/coq.thirdparty',
+		config = function()
+			require('coq_3p') {
+				{ src = 'vim_dadbod_completion', short_name = 'DB' },
+				{ src = 'dap' },
+				-- { src = 'copilot', short_name = 'COP', accept_key = '<C-J>'}
+			}
+		end
+	}
+	-- AI in my code
+	use 'github/copilot.vim'
+	-- Lua AI in my code
+	-- use {
+	-- 	'zbirenbaum/copilot.lua',
+	-- 	-- event = {"VimEnter"},
+	-- 	config = function()
+	-- 		vim.defer_fn(function()
+	-- 			require("copilot").setup()
+	-- 		end, 100)
+	-- 	end,
+	-- }
+	-- Autocomplete source for vim dadbod (database)
+	use 'kristijanhusak/vim-dadbod-completion'
+
+--------------------------------------------
+
+
+---------- Search ----------
+
+	-- Pretty fuzzy finder
+	use 'nvim-telescope/telescope.nvim'
+	-- Telescope fzf integration
+	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+	-- rg raw live grep
+	use 'nvim-telescope/telescope-rg.nvim'
+	-- dap integration
+	use 'nvim-telescope/telescope-dap.nvim'
+	-- Uses telescope for the native ui-select
+	use 'nvim-telescope/telescope-ui-select.nvim'
+
+------------------------------------
+
+
+---------- Language Server Stuff ----------
+
+	-- A collection of common configurations for Neovim's built-in language server client
+	-- Handles automatically launching and initializing installed language servers
+	use 'neovim/nvim-lspconfig'
+	-- LSP installer
+	use {
+		'williamboman/nvim-lsp-installer',
+		requires = { 'neovim/nvim-lspconfig' },
+	}
+
+	---- General dependencies
+	-- popup window interface
+	use 'nvim-lua/popup.nvim'
+	-- a bunch of nice functions that creators of nvim plugins don't want to rewrite
+	use 'nvim-lua/plenary.nvim'
+	-- language server for alternative completions provided through LSP
+	use 'jose-elias-alvarez/null-ls.nvim'
+	-- Make working with TS LS better
+	use 'jose-elias-alvarez/nvim-lsp-ts-utils'
+
+------------------------------------------------------------------
+
+
+---------- Misc ----------
+
+	-- Don't change initial buffer position when opening new buffer
+	use {
+		'luukvbaal/stabilize.nvim',
+		config = function()
+			require('stabilize').setup{
+				dap = {
+					breakpoints = {
+						icon = "🛑"
 					}
 				}
-			end
-		}
-		-- More speed up
-		use 'nathom/filetype.nvim'
-		-- Virtual text to add indentation guides
-		use {
-			'lukas-reineke/indent-blankline.nvim',
-			config = function()
-				require('indent_blankline').setup{
-					show_current_context = true,
-					show_current_context_start = true,
-				}
-			end
-		}
-		-- Hints for keybindings
-		use 'folke/which-key.nvim'
-		-- Rest Client
-		-- use 'NTBBloodbath/rest.nvim'
-		-- Breakdown of what vim spends time on when starting up
-		-- use 'dstein64/vim-startuptime'
+			}
+		end
+	}
+	-- More speed up
+	use 'nathom/filetype.nvim'
+	-- Virtual text to add indentation guides
+	use {
+		'lukas-reineke/indent-blankline.nvim',
+		config = function()
+			require('indent_blankline').setup{
+				show_current_context = true,
+				show_current_context_start = true,
+			}
+		end
+	}
+	-- Hints for keybindings
+	use 'folke/which-key.nvim'
+	-- Rest Client
+	-- use 'NTBBloodbath/rest.nvim'
+	-- Breakdown of what vim spends time on when starting up
+	-- use 'dstein64/vim-startuptime'
 
-	--------------------------------
+--------------------------------
 
 
-	-------- Development --------
+-------- Development --------
 
-		-- Reusable UI components
-		-- use 'MunifTanjim/nui.nvim'
+	-- Reusable UI components
+	-- use 'MunifTanjim/nui.nvim'
 
-	-----------------------------
+-----------------------------
 
-end)
+-- end)
