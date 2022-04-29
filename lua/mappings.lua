@@ -178,22 +178,22 @@ local mappings = {}
 
 ---------------------------- Git ------------------------
 
--- 	local gitsigns = require('gitsigns')
+	local gitsigns = require('gitsigns')
 
--- 	mappings['git'] = {
--- 		[']c'] = { mode = 'n', action = gitsigns.next_hunk, label = 'Next hunk' },
--- 		['[c'] = { mode = 'n', action = gitsigns.prev_hunk, label = 'Previous hunk' },
--- 		['<leader>hs'] = { mode = 'n', action = gitsigns.stage_hunk, label = 'Stage hunk' },
--- 		['<leader>hu'] = { mode = 'n', action = gitsigns.undo_stage_hunk, label = 'Undo stage hunk' },
--- 		['<leader>hr'] = { mode = 'n', action = gitsigns.reset_hunk, label = 'Reset hunk' },
--- 		['<leader>hR'] = { mode = 'n', action = gitsigns.reset_buffer, label = 'Reset buffer' },
--- 		['<leader>hp'] = { mode = 'n', action = gitsigns.preview_hunk, label = 'Preview hunk' },
--- 		['<leader>hb'] = { mode = 'n', action = function () gitsigns.blame_line{full=true} end, label = 'Blame line' },
--- 		['<leader>hS'] = { mode = 'n', action = gitsigns.stage_buffer, label = 'Stage buffer' },
--- 		['<leader>hU'] = { mode = 'n', action = gitsigns.reset_buffer_index, label = 'Reset buffer index' },
--- 	}
+	mappings['git'] = {
+		[']c'] = { mode = 'n', action = gitsigns.next_hunk, label = 'Next hunk' },
+		['[c'] = { mode = 'n', action = gitsigns.prev_hunk, label = 'Previous hunk' },
+		['<leader>hs'] = { mode = 'n', action = gitsigns.stage_hunk, label = 'Stage hunk' },
+		['<leader>hu'] = { mode = 'n', action = gitsigns.undo_stage_hunk, label = 'Undo stage hunk' },
+		['<leader>hr'] = { mode = 'n', action = gitsigns.reset_hunk, label = 'Reset hunk' },
+		['<leader>hR'] = { mode = 'n', action = gitsigns.reset_buffer, label = 'Reset buffer' },
+		['<leader>hp'] = { mode = 'n', action = gitsigns.preview_hunk, label = 'Preview hunk' },
+		['<leader>hb'] = { mode = 'n', action = function () gitsigns.blame_line{full=true} end, label = 'Blame line' },
+		['<leader>hS'] = { mode = 'n', action = gitsigns.stage_buffer, label = 'Stage buffer' },
+		['<leader>hU'] = { mode = 'n', action = gitsigns.reset_buffer_index, label = 'Reset buffer index' },
+	}
 
--- 	stems['<leader>h'] = { label = 'Git' }
+	stems['<leader>h'] = { label = 'Git' }
 
 ---------------------------------------------------------
 
