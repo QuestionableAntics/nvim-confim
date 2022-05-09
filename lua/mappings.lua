@@ -15,7 +15,6 @@ cmap('jk', '<ESC>')
 tmap('jk', [[<C-\><C-N>]])
 
 local stems = {}
-
 local mappings = {}
 
 ------------------- Random -------------------

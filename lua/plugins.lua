@@ -69,7 +69,7 @@ use 'wbthomason/packer.nvim'
 		'lewis6991/gitsigns.nvim',
 		config = function()
 			require('gitsigns').setup {
-				current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+				current_line_blame = true,
 				current_line_blame_opts = { delay = 200, },
 			}
 		end
@@ -149,6 +149,19 @@ use 'wbthomason/packer.nvim'
 				context_commentstring = { enable = true },
 				-- Better auto indent
 				-- yati = { enable = true },
+			    textobjects = {
+					select = {
+					    enable = true,
+					    -- Automatically jump forward to textobj, similar to targets.vim
+					    lookahead = true,
+						keymaps = {
+							["af"] = "@function.outer",
+							["if"] = "@function.inner",
+							["ac"] = "@class.outer",
+							["ic"] = "@class.inner",
+						},
+					},
+				},
 			}
 		end
 	}
@@ -193,6 +206,8 @@ use 'wbthomason/packer.nvim'
 	}
 	-- Fuzzy motions
 	use 'rlane/pounce.nvim'
+	-- Additional treesitter functionality (in/around function/class/etc. operations)
+	use 'nvim-treesitter/nvim-treesitter-textobjects'
 	-- Session Management
 	use {
 		'rmagatti/auto-session',
@@ -233,9 +248,12 @@ use 'wbthomason/packer.nvim'
 	use {
 		'anuvyklack/pretty-fold.nvim',
 		config = function()
-			require('pretty-fold').setup()
-			require('pretty-fold.preview').setup()
-		end
+			require('pretty-fold').setup{}
+			require('pretty-fold.preview').setup{}
+		end,
+		requires = {
+			'anuvyklack/nvim-keymap-amend'
+		}
 	}
 	-- Better Quickfix
 	use {
