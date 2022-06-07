@@ -75,7 +75,7 @@ local mappings = {}
 	mappings['fuzzy_finder'] = {
 		['<leader>ff'] = { mode = 'n', action = telescope_builtin.find_files, label = 'Find files' },
 		-- ['<leader>fg'] = { mode = 'n', action = telescope_builtin.live_grep, label = 'Live Grep' },
-		['<leader>fg'] = { mode = 'n', action = telescope.extensions.live_grep_raw.live_grep_raw, label = 'Live Grep' },
+		['<leader>fg'] = { mode = 'n', action = telescope.extensions.live_grep_args.live_grep_args, label = 'Live Grep' },
 		['<leader>fb'] = { mode = 'n', action = telescope_builtin.buffers, label = 'Find Buffers' },
 		['<leader>fh'] = { mode = 'n', action = telescope_builtin.help_tags, label = 'Find Help Tags' },
 		['<leader>fo'] = { mode = 'n', action = telescope_builtin.oldfiles, label = 'Find Old Files' },

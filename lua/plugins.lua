@@ -37,7 +37,7 @@ use 'wbthomason/packer.nvim'
 	-- Tabline
 	use {
 		'nanozuki/tabby.nvim',
-		config = require('tabby').setup{}
+		config = function() require('tabby').setup{} end
 	}
 	-- LSP progress
 	use {

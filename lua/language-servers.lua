@@ -86,6 +86,8 @@ local lspconfig = require 'lspconfig'
 
 		-- and the smallest for the most used lol
 		pyright = {},
+
+		bashls = {},
 	}
 
 	for server, config in pairs(server_configs) do
