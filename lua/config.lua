@@ -78,14 +78,24 @@ opt.lazyredraw = true
 opt.smarttab = true
 opt.smartindent = true
 
+-- Set the height of the command bar to 0 line
+opt.cmdheight = 0
+
 ----- Visuals -----
 
 	-- Highlight yanked text on yank
-	vim.cmd [[ autocmd TextYankPost * silent! lua vim.highlight.on_yank() ]]
+	vim.api.nvim_create_augroup("reset_group", {clear = true})
+	vim.api.nvim_create_autocmd("TextYankPost", {
+		group = "reset_group",
+		pattern = "*",
+		callback = function () require("vim.highlight").on_yank() end,
+	})
 
-	-- No other way to set colorscheme in Lua config currently
-	vim.cmd 'colorscheme codedark'
-
+	-- Set the colorscheme
+	vim.api.nvim_cmd({
+		cmd = 'colorscheme',
+		args = {'codedark'}
+	}, {})
 	-- Nice icons for DBUI
 	vim.g.db_ui_use_nerd_fonts = 1
 

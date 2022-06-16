@@ -95,6 +95,31 @@ use 'wbthomason/packer.nvim'
 	-- Testing
 	use 'vim-test/vim-test' -- required for ultest
 	use { 'rcarriga/vim-ultest', run = ':UpdateRemotePlugins' }
+	use {
+		'nvim-neotest/neotest',
+		requires = {
+			'nvim-lua/plenary.nvim',
+			'nvim-treesitter/nvim-treesitter',
+			'antoinemadec/FixCursorHold.nvim',
+			'haydenmeade/neotest-jest',
+			'nvim-neotest/neotest-python',
+			'nvim-neotest/neotest-vim-test'
+		},
+		config = function()
+			require("neotest").setup({
+				adapters = {
+					require("neotest-python")({
+						dap = { justMyCode = false },
+					}),
+					require("neotest-jest"),
+					require("neotest-vim-test")({
+						ignore_file_types = { "python", "vim", "lua" },
+					}),
+				},
+			})
+		end
+
+	}
 	-- Debug installer
 	use 'Pocco81/DAPInstall.nvim'
 	-- Debug Jest
@@ -199,8 +224,8 @@ use 'wbthomason/packer.nvim'
 		'phaazon/hop.nvim',
 		config = function()
 			require('hop').setup {
-			-- Themes will overwrite this sometimes, this ensures that hop greys out non highlighted letters
-			create_hl_autocmd = true
+				-- Themes will overwrite this sometimes, this ensures that hop greys out non highlighted letters
+				create_hl_autocmd = true
 			}
 		end
 	}

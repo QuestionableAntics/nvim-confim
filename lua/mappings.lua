@@ -96,15 +96,20 @@ local mappings = {}
 
 	vim.cmd [[nmap ]t <Plug>(ultest-next-fail)<CR>]]
 	vim.cmd [[nmap [t <Plug>(ultest-prev-fail)<CR>]]
-	vim.cmd [[nmap <leader>uf <Plug>(ultest-run-file)<CR>]]
+	-- vim.cmd [[nmap <leader>uf <Plug>(ultest-run-file)<CR>]]
+
+	local neotest = require('neotest')
 
 	mappings['testing'] = {
+		-- TODO: Revisit this later and see if there's clearer errors around it not working
+		-- ['<leader>dn'] = { mode = 'n', action = function() neotest.run.run({strategy = "dap"}) end, label = 'Debug Nearest Test' },
 		['<leader>dn'] = { mode = 'n', action = '<cmd>UltestDebugNearest<CR>', label = 'Debug Nearest Test' },
 		['<leader>df'] = { mode = 'n', action = '<cmd>UltestDebug<CR>', label = 'Debug Test' },
-		['<leader>un'] = { mode = 'n', action = '<cmd>UltestNearest<CR>', label = 'Run Nearest Test' },
-		['<leader>ul'] = { mode = 'n', action = '<cmd>UltestLast<CR>', label = 'Run Last Test' },
-		['<leader>us'] = { mode = 'n', action = '<cmd>UltestSummary<CR>', label = 'Run Summary' },
-		['<leader>uo'] = { mode = 'n', action = '<cmd>UltestOutput<CR>', label = 'Run Output' },
+		['<leader>un'] = { mode = 'n', action = function() neotest.run.run() end, label = 'Run Nearest Test' },
+		['<leader>ul'] = { mode = 'n', action = function() neotest.run.run_last() end, label = 'Run Last Test' },
+		['<leader>uf'] = { mode = 'n', action = function() neotest.run.run(vim.fn.expand("%")) end, label = 'Run File' },
+		['<leader>us'] = { mode = 'n', action = function() neotest.summary.open() end, label = 'Open Test Summary' },
+		['<leader>uo'] = { mode = 'n', action = function() neotest.output.open() end, label = 'Test Output' },
 	}
 
 	stems['<leader>u'] = { label = 'Testing' }
