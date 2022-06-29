@@ -60,6 +60,9 @@ local mappings = {}
 		['crp'] = { mode = 'n', action = ':let @* = expand("%:~")<CR>', label = 'Copy current file path from home directory' },
 		-- copy current file name
 		['cn'] = { mode = 'n', action = ':let @* = expand("%:t")<CR>', label = 'Copy current file name' },
+
+		-- open markdown previewer
+		['<leader>md'] = { mode = 'n', action = ':MarkdownPreview', label = 'Open Markdown Previewer' },
 	}
 
 	stems['<leader>r'] = { label =  'REPL' }

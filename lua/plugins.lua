@@ -1,5 +1,6 @@
 -- https://github.com/wbthomason/packer.nvim
 
+-- Reduce nesting
 local use = require('utils').packer_use()
 
 -- Speeds up loading of lua modules for better start up time. Periodically check if this is needed (it will be merged into neovim main at some point)
@@ -397,6 +398,16 @@ use 'wbthomason/packer.nvim'
 	-- use 'NTBBloodbath/rest.nvim'
 	-- Breakdown of what vim spends time on when starting up
 	-- use 'dstein64/vim-startuptime'
+	-- Markdown previewer
+	use {
+		'iamcco/markdown-preview.nvim',
+		run = 'cd app && npm install',
+		setup = function()
+			vim.g.mkdp_filetypes = { 'markdown' }
+			vim.g.mkdp_auto_close = 0
+		end,
+		ft = { 'markdown' },
+	}
 
 --------------------------------
 

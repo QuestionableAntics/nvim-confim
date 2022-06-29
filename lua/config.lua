@@ -96,6 +96,7 @@ opt.cmdheight = 0
 		cmd = 'colorscheme',
 		args = {'codedark'}
 	}, {})
+
 	-- Nice icons for DBUI
 	vim.g.db_ui_use_nerd_fonts = 1
 
