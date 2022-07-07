@@ -402,11 +402,6 @@ use 'wbthomason/packer.nvim'
 	use {
 		'iamcco/markdown-preview.nvim',
 		run = 'cd app && npm install',
-		setup = function()
-			vim.g.mkdp_filetypes = { 'markdown' }
-			vim.g.mkdp_auto_close = 0
-		end,
-		ft = { 'markdown' },
 	}
 
 --------------------------------
