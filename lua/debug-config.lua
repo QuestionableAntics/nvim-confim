@@ -5,7 +5,6 @@ local dap_vscode_ext = require 'dap.ext.vscode'
 -- local dap_utils = require 'dap.utils'
 -- renamed the entire package and now everything's broke lol
 -- local dap_buddy = require 'dap-buddy'
-local ultest = require 'ultest'
 
 --------------- Config ----------------
 
@@ -18,9 +17,6 @@ vim.fn.sign_define('DapBreakpoint', {text='🛑', texthl='', linehl='', numhl=''
 -- logs live at ~/.cache/nvim/dap.log
 -- one of TRACE, DEBUG, INFO, WARN, ERROR
 -- dap.set_log_level('DEBUG')
-
--- Colored output
-vim.g.ultest_use_pty = 1
 
 -- Display variable values as virtual text next to the variable
 vim.g.diagnostic_enable_virtual_text = 1
@@ -146,30 +142,42 @@ vim.diagnostic.config( {
 	-- 	},
 	-- }
 
-	ultest.setup({
-		builders = {
-			['python#pytest'] = function (cmd)
-				-- The command can start with python command directly or an env manager
-				local non_modules = {'python', 'pipenv', 'poetry'}
-				-- Index of the python module to run the test.
-				local module_index = 1
-				if vim.tbl_contains(non_modules, cmd[1]) then
-					module_index = 3
-				end
-				local module = cmd[module_index]
+	-- ultest.setup({
+	-- 	builders = {
+	-- 		['python#pytest'] = function (cmd)
+	-- 			-- The command can start with python command directly or an env manager
+	-- 			local non_modules = {'python', 'pipenv', 'poetry'}
+	-- 			-- Index of the python module to run the test.
+	-- 			local module_index = 1
+	-- 			if vim.tbl_contains(non_modules, cmd[1]) then
+	-- 				module_index = 3
+	-- 			end
+	-- 			local module = cmd[module_index]
 
-				-- Remaining elements are arguments to the module
-				local args = vim.list_slice(cmd, module_index + 1)
-				return {
-					dap = {
-						type = 'python',
-						request = 'launch',
-						module = module,
-						args = args
-					}
-				}
-			end
-		}
+	-- 			-- Remaining elements are arguments to the module
+	-- 			local args = vim.list_slice(cmd, module_index + 1)
+	-- 			return {
+	-- 				dap = {
+	-- 					type = 'python',
+	-- 					request = 'launch',
+	-- 					module = module,
+	-- 					args = args
+	-- 				}
+	-- 			}
+	-- 		end
+	-- 	}
+	-- })
+
+	require("neotest").setup({
+		adapters = {
+			require("neotest-python")({
+				dap = { justMyCode = false },
+			}),
+			require("neotest-jest"),
+			require("neotest-vim-test")({
+				ignore_file_types = { "python", "vim", "lua" },
+			}),
+		},
 	})
 
 	dap_ui.setup()

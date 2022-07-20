@@ -79,7 +79,7 @@ opt.smarttab = true
 opt.smartindent = true
 
 -- Set the height of the command bar to 0 line
-opt.cmdheight = 0
+opt.cmdheight = 1
 
 ----- Visuals -----
 
@@ -92,10 +92,11 @@ opt.cmdheight = 0
 	})
 
 	-- Set the colorscheme
-	vim.api.nvim_cmd({
-		cmd = 'colorscheme',
-		args = {'codedark'}
-	}, {})
+	vim.cmd [[colorscheme codedark]]
+	-- vim.api.nvim_cmd({
+	-- 	cmd = 'colorscheme',
+	-- 	args = {'codedark'}
+	-- }, {})
 
 	-- Nice icons for DBUI
 	vim.g.db_ui_use_nerd_fonts = 1

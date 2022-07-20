@@ -35,7 +35,6 @@ local lspconfig = require 'lspconfig'
 	lspconfig.eslint.setup{}
 
 	local server_configs = {
-		-- the biggest config for the by far least used language
 		sumneko_lua = {
 			settings = {
 				Lua = {
@@ -84,7 +83,6 @@ local lspconfig = require 'lspconfig'
 			},
 		},
 
-		-- and the smallest for the most used lol
 		pyright = {},
 
 		bashls = {},
@@ -94,11 +92,13 @@ local lspconfig = require 'lspconfig'
 		local server_available, requested_server = lsp_installer_servers.get_server(server)
 
 		if server_available then
-			requested_server:on_ready(function ()
-				requested_server:setup(
-					coq.lsp_ensure_capabilities(config)
-				)
-			end)
+			requested_server:on_ready(
+				function ()
+					requested_server:setup(
+						coq.lsp_ensure_capabilities(config)
+					)
+				end
+			)
 
 			if not requested_server:is_installed() then
 				-- Queue the server to be installed

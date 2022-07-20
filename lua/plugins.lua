@@ -77,8 +77,6 @@ use 'wbthomason/packer.nvim'
 	}
 	-- git commit browser
 	use 'junegunn/gv.vim'
-	-- easy conflict resolution
-	use 'rhysd/conflict-marker.vim'
 
 ------------------------------------------------------
 
@@ -94,8 +92,7 @@ use 'wbthomason/packer.nvim'
 	-- Virtual Text
 	use 'theHamsta/nvim-dap-virtual-text'
 	-- Testing
-	use 'vim-test/vim-test' -- required for ultest
-	use { 'rcarriga/vim-ultest', run = ':UpdateRemotePlugins' }
+	use 'vim-test/vim-test' -- required for neotest
 	use {
 		'nvim-neotest/neotest',
 		requires = {
@@ -106,20 +103,6 @@ use 'wbthomason/packer.nvim'
 			'nvim-neotest/neotest-python',
 			'nvim-neotest/neotest-vim-test'
 		},
-		config = function()
-			require("neotest").setup({
-				adapters = {
-					require("neotest-python")({
-						dap = { justMyCode = false },
-					}),
-					require("neotest-jest"),
-					require("neotest-vim-test")({
-						ignore_file_types = { "python", "vim", "lua" },
-					}),
-				},
-			})
-		end
-
 	}
 	-- Debug installer
 	use 'Pocco81/DAPInstall.nvim'
@@ -203,7 +186,13 @@ use 'wbthomason/packer.nvim'
 	-- REPL
 	use 'metakirby5/codi.vim'
 	-- Change the surroundings
-	use 'tpope/vim-surround'
+	-- use 'tpope/vim-surround'
+	use {
+		'https://github.com/kylechui/nvim-surround',
+		config = function()
+			require("nvim-surround").setup()
+		end
+	}
 	-- Better auto indent
 	use 'yioneko/nvim-yati'
 	-- Assorted things
@@ -350,6 +339,11 @@ use 'wbthomason/packer.nvim'
 	use {
 		'williamboman/nvim-lsp-installer',
 		requires = { 'neovim/nvim-lspconfig' },
+		config = function()
+			require('nvim_lsp_installer').setup {
+				automatic_installation = true,
+			}
+		end
 	}
 
 	---- General dependencies
