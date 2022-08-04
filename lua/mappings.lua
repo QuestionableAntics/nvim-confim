@@ -129,8 +129,16 @@ local mappings = {}
 		['<F11>'] = { mode = 'n', action = dap.step_into, label = 'Debug Step Into'},
 		['<F12>'] = { mode = 'n', action = dap.step_out, label = 'Debug Step Out'},
 		['<leader>db'] = { mode = 'n', action = dap.toggle_breakpoint, label = 'Debug Toggle Breakpoint'},
-		['<leader>dsbr'] = { mode = 'n', action = (function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end), label = 'Debug Set Breakpoint'},
-		['<leader>dsbm'] = { mode = 'n', action = (function() dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end), label = 'Debug Set Breakpoint Message'},
+		['<leader>dsbr'] = {
+			mode = 'n',
+			action = function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end,
+			label = 'Debug Set Breakpoint'
+		},
+		['<leader>dsbm'] = {
+			mode = 'n',
+			action = function() dap.set_breakpoint(nil, nil, vim.fn.input("Log point message: ")) end,
+			label = 'Debug Set Breakpoint Message'
+		},
 		['<leader>dr'] = { mode = 'n', action = dap.repl.open, label = 'Debug REPL'},
 		-- ['<leader>dl'] = { mode = 'n', action = dap.repl.run_last, label = 'Debug Run Last'},
 

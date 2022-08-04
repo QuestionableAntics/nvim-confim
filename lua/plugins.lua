@@ -264,10 +264,11 @@ use 'wbthomason/packer.nvim'
 		'anuvyklack/pretty-fold.nvim',
 		config = function()
 			require('pretty-fold').setup{}
-			require('pretty-fold.preview').setup{}
+			require('fold-preview').setup{}
 		end,
 		requires = {
-			'anuvyklack/nvim-keymap-amend'
+			'anuvyklack/nvim-keymap-amend',
+			'https://github.com/anuvyklack/fold-preview.nvim'
 		}
 	}
 	-- Better Quickfix
@@ -317,11 +318,16 @@ use 'wbthomason/packer.nvim'
 ---------- Search ----------
 
 	-- Pretty fuzzy finder
-	use 'nvim-telescope/telescope.nvim'
+	use {
+		'nvim-telescope/telescope.nvim',
+
+		requires = {
+			-- rg raw live grep
+			'nvim-telescope/telescope-live-grep-args.nvim'
+		},
+	}
 	-- Telescope fzf integration
 	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-	-- rg raw live grep
-	use 'nvim-telescope/telescope-rg.nvim'
 	-- dap integration
 	use 'nvim-telescope/telescope-dap.nvim'
 	-- Uses telescope for the native ui-select
@@ -335,15 +341,15 @@ use 'wbthomason/packer.nvim'
 	-- A collection of common configurations for Neovim's built-in language server client
 	-- Handles automatically launching and initializing installed language servers
 	use 'neovim/nvim-lspconfig'
-	-- LSP installer
+
+	-- General external editor tooling installation management (Language servers, dap servers, linters, formatters)
 	use {
-		'williamboman/nvim-lsp-installer',
-		requires = { 'neovim/nvim-lspconfig' },
+		'williamboman/mason.nvim',
 		config = function()
-			require('nvim_lsp_installer').setup {
-				automatic_installation = true,
-			}
-		end
+			require('mason').setup()
+			require('mason-lspconfig').setup()
+		end,
+		requires = { 'williamboman/mason-lspconfig.nvim' }
 	}
 
 	---- General dependencies

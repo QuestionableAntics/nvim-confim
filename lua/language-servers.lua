@@ -22,7 +22,6 @@ local util = require("lspconfig.util")
 ----------------------------------
 
 local coq = require 'coq'
-local lsp_installer_servers = require 'nvim-lsp-installer.servers'
 local lspconfig = require 'lspconfig'
 
 ------------ Setup ------------
@@ -89,22 +88,8 @@ local lspconfig = require 'lspconfig'
 	}
 
 	for server, config in pairs(server_configs) do
-		local server_available, requested_server = lsp_installer_servers.get_server(server)
-
-		if server_available then
-			requested_server:on_ready(
-				function ()
-					requested_server:setup(
-						coq.lsp_ensure_capabilities(config)
-					)
-				end
-			)
-
-			if not requested_server:is_installed() then
-				-- Queue the server to be installed
-				requested_server:install()
-			end
-		end
+		-- LSP Snippets
+		lspconfig[server].setup(coq.lsp_ensure_capabilities(config))
 	end
 
 ------------------------------------------
