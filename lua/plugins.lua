@@ -186,13 +186,13 @@ use 'wbthomason/packer.nvim'
 	-- REPL
 	use 'metakirby5/codi.vim'
 	-- Change the surroundings
-	-- use 'tpope/vim-surround'
-	use {
-		'https://github.com/kylechui/nvim-surround',
-		config = function()
-			require("nvim-surround").setup()
-		end
-	}
+	use 'tpope/vim-surround'
+	-- use {
+	-- 	'https://github.com/kylechui/nvim-surround',
+	-- 	config = function()
+	-- 		require("nvim-surround").setup()
+	-- 	end
+	-- }
 	-- Better auto indent
 	use 'yioneko/nvim-yati'
 	-- Assorted things
