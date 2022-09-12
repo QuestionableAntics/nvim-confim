@@ -77,7 +77,6 @@ local mappings = {}
 
 	mappings['fuzzy_finder'] = {
 		['<leader>ff'] = { mode = 'n', action = telescope_builtin.find_files, label = 'Find files' },
-		-- ['<leader>fg'] = { mode = 'n', action = telescope_builtin.live_grep, label = 'Live Grep' },
 		['<leader>fg'] = { mode = 'n', action = telescope.extensions.live_grep_args.live_grep_args, label = 'Live Grep' },
 		['<leader>fb'] = { mode = 'n', action = telescope_builtin.buffers, label = 'Find Buffers' },
 		['<leader>fh'] = { mode = 'n', action = telescope_builtin.help_tags, label = 'Find Help Tags' },
@@ -101,7 +100,7 @@ local mappings = {}
 
 	mappings['testing'] = {
 		-- TODO: Revisit this later and see if there's clearer errors around it not working
-		-- ['<leader>dn'] = { mode = 'n', action = function() neotest.run.run({strategy = "dap"}) end, label = 'Debug Nearest Test' },
+		['<leader>dn'] = { mode = 'n', action = function() neotest.run.run({strategy = "dap"}) end, label = 'Debug Nearest Test' },
 		['<leader>un'] = { mode = 'n', action = function() neotest.run.run() end, label = 'Run Nearest Test' },
 		['<leader>ul'] = { mode = 'n', action = function() neotest.run.run_last() end, label = 'Run Last Test' },
 		['<leader>uf'] = { mode = 'n', action = function() neotest.run.run(vim.fn.expand("%")) end, label = 'Run File' },
