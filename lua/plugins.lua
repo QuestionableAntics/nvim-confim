@@ -3,7 +3,8 @@
 -- Reduce nesting
 local use = require('utils').packer_use()
 
--- Speeds up loading of lua modules for better start up time. Periodically check if this is needed (it will be merged into neovim main at some point)
+-- Speeds up loading of lua modules for better start up time.
+-- Periodically check if this is needed (it will be merged into neovim main at some point)
 use {
 	'lewis6991/impatient.nvim',
 	config = function() require('impatient') end
@@ -268,7 +269,7 @@ use {
 	end,
 	requires = {
 		'anuvyklack/nvim-keymap-amend',
-		'https://github.com/anuvyklack/fold-preview.nvim'
+		'anuvyklack/fold-preview.nvim'
 	}
 }
 -- Better Quickfix
@@ -362,7 +363,7 @@ use 'jose-elias-alvarez/null-ls.nvim'
 -- Make working with TS LS better
 use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 -- Additional Omnisharp functionality
-use 'https://github.com/Hoffs/omnisharp-extended-lsp.nvim'
+use 'Hoffs/omnisharp-extended-lsp.nvim'
 
 ------------------------------------------------------------------
 
@@ -406,7 +407,7 @@ use {
 	run = 'cd app && npm install',
 }
 use {
-	'https://github.com/phaazon/mind.nvim',
+	'phaazon/mind.nvim',
 	config = function()
 		require('mind').setup{}
 	end,
