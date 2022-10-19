@@ -1,7 +1,8 @@
 -- https://github.com/wbthomason/packer.nvim
 
 -- Reduce nesting
-local use = require('utils').packer_use()
+local utils = require('utils')
+local use = utils.packer_use()
 
 -- Speeds up loading of lua modules for better start up time.
 -- Periodically check if this is needed (it will be merged into neovim main at some point)
@@ -21,6 +22,18 @@ use 'kyazdani42/nvim-web-devicons'
 use 'gregsexton/MatchTag'
 -- VS Code theme
 use 'tomasiser/vim-code-dark'
+-- Other VS Code theme
+-- use {
+-- 	'Mofiqul/vscode.nvim',
+-- 	config = function()
+-- 		-- vim.o.background = 'dark'
+--
+-- 		require('vscode').setup{
+-- 			transparent = true,
+-- 			italic_comments = true,
+-- 		}
+-- 	end
+-- }
 -- Nice status bar
 use {
 	'nvim-lualine/lualine.nvim',
@@ -105,12 +118,8 @@ use {
 		'nvim-neotest/neotest-vim-test'
 	},
 }
--- Debug installer
-use 'Pocco81/DAPInstall.nvim'
 -- Debug Jest
 use 'David-Kunz/jester'
--- Develop inside Docker containers
--- use 'jamestthompson3/nvim-remote-containers'
 
 ---------------------------------
 
@@ -126,6 +135,9 @@ use {
 use {
 	'nvim-treesitter/nvim-treesitter',
 	run = ':TSUpdate',
+	-- Last commit before a breaking change that changes what highlight groups use to work
+	-- check if this is still needed
+	commit = '4cccb6f',
 	config = function()
 		require('nvim-treesitter.configs').setup {
 			-- either "all" or {"a", "list", "of", "languages"}
@@ -147,18 +159,15 @@ use {
 				"toml",
 				"json",
 				"json5",
-				"markdown"
+				"markdown",
+				"http"
 			},
-			-- false will disable the whole extension
 			highlight = { enable = true },
 			-- async installation of parsers
 			sync_install = false,
-			-- something else does indentations already, this would probably be better if I can disable whatever else is indenting
-			indent = { enable = false },
+			indent = { enable = true },
 			-- enable nvim-ts-context-commentstring
 			context_commentstring = { enable = true },
-			-- Better auto indent
-			-- yati = { enable = true },
 			textobjects = {
 				select = {
 					enable = true,
@@ -175,8 +184,6 @@ use {
 		}
 	end
 }
--- Highlight other instances of word under cursor
-use 'yamatsum/nvim-cursorline'
 -- Auto close and update jsx tags
 use {
 	'windwp/nvim-ts-autotag',
@@ -188,16 +195,6 @@ use 'JoosepAlviste/nvim-ts-context-commentstring'
 use 'metakirby5/codi.vim'
 -- Change the surroundings
 use 'tpope/vim-surround'
--- use {
--- 	'https://github.com/kylechui/nvim-surround',
--- 	config = function()
--- 		require("nvim-surround").setup()
--- 	end
--- }
--- Better auto indent
-use 'yioneko/nvim-yati'
--- Assorted things
--- use 'echasnovski/mini.nvim'
 
 ------------------------------------------------------------
 
@@ -220,8 +217,6 @@ use {
 		}
 	end
 }
--- Fuzzy motions
-use 'rlane/pounce.nvim'
 -- Additional treesitter functionality (in/around function/class/etc. operations)
 use 'nvim-treesitter/nvim-treesitter-textobjects'
 -- Session Management
@@ -234,32 +229,36 @@ use {
 		}
 	end
 }
--- Session integration for Telescope
-use 'rmagatti/session-lens'
--- Enhanced clipboard
+-- Comment stuff out with lua
 use {
-	"AckslD/nvim-neoclip.lua",
+	'numToStr/Comment.nvim',
 	config = function()
-		require('neoclip').setup{
-			enable_persistent_history = true,
-			default_register_macros = 'q',
-			enable_macro_history = true,
+		require('Comment').setup {
+			pre_hook = function(ctx)
+			-- Only calculate commentstring for tsx filetypes
+			if vim.bo.filetype == 'typescriptreact' then
+				local U = require('Comment.utils')
+
+				-- Determine whether to use linewise or blockwise commentstring
+				local type = ctx.ctype == U.ctype.linewise and '__default' or '__multiline'
+
+				-- Determine the location where to calculate commentstring from
+				local location = nil
+				if ctx.ctype == U.ctype.blockwise then
+					location = require('ts_context_commentstring.utils').get_cursor_location()
+				elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
+					location = require('ts_context_commentstring.utils').get_visual_start_location()
+				end
+
+				return require('ts_context_commentstring.internal').calculate_commentstring({
+					key = type,
+					location = location,
+				})
+			end
+		end,
 		}
-	end,
-	requires = {
-		{'tami5/sqlite.lua', module = 'sqlite'},
-		{'nvim-telescope/telescope.nvim'},
-	},
+	end
 }
--- Comment stuff out with lua (does not work with nvim-ts-context-commentstring currently)
--- use {
--- 	'numToStr/Comment.nvim',
--- 	config = function() require('Comment').setup() end
--- }
--- Comment stuff out
-use 'tpope/vim-commentary'
--- Per project navigation
-use 'ThePrimeagen/harpoon'
 -- Folding
 use {
 	'anuvyklack/pretty-fold.nvim',
@@ -277,6 +276,9 @@ use {
 	'kevinhwang91/nvim-bqf',
 	config = function() require('bqf').setup() end
 }
+
+-- Track mouse
+use 'DanilaMihailov/beacon.nvim'
 
 --------------------------------------------------
 
@@ -300,16 +302,6 @@ use {
 }
 -- AI in my code
 use 'github/copilot.vim'
--- Lua AI in my code
--- use {
--- 	'zbirenbaum/copilot.lua',
--- 	-- event = {"VimEnter"},
--- 	config = function()
--- 		vim.defer_fn(function()
--- 			require("copilot").setup()
--- 		end, 100)
--- 	end,
--- }
 -- Autocomplete source for vim dadbod (database)
 use 'kristijanhusak/vim-dadbod-completion'
 
@@ -362,8 +354,6 @@ use 'nvim-lua/plenary.nvim'
 use 'jose-elias-alvarez/null-ls.nvim'
 -- Make working with TS LS better
 use 'jose-elias-alvarez/nvim-lsp-ts-utils'
--- Additional Omnisharp functionality
-use 'Hoffs/omnisharp-extended-lsp.nvim'
 
 ------------------------------------------------------------------
 
@@ -398,20 +388,61 @@ use {
 -- Hints for keybindings
 use 'folke/which-key.nvim'
 -- Rest Client
--- use 'NTBBloodbath/rest.nvim'
--- Breakdown of what vim spends time on when starting up
--- use 'dstein64/vim-startuptime'
+use {
+	"rest-nvim/rest.nvim",
+	requires = { "nvim-lua/plenary.nvim" },
+	-- ft = {'http'},
+	config = function()
+		require("rest-nvim").setup({
+			json = "jq",
+		})
+
+		-- local wk = require('which-key')
+		-- local rest_nvim = require('rest-nvim')
+
+		-- utils.map('n', '<C-k>', rest_nvim.run)
+
+		-- wk.register({
+		-- 	["<C-k>"] = {
+		-- 		mode = 'n',
+		-- 		action = rest_nvim.run,
+		-- 		label = "Run",
+		-- 		buffer = vim.api.nvim_get_current_buf()
+		-- 	}
+		-- })
+		--
+		-- maybe someday
+		-- _G.WhichkeyHTTP = function()
+		-- 	local wk = require('which-key')
+		-- 	local rest_nvim = require('rest-nvim')
+
+		-- 	-- utils.map('n', '<C-k>', rest_nvim.run)
+
+
+		-- 	wk.register({
+		-- 		["<C-k>"] = {
+		-- 			mode = 'n',
+		-- 			action = rest_nvim.run,
+		-- 			label = "Run",
+		-- 			buffer = vim.api.nvim_get_current_buf()
+		-- 		}
+		-- 	})
+		-- end
+
+		-- vim.cmd[[
+		-- 	autocmd FileType http lua WhichkeyHTTP()
+		-- ]]
+
+	end
+}
 -- Markdown previewer
 use {
 	'iamcco/markdown-preview.nvim',
 	run = 'cd app && npm install',
 }
-use {
-	'phaazon/mind.nvim',
-	config = function()
-		require('mind').setup{}
-	end,
-}
+
+-- modify filepath and file contents in Quickfix buffer
+use 'gabrielpoca/replacer.nvim'
 
 --------------------------------
 
@@ -423,4 +454,85 @@ use {
 
 -----------------------------
 
--- end)
+
+-------- Currently Unused --------
+
+local CurrentlyUnused = function()
+	-- Note taking functionality
+	use {
+		'phaazon/mind.nvim',
+		config = function()
+			require('mind').setup{}
+		end,
+	}
+	-- Breakdown of what vim spends time on when starting up
+	use 'dstein64/vim-startuptime'
+	-- Additional Omnisharp functionality
+	use 'Hoffs/omnisharp-extended-lsp.nvim'
+	-- Assorted things
+	use 'echasnovski/mini.nvim'
+	-- Manipulate object surrounding characters
+	use {
+		'https://github.com/kylechui/nvim-surround',
+		config = function()
+			require("nvim-surround").setup()
+		end
+	}
+	-- Per project navigation
+	use 'ThePrimeagen/harpoon'
+	-- Undo Tree
+	use 'mbbill/undotree'
+	-- Develop inside Docker containers
+	use 'jamestthompson3/nvim-remote-containers'
+
+	-- Lua AI in my code
+	use {
+		'zbirenbaum/copilot.lua',
+		-- event = {"VimEnter"},
+		config = function()
+			vim.defer_fn(function()
+				require('copilot').setup({
+				  panel = {
+					enabled = true,
+					auto_refresh = false,
+					keymap = {
+					  jump_prev = "[[",
+					  jump_next = "]]",
+					  accept = "<CR>",
+					  refresh = "gr",
+					  open = "<M-CR>"
+					},
+				  },
+				  suggestion = {
+					enabled = true,
+					auto_trigger = false,
+					debounce = 75,
+					keymap = {
+					 accept = "<C-J>",
+					 next = "<M-]>",
+					 prev = "<M-[>",
+					 dismiss = "<C-]>",
+					},
+				  },
+				  filetypes = {
+					yaml = false,
+					markdown = false,
+					help = false,
+					gitcommit = false,
+					gitrebase = false,
+					hgcommit = false,
+					svn = false,
+					cvs = false,
+					["."] = false,
+				  },
+				  copilot_node_command = 'node', -- Node version must be < 18
+				  plugin_manager_path = vim.fn.stdpath("data") .. "/site/pack/packer",
+				  server_opts_overrides = {},
+				})
+				-- require("copilot").setup()
+			end, 100)
+		end,
+	}
+
+
+end

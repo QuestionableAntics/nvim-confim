@@ -61,108 +61,28 @@ M.autocmd = function (group, cmds, clear)
   cmd [[augroup END]]
 end
 
--- look into using this instead of the vim notes window
--- local Popup = require "nui.popup"
--- local event = require("nui.utils.autocmd").event
-
--- local popup = Popup({
---   enter = false,
---   focusable = true,
---   zindex = -1,
---   border = {
---     style = "rounded",
---   },
---   position = {
--- 	 row = "10%",
--- 	 col = "90%",
---   },
---   size = {
---     width = "10%",
---     height = "10%",
---   },
---   buf_options = {
---     modifiable = false,
---     readonly = true,
---   },
--- })
-
--- -- unmount component when cursor leaves buffer
--- popup:on({ event.BufLeave }, function()
---   popup:unmount()
--- end, { once = true })
--- popup:on(event.FocusLost, function() popup:unmount() end)
-
--- mount/open the component
--- popup:mount()
-
--- vim.api.nvim_buf_set_lines(popup.bufnr, 0, 1, false, { "asdfasdf" })
-
-M.Spawn_note_window = function()
-	vim.cmd [[
-	  let path = "~/notes/"
-	  let file_name = path.strftime("note-%d-%m-%y.wiki")
-	  " Empty buffer
-	  let buf = nvim_create_buf(v:false, v:true)
-	  " Get current UI
-	  let ui = nvim_list_uis()[0]
-	  " Dimension
-	  let width = (ui.width/2)
-	  let height = (ui.height/2)
-	  " Options for new window
-	  let opts = {'relative': 'editor',
-				  \ 'width': width,
-				  \ 'height': height,
-				  \ 'col': (ui.width - width)/2,
-				  \ 'row': (ui.height - height)/2,
-				  \ 'anchor': 'NW',
-				  \ 'style': 'minimal',
-				  \ 'border': 'single',
-				  \ }
-	  " Spawn window
-	  let win = nvim_open_win(buf, 1, opts)
-	  " Now we can actually open or create the note for the day?
-	  if filereadable(expand(file_name))
-		execute "e ".fnameescape(file_name)
-		let column = 80
-		execute "set textwidth=".column
-		execute "set colorcolumn=".column
-		execute "norm Go"
-		execute "norm zz"
-		execute "startinsert"
-	  else
-		execute "e ".fnameescape(file_name)
-		let column = 80
-		execute "set textwidth=".column
-		execute "set colorcolumn=".column
-		execute "norm Gi= Notes for ".strftime("%d-%m-%y")." ="
-		execute "norm G2o"
-		execute "norm Gi- " 
-		execute "norm zz"
-		execute "startinsert"
-	  endif
-  ]]
-end
-
 M.packer_use = function()
 	local use = nil
-	local ensure_packer = function()
-	  local fn = vim.fn
-	  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-	  if fn.empty(fn.glob(install_path)) > 0 then
+	local fn = vim.fn
+	local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+	local packer_bootstrap = false
+
+	if fn.empty(fn.glob(install_path)) > 0 then
 		fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 		vim.cmd [[packadd packer.nvim]]
-		return true
-	  end
-	  return false
+		packer_bootstrap = true
 	end
-
-	local packer_bootstrap = ensure_packer()
 
 	if packer_bootstrap then
 		require('packer').sync()
 	end
 
-	require('packer').startup(function(pack_use) use = pack_use end)
+	require('packer').startup({
+		function(pack_use) use = pack_use end,
+		-- does not solve, but seems to help some with packer sync/install/update not finishing checking commits for all packages
+		config = { display = { max_jobs = 10 } }
+	})
+
 	return use
 end
 
